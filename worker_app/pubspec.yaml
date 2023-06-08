@@ -30,6 +30,17 @@ environment:
 dependencies:
   flutter:
     sdk: flutter
+  get: ^4.6.5
+  http: ^0.13.0
+  shared_preferences: ^2.1.0
+  sized_context: ^1.0.0+4
+  image_picker: ^0.8.7
+  auto_size_text: ^3.0.0
+  flutter_launcher_icons: ^0.13.1
+  dartz: ^0.10.1
+  connectivity_plus: ^4.0.1
+  path_provider: ^2.0.5
+  file_picker: 5.2.1
 
 
   # The following adds the Cupertino Icons font to your application.
