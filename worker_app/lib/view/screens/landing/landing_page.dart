@@ -63,19 +63,6 @@ class Landing extends StatelessWidget {
                 SizedBox(
                   height: Get.size.height * .02,
                 ),
-                Obx(() {
-                  return Row(
-                    mainAxisAlignment: MainAxisAlignment.center,
-                    children: List.generate(
-                        controller.pagedetals.length,
-                        (index) => buildDot(
-                            index: index,
-                            currentindex: controller.pageindex.value)),
-                  );
-                }),
-                SizedBox(
-                  height: Get.size.height * .06,
-                ),
                 MyButton(
                   myRadius: 5,
                   mywidth: size
@@ -94,6 +81,19 @@ class Landing extends StatelessWidget {
                             : backGroundDarkColor),
                   ),
                 ),
+                SizedBox(
+                  height: Get.size.height * .06,
+                ),
+                Obx(() {
+                  return Row(
+                    mainAxisAlignment: MainAxisAlignment.center,
+                    children: List.generate(
+                        controller.pagedetals.length,
+                        (index) => buildDot(
+                            index: index,
+                            currentindex: controller.pageindex.value)),
+                  );
+                }),
               ]),
               SizedBox(
                 height: Get.size.height * .1,

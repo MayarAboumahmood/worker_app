@@ -9,8 +9,8 @@ import '../../main.dart';
 import '../screens/settings/setting_page.dart';
 
 // ignore: must_be_immutable
-class Drawer extends StatelessWidget {
-  Drawer({super.key});
+class ProjectDrawer extends StatelessWidget {
+  ProjectDrawer({super.key});
   SlideDrawerController controller = Get.put(SlideDrawerController());
   @override
   Widget build(BuildContext context) {

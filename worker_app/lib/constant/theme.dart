@@ -13,7 +13,7 @@ Color? skinColorWhite =
 
 //for the dark mode:
 Color darkPrimaryColor =
-    Colors.teal[500]!; // Colors.red[500]!; //Colors.teal[900]!;
+    Colors.teal[600]!; // Colors.red[500]!; //Colors.teal[900]!;
 Color darkHoverButtonColor =
     Colors.teal[600]!; // Colors.red[600]!; //Colors.teal[800]!;
 Color darkWoodBrownColor = Colors.redAccent[700]!;
@@ -103,8 +103,7 @@ class Themes {
     primaryColor: darkPrimaryColor,
     secondaryHeaderColor: darkWoodBrownColor,
     appBarTheme: AppBarTheme(
-      actionsIconTheme: IconThemeData(color: darkPrimaryColor),
-
+      actionsIconTheme: IconThemeData(color: backGroundDarkColor),
       titleTextStyle: TextStyle(
           color: skinColorWhite,
           fontFamily:
@@ -230,7 +229,7 @@ class Themes {
       actionsIconTheme: IconThemeData(color: primaryColor),
       titleTextStyle:
           TextStyle(color: Colors.black, fontFamily: jostFontFamily),
-      iconTheme: IconThemeData(color: skinColorWhite),
+      iconTheme: IconThemeData(color: backGroundDarkColor),
       color:
           skinColorWhite, //here to control the app bar color "and it's the same whit background color".
     ),
