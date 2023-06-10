@@ -108,7 +108,7 @@ class Themes {
           color: skinColorWhite,
           fontFamily:
               jostFontFamily), //controller the color of the appbar text.
-      iconTheme: IconThemeData(color: backGroundDarkColor),
+      iconTheme: IconThemeData(color: skinColorWhite),
 
       color: backGroundDarkColor.withOpacity(
           0.1), //here to control the app bar color "and it's the same whit background color".
