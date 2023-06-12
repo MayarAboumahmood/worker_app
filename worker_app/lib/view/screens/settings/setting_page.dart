@@ -296,8 +296,8 @@ class Setting extends StatelessWidget {
                   onTap: () {
                     themeController.changeTheme();
                     Get.back();
-                    Future.delayed(const Duration(milliseconds: 10), () {
-                      Get.offAllNamed('/bar');
+                    Future.delayed(const Duration(milliseconds: 20), () {
+                      Get.offAllNamed('/Bar');
                     });
                   },
                   child: iconBox(

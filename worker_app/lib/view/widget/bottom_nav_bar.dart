@@ -4,6 +4,7 @@ import 'package:get/get.dart';
 
 import '../../constant/text_style.dart';
 import '../../constant/theme.dart';
+import '../screens/bar/bar_page_controller.dart';
 
 void main() => runApp(const MaterialApp(home: BottomNavBar()));
 
@@ -15,7 +16,8 @@ class BottomNavBar extends StatefulWidget {
 }
 
 class BottomNavBarState extends State<BottomNavBar> {
-  int page = 0;
+  BarPageController controller = Get.find();
+  // int page = 0;
   GlobalKey<CurvedNavigationBarState> bottomNavigationKey = GlobalKey();
 
   @override
@@ -32,14 +34,16 @@ class BottomNavBarState extends State<BottomNavBar> {
       ],
       color: Get.isDarkMode ? darkPrimaryColor : primaryColor,
       buttonBackgroundColor: Get.isDarkMode ? darkPrimaryColor : primaryColor,
-      backgroundColor: Get.isDarkMode ? backGroundDarkColor : skinColorWhite!,
+      backgroundColor: Get.isDarkMode
+          ? backGroundDarkColor.withOpacity(0.1)
+          : skinColorWhite!.withOpacity(0.1),
       animationCurve: Curves.easeInOut,
-      animationDuration: const Duration(milliseconds: 300),
+      animationDuration: const Duration(milliseconds: 500),
       onTap: (index) {
         setState(() {
-          print('index :');
-          print(index);
-          page = index;
+          // print('index :');
+          // print(index);
+          controller.changePage(index);
         });
       },
       letIndexChange: (index) => true,

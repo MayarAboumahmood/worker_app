@@ -1,11 +1,16 @@
 import 'package:flutter/material.dart';
 import 'package:get/get.dart';
 import 'package:worker_app/constant/text_style.dart';
+import 'package:worker_app/view/screens/bar/bar_page_controller.dart';
 
 import '../../../constant/sizes.dart';
 import '../../../constant/theme.dart';
+import '../../../main.dart';
+import '../../widget/animation_title.dart';
 import '../../widget/bottom_nav_bar.dart';
 import '../../widget/drawer.dart';
+import '../../widget/drink_card.dart';
+import '../../widget/event_card.dart';
 
 class BarPage extends StatelessWidget {
   const BarPage({Key? key}) : super(key: key);
@@ -13,10 +18,32 @@ class BarPage extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     Sizes size = Sizes(context);
+    BarPageController controller = Get.find();
     return DefaultTabController(
-        length: 4,
+        length: 1,
         initialIndex: 0,
         child: Scaffold(
+          floatingActionButton: Obx(() => SizedBox(
+                height: 100,
+                child: AnimatedAlign(
+                  duration: const Duration(milliseconds: 500),
+                  alignment: controller.page.value == 3
+                      ? sharedPreferences!.getString('lang') == 'en'
+                          ? Alignment.topRight
+                          : sharedPreferences!.getString('lang') == 'ar'
+                              ? Alignment.topLeft
+                              : Alignment.topRight
+                      : sharedPreferences!.getString('lang') == 'en'
+                          ? Alignment.bottomRight
+                          : sharedPreferences!.getString('lang') == 'ar'
+                              ? Alignment.bottomLeft
+                              : Alignment.bottomRight,
+                  child: FloatingActionButton.extended(
+                      onPressed: () {},
+                      label: Text('Done'.tr, style: generalTextStyle(null))),
+                ),
+              )),
+          extendBody: true,
           appBar: createAppBar(size),
           drawer: ProjectDrawer(),
           body: Stack(
@@ -34,145 +61,93 @@ class BarPage extends StatelessWidget {
                   ),
                 ),
               ),
-              TabBarView(
-                children: [
-                  buildGridView(),
-                  buildGridView(),
-                  buildGridView(),
-                  buildGridView(),
-                ],
-              ),
+              Obx(() {
+                print('selectPage(controller)');
+                print(selectPage(controller));
+                return TabBarView(
+                  children: selectPage(controller),
+                );
+              }),
             ],
           ),
           bottomNavigationBar: const BottomNavBar(),
         ));
   }
 
-  Widget createMyBottomBar() {
-    return Container(
-        color: Get.isDarkMode ? backGroundDarkColor : skinColorWhite,
-        height: Get.size.height * .12,
-        child: BottomAppBar(
-          color: Get.isDarkMode ? darkPrimaryColor : primaryColor,
-          child: TabBar(
-            dividerColor: Get.isDarkMode ? backGroundDarkColor : skinColorWhite,
-            indicatorColor:
-                Get.isDarkMode ? backGroundDarkColor : skinColorWhite,
-            tabs: [
-              // Container(
-              //   margin: EdgeInsets.only(
-              //     top: Get.size.height * .02,
-              //   ),
-              //   height: Get.size.height * .1,
-              //   color: Get.isDarkMode ? darkPrimaryColor : primaryColor,
-              // ),
-              bottomBarUnite(Icons.event, 'Events'.tr, Get.size.width * .26, 2),
-              bottomBarUnite(
-                  Icons.wine_bar_rounded, 'Bar'.tr, Get.size.width * .5, 2),
-              bottomBarUnite(
-                  Icons.task_alt_rounded, 'Orders'.tr, Get.size.width * .74, 2),
-              bottomBarUnite(Icons.door_sliding_rounded, 'Door'.tr,
-                  Get.size.width * .02, 2),
-            ],
-          ),
-        ));
+  List<Widget> selectPage(BarPageController controller) {
+    List<Widget> list = [
+      buildGridView1(Colors.red),
+      buildGridView2(Colors.amber),
+      buildGridView(Colors.black),
+      buildGridView(Colors.blue),
+    ];
+    print('controller.page.value');
+    print(controller.page.value);
+    return ([list[controller.page.value]]);
   }
 
-  Widget bottomBarUnite(
-      IconData? icon, String text, double left, double bottom) {
-    return GestureDetector(
-        onTap: () {},
-        child: AnimatedContainer(
-          height: Get.size.height * .11,
-          width: Get.size.height * .11,
-          padding: const EdgeInsets.all(20),
-          duration: const Duration(milliseconds: 100),
-          decoration: BoxDecoration(
-              border: Border.all(
-                color: Get.isDarkMode ? backGroundDarkColor : skinColorWhite!,
-                width: 4.0,
-              ),
-              color: Get.isDarkMode ? darkPrimaryColor : primaryColor,
-              shape: BoxShape.circle),
-          child: Column(children: [
-            Icon(
-              icon,
-              color: Get.isDarkMode ? skinColorWhite : backGroundDarkColor,
-            ),
-            Text(
-              text,
-              style: generalTextStyle(null),
-            ),
-          ]),
-        ));
-  }
-
-  Widget createBottomBar() {
-    return ClipRRect(
-      borderRadius: const BorderRadius.only(
-          topLeft: Radius.circular(10), topRight: Radius.circular(10)),
-      child: BottomAppBar(
-        color: Get.isDarkMode ? darkPrimaryColor : primaryColor,
-        child: TabBar(
-          dividerColor: Get.isDarkMode ? backGroundDarkColor : skinColorWhite,
-          indicatorColor: Get.isDarkMode ? backGroundDarkColor : skinColorWhite,
-          tabs: [
-            Tab(
-              text: 'Events'.tr,
-              icon: Icon(
-                Icons.event,
-                color: Get.isDarkMode ? skinColorWhite : backGroundDarkColor,
-              ),
-            ),
-            Tab(
-              text: 'Bar'.tr,
-              icon: Icon(
-                Icons.wine_bar_rounded,
-                color: Get.isDarkMode ? skinColorWhite : backGroundDarkColor,
-              ),
-            ),
-            Tab(
-              text: 'Orders'.tr,
-              icon: Icon(
-                Icons.task_alt_rounded,
-                color: Get.isDarkMode ? skinColorWhite : backGroundDarkColor,
-              ),
-            ),
-            Tab(
-              icon: Icon(
-                Icons.door_sliding_rounded,
-                color: Get.isDarkMode ? skinColorWhite : backGroundDarkColor,
-              ),
-              child: Text(
-                'Door'.tr,
-                style: generalTextStyle(null),
-              ),
-            ),
-          ],
-        ),
-      ),
-    );
-  }
-
-  Widget verticalDivider() {
-    return VerticalDivider(
-      width: 0,
-      thickness: 2,
-      color: Get.isDarkMode ? backGroundDarkColor : skinColorWhite,
-    );
-  }
-
-  Widget buildGridView() {
+  Widget buildGridView(Color? color) {
     return GridView.builder(
       padding: const EdgeInsets.all(16),
       gridDelegate: const SliverGridDelegateWithFixedCrossAxisCount(
         crossAxisCount: 2,
+        mainAxisExtent: 230,
+        crossAxisSpacing: 10,
+        mainAxisSpacing: 16,
+      ),
+      itemCount: 16,
+      itemBuilder: (context, index) {
+        return DrinkCard(
+          drink: Drink(name: 'beer', unitPriceInSP: 15000),
+        );
+      },
+    );
+  }
+
+  Widget buildGridView1(Color? color) {
+    return GridView.builder(
+      padding: const EdgeInsets.all(16),
+      gridDelegate: const SliverGridDelegateWithFixedCrossAxisCount(
+          crossAxisCount: 1,
+          crossAxisSpacing: 16,
+          mainAxisSpacing: 16,
+          mainAxisExtent: 470),
+      itemCount: 10,
+      itemBuilder: (context, index) {
+        return EventCard(
+          event: Event(
+              artistsNames: ['mohammad', 'hassan', 'walled'],
+              availablePlaces: 50,
+              beginDate: '19/12/2023',
+              description: 'very good',
+              eventName: 'the beast even',
+              imagesNames: [
+                'assets/images/concert.png',
+                'assets/images/medium page background image.jpg',
+                'assets/images/tickets.png'
+              ],
+              ticketsPrice: 50000),
+          // color: color,
+          // child: Center(
+          //   child: Text('Card ${index + 1}'),
+          // ),
+        );
+      },
+    );
+  }
+
+  Widget buildGridView2(Color? color) {
+    return GridView.builder(
+      padding: const EdgeInsets.all(16),
+      gridDelegate: const SliverGridDelegateWithFixedCrossAxisCount(
+        crossAxisCount: 1,
         crossAxisSpacing: 16,
         mainAxisSpacing: 16,
       ),
       itemCount: 16,
       itemBuilder: (context, index) {
         return Card(
+          color: color,
           child: Center(
             child: Text('Card ${index + 1}'),
           ),
@@ -185,10 +160,7 @@ class BarPage extends StatelessWidget {
     return AppBar(
       elevation: 0.4,
       backgroundColor: Get.isDarkMode ? darkPrimaryColor : primaryColor,
-      title: Text(
-        'Worker app'.tr,
-        style: generalTextStyle(size.appBarTextSize / 2),
-      ),
+      title: AnimationAppBarTitle(title: 'Worker app'),
       actions: [
         IconButton(
           icon: Icon(
