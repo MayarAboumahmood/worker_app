@@ -1,5 +1,4 @@
 import 'package:get/get.dart';
-import 'package:worker_app/view/screens/bar/bar_page_controller.dart';
 import 'package:worker_app/view/widget/event_card.dart';
 
 import '../view/screens/settings/setting_controller.dart';
