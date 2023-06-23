@@ -14,7 +14,6 @@ class EventCard extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     final Sizes size = Sizes(context);
-
     return cardBody(size);
   }
 

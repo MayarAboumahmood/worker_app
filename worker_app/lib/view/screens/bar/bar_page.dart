@@ -160,7 +160,7 @@ class BarPage extends StatelessWidget {
     return AppBar(
       elevation: 0.4,
       backgroundColor: Get.isDarkMode ? darkPrimaryColor : primaryColor,
-      title: AnimationAppBarTitle(title: 'Worker app'),
+      title: AnimationAppBarTitle(title: 'Worker app'.tr),
       actions: [
         IconButton(
           icon: Icon(
