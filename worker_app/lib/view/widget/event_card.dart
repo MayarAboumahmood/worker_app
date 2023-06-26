@@ -1,9 +1,11 @@
 import 'package:auto_size_text/auto_size_text.dart';
 import 'package:flutter/material.dart';
 import 'package:get/get.dart';
+import 'package:worker_app/constant/fonts.dart';
 import '../../constant/sizes.dart';
 import '../../constant/text_style.dart';
 import '../../constant/theme.dart';
+import '../../main.dart';
 
 class EventCard extends StatelessWidget {
   final EventCardController controller = Get.put(EventCardController());
@@ -29,7 +31,6 @@ class EventCard extends StatelessWidget {
           borderRadius: BorderRadius.circular(size.buttonRadius),
         ),
         width: size.drinkCardWidth,
-        // height: 210,
         child: SingleChildScrollView(
             child: Column(
           crossAxisAlignment: CrossAxisAlignment.start,
@@ -37,44 +38,72 @@ class EventCard extends StatelessWidget {
           children: [
             SizedBox(
               height: 250,
-              child: GestureDetector(
-                  onHorizontalDragEnd: (details) {
-                    const velocityThreshold = 2.0;
-                    if (details.velocity.pixelsPerSecond.dx.abs() >
-                        velocityThreshold) {
-                      final direction =
-                          details.velocity.pixelsPerSecond.dx.isNegative
-                              ? -1
-                              : 1;
-                      controller.onSlide(direction);
-                    }
-                  },
-                  onTap: () {},
-                  child: buildImagesList(size)),
+              child: Stack(
+                children: [
+                  GestureDetector(
+                      onHorizontalDragEnd: (details) {
+                        const velocityThreshold = 2.0;
+                        if (details.velocity.pixelsPerSecond.dx.abs() >
+                            velocityThreshold) {
+                          final direction =
+                              details.velocity.pixelsPerSecond.dx.isNegative
+                                  ? -1
+                                  : 1;
+                          controller.onSlide(direction);
+                        }
+                      },
+                      onTap: () {},
+                      child: buildImagesList(size)),
+                  Positioned(
+                    bottom: 10,
+                    left: sharedPreferences!.getString('lang') == 'en'
+                        ? 10
+                        : sharedPreferences!.getString('lang') == 'ar'
+                            ? null
+                            : 10,
+                    right: sharedPreferences!.getString('lang') == 'en'
+                        ? null
+                        : sharedPreferences!.getString('lang') == 'ar'
+                            ? 10
+                            : null,
+                    child: Text(
+                      event.eventName,
+                      style: TextStyle(
+                          color: skinColorWhite,
+                          fontSize: 23,
+                          fontFamily: jostFontFamily,
+                          fontWeight: FontWeight.bold),
+                    ),
+                  ),
+                ],
+              ),
             ),
             const SizedBox(height: 10),
             buildDots(),
-            setEventOneINfo(
-              event.eventName,
+            const SizedBox(height: 3),
+            setEventINfo(
+              'Artists: '.tr +
+                  event.artistsNames.join(
+                      ", "), //event.artist[index].name+event.artist[index].playWith
             ),
             const SizedBox(height: 3),
-            setEventOneINfo(
-              '${event.ticketsPrice} S.P',
+            setEventINfo(
+              'Date: '.tr + event.beginDate,
             ),
             const SizedBox(height: 3),
-            setEventOneINfo(event.description),
-            const SizedBox(height: 3),
-            setEventOneINfo(
-              'Artists: ${event.artistsNames.join(", ")}',
+            setEventINfo(
+              'Available Places: '.tr + event.availablePlaces.toString(),
             ),
             const SizedBox(height: 3),
-            setEventOneINfo(
-              'Available Places: ${event.availablePlaces}',
-            ),
-            const SizedBox(height: 3),
-            setEventOneINfo(
-              'Begin Date: ${event.beginDate}',
-            ),
+            TextButton(
+              child: Text(
+                'click here for more info...'.tr,
+                style: generalTextStyle(null),
+              ),
+              onPressed: () {
+                Get.toNamed('/EventInfo', arguments: event);
+              },
+            )
           ],
         )));
   }
@@ -93,9 +122,34 @@ class EventCard extends StatelessWidget {
                 topLeft: Radius.circular(size.buttonRadius),
                 topRight: Radius.circular(size.buttonRadius),
               ),
-              child: Image.asset(
-                event.imagesNames[index],
-                fit: BoxFit.fill,
+              child: Stack(
+                children: [
+                  Positioned(
+                    top: 0,
+                    bottom: 0,
+                    left: 0,
+                    right: 0,
+                    child: Image.asset(
+                      event.imagesNames[index],
+                      fit: BoxFit.fill,
+                    ),
+                  ),
+                  Positioned(
+                    top: 0,
+                    bottom: 0,
+                    left: 0,
+                    right: 0,
+                    child: Container(
+                      decoration: BoxDecoration(
+                        color: backGroundDarkColor.withOpacity(0.3),
+                        borderRadius: BorderRadius.only(
+                          topLeft: Radius.circular(size.buttonRadius),
+                          topRight: Radius.circular(size.buttonRadius),
+                        ),
+                      ),
+                    ),
+                  )
+                ],
               ),
             );
           },
@@ -117,7 +171,7 @@ class EventCard extends StatelessWidget {
     });
   }
 
-  Widget setEventOneINfo(String title) {
+  Widget setEventINfo(String title) {
     return Padding(
       padding: const EdgeInsets.symmetric(horizontal: 7),
       child: AutoSizeText(title, style: generalTextStyle(15)),
@@ -161,8 +215,8 @@ class Event {
 }
 
 class EventCardController extends GetxController {
-  final PageController pageController = PageController();
   final RxInt pageIndex = 0.obs;
+  final PageController pageController = PageController();
 
   @override
   void onClose() {

@@ -10,7 +10,7 @@ import '../../widget/animation_title.dart';
 import '../../widget/bottom_nav_bar.dart';
 import '../../widget/drawer.dart';
 import '../../widget/drink_card.dart';
-import '../../widget/event_card.dart';
+import '../door/door_page.dart';
 
 class BarPage extends StatelessWidget {
   const BarPage({Key? key}) : super(key: key);
@@ -27,7 +27,7 @@ class BarPage extends StatelessWidget {
                 height: 100,
                 child: AnimatedAlign(
                   duration: const Duration(milliseconds: 500),
-                  alignment: controller.page.value == 3
+                  alignment: controller.page.value == 2
                       ? sharedPreferences!.getString('lang') == 'en'
                           ? Alignment.topRight
                           : sharedPreferences!.getString('lang') == 'ar'
@@ -46,29 +46,32 @@ class BarPage extends StatelessWidget {
           extendBody: true,
           appBar: createAppBar(size),
           drawer: ProjectDrawer(),
-          body: Stack(
-            children: [
-              Container(
-                color: Get.isDarkMode ? darkPrimaryColor : primaryColor,
-              ),
-              Container(
-                margin: const EdgeInsets.only(top: 30),
-                decoration: BoxDecoration(
-                  color: Get.isDarkMode ? backGroundDarkColor : skinColorWhite,
-                  borderRadius: const BorderRadius.only(
-                    topLeft: Radius.circular(15),
-                    topRight: Radius.circular(15),
+          body: SafeArea(
+            child: Stack(
+              children: [
+                Container(
+                  color: Get.isDarkMode ? darkPrimaryColor : primaryColor,
+                ),
+                Container(
+                  margin: const EdgeInsets.only(top: 30),
+                  decoration: BoxDecoration(
+                    color:
+                        Get.isDarkMode ? backGroundDarkColor : skinColorWhite,
+                    borderRadius: const BorderRadius.only(
+                      topLeft: Radius.circular(15),
+                      topRight: Radius.circular(15),
+                    ),
                   ),
                 ),
-              ),
-              Obx(() {
-                print('selectPage(controller)');
-                print(selectPage(controller));
-                return TabBarView(
-                  children: selectPage(controller),
-                );
-              }),
-            ],
+                Obx(() {
+                  print('selectPage(controller)');
+                  print(selectPage(controller));
+                  return TabBarView(
+                    children: selectPage(controller),
+                  );
+                }),
+              ],
+            ),
           ),
           bottomNavigationBar: const BottomNavBar(),
         ));
@@ -76,17 +79,14 @@ class BarPage extends StatelessWidget {
 
   List<Widget> selectPage(BarPageController controller) {
     List<Widget> list = [
-      buildGridView1(Colors.red),
-      buildGridView2(Colors.amber),
-      buildGridView(Colors.black),
-      buildGridView(Colors.blue),
+      buildBarGridView(Colors.black),
+      buildBarGridView(Colors.blue),
+      reservationList(),
     ];
-    print('controller.page.value');
-    print(controller.page.value);
     return ([list[controller.page.value]]);
   }
 
-  Widget buildGridView(Color? color) {
+  Widget buildBarGridView(Color? color) {
     return GridView.builder(
       padding: const EdgeInsets.all(16),
       gridDelegate: const SliverGridDelegateWithFixedCrossAxisCount(
@@ -99,58 +99,6 @@ class BarPage extends StatelessWidget {
       itemBuilder: (context, index) {
         return DrinkCard(
           drink: Drink(name: 'beer', unitPriceInSP: 15000),
-        );
-      },
-    );
-  }
-
-  Widget buildGridView1(Color? color) {
-    return GridView.builder(
-      padding: const EdgeInsets.all(16),
-      gridDelegate: const SliverGridDelegateWithFixedCrossAxisCount(
-          crossAxisCount: 1,
-          crossAxisSpacing: 16,
-          mainAxisSpacing: 16,
-          mainAxisExtent: 470),
-      itemCount: 10,
-      itemBuilder: (context, index) {
-        return EventCard(
-          event: Event(
-              artistsNames: ['mohammad', 'hassan', 'walled'],
-              availablePlaces: 50,
-              beginDate: '19/12/2023',
-              description: 'very good',
-              eventName: 'the beast even',
-              imagesNames: [
-                'assets/images/concert.png',
-                'assets/images/medium page background image.jpg',
-                'assets/images/tickets.png'
-              ],
-              ticketsPrice: 50000),
-          // color: color,
-          // child: Center(
-          //   child: Text('Card ${index + 1}'),
-          // ),
-        );
-      },
-    );
-  }
-
-  Widget buildGridView2(Color? color) {
-    return GridView.builder(
-      padding: const EdgeInsets.all(16),
-      gridDelegate: const SliverGridDelegateWithFixedCrossAxisCount(
-        crossAxisCount: 1,
-        crossAxisSpacing: 16,
-        mainAxisSpacing: 16,
-      ),
-      itemCount: 16,
-      itemBuilder: (context, index) {
-        return Card(
-          color: color,
-          child: Center(
-            child: Text('Card ${index + 1}'),
-          ),
         );
       },
     );

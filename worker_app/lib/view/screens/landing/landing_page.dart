@@ -13,6 +13,8 @@ import 'landing_controller.dart';
 class Landing extends StatelessWidget {
   final OnBoardController controller = Get.put(OnBoardController());
 
+  Landing({super.key});
+
   @override
   Widget build(BuildContext context) {
     final Sizes size = Sizes(context);
@@ -71,9 +73,9 @@ class Landing extends StatelessWidget {
                     myRadius: 5,
                     mywidth: size.wideNormalButtonWidth,
                     myheight: size.normalButtonHeight,
-                    mycolor: primaryColor,
+                    mycolor: Get.isDarkMode ? darkPrimaryColor : primaryColor,
                     ontap: () {
-                      Get.offAllNamed('/Bar');
+                      Get.offAllNamed('/EventPage');
                     },
                     child: Text(
                       'Continue'.tr,

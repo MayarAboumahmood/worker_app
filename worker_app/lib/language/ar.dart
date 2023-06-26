@@ -110,5 +110,16 @@ const Map<String, String> ar = {
   'Edite the drink': 'عدل على المشروب',
   'Current event information': "معلومات الحفلة الحالية",
   'logout': 'تسجيل الخروج',
-  'Select from the worker': 'اختر من العمال'
+  'Select from the worker': 'اختر من العمال',
+  'Description: ': 'الوصف: ',
+  'Artists: ': 'الفنانيين: ',
+  'Date: ': 'التاريخ: ',
+  'Available Places: ': 'الاماكن المتاحة: ',
+  'Ticket Price: ': 'سعر البطاقة: ',
+  'Work here': 'اعمل هنا',
+  'click here for more info...': 'أضغط هنا لمزيد من المعلومات',
+  'S.P': 'ليرة سورية',
+  'Bar': 'البار',
+  'Orders': 'الطلبات',
+  'Door': 'الباب'
 };

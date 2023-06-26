@@ -105,4 +105,10 @@ const Map<String, String> en = {
   'Unit price S.P': 'Unit price S.P',
   'Delete the drink': 'Delete the drink',
   'Edite the drink': 'Edite the drink',
+  'Description: ': 'Description: ',
+  'Artists: ': 'Artists: ',
+  'Date: ': 'Date: ',
+  'Available Places: ': 'Available Places: ',
+  'Ticket Price: ': 'Ticket Price: ',
+  'Work here': 'Work here',
 };

@@ -20,8 +20,8 @@ class Setting extends StatelessWidget {
   Widget build(BuildContext context) {
     Sizes size = Sizes(context);
     return Container(
-        height: Get.size.height * .9,
-        width: context.widthInches > 5.5 ? 400 : Get.size.width * .85,
+        height: Get.size.height * .95,
+        width: context.widthInches > 5.5 ? 400 : Get.size.width * .95,
         color: Get.isDarkMode ? Colors.black54 : skinColorWhite,
         child: SingleChildScrollView(
           child: Column(children: [
@@ -64,7 +64,6 @@ class Setting extends StatelessWidget {
     return MaterialButton(
       onPressed: () {},
       child: Container(
-        // width: 345,
         padding: EdgeInsets.symmetric(
             horizontal: context.widthInches > 5 ? 7 : 7,
             vertical: Get.size.height * .02),
@@ -296,8 +295,8 @@ class Setting extends StatelessWidget {
                   onTap: () {
                     themeController.changeTheme();
                     Get.back();
-                    Future.delayed(const Duration(milliseconds: 20), () {
-                      Get.offAllNamed('/Bar');
+                    Future.delayed(const Duration(milliseconds: 50), () {
+                      Get.offAllNamed('/');
                     });
                   },
                   child: iconBox(

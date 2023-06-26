@@ -12,9 +12,12 @@ class DrinkCard extends StatelessWidget {
   Drink drink;
   Function()? onPressed;
   DrinkCard({super.key, required this.drink, this.onPressed});
-
   @override
   Widget build(BuildContext context) {
+    DrinkCardContrller controller = Get.put(
+      DrinkCardContrller(),
+      tag: drink.hashCode.toString(),
+    );
     Sizes size = Sizes(context);
     return GestureDetector(
       onTap: onPressed,
@@ -44,14 +47,35 @@ class DrinkCard extends StatelessWidget {
                       Positioned.fill(
                         child: Image.asset(
                           // drink.imageName;
-                          'assets/images/drinks.png',
+                          'assets/images/medium page background image.jpg',
                           fit: BoxFit.fill,
                         ),
                       ),
-                      Positioned(
-                          top: 10, left: 5, child: addRemoveButton('add')),
-                      Positioned(
-                          top: 10, right: 5, child: addRemoveButton('remove')),
+                      Positioned.fill(
+                        child: Container(
+                          color: backGroundDarkColor.withOpacity(0.2),
+                        ),
+                      ),
+                      Row(
+                        children: [
+                          const SizedBox(
+                            width: 6,
+                          ),
+                          addRemoveButton('add', controller),
+                          const Spacer(),
+                          Obx(() => Text(
+                                controller.numberOfDrinks.value.toString(),
+                                style: TextStyle(
+                                  color: skinColorWhite,
+                                ),
+                              )),
+                          const Spacer(),
+                          addRemoveButton('remove', controller),
+                          const SizedBox(
+                            width: 6,
+                          ),
+                        ],
+                      ),
                     ],
                   ),
                 ),
@@ -72,39 +96,21 @@ class DrinkCard extends StatelessWidget {
     );
   }
 
-  Widget addRemoveButton(String addOrRemove) {
-    return GestureDetector(
-      onTap: () {
-        //add one from this drink or remove one of the drink
-      },
-      child: Container(
-        height: 25,
-        decoration: BoxDecoration(
-            boxShadow: const [
-              BoxShadow(
-                  offset: Offset(-2, -1),
-                  color: Colors.black12,
-                  spreadRadius: 0,
-                  blurRadius: 10),
-              BoxShadow(
-                  offset: Offset(6, 5),
-                  color: Colors.black26,
-                  spreadRadius: 01,
-                  blurRadius: 10),
-              BoxShadow(
-                  offset: Offset(-2, 5),
-                  color: Colors.black26,
-                  spreadRadius: 01,
-                  blurRadius: 10),
-              BoxShadow(
-                  offset: Offset(6, -1),
-                  color: Colors.black26,
-                  spreadRadius: 01,
-                  blurRadius: 10),
-            ],
-            shape: BoxShape.circle,
-            color: addOrRemove == 'add' ? Colors.green : Colors.red),
-        child: Icon(addOrRemove == 'add' ? Icons.add : Icons.remove),
+  Widget addRemoveButton(String addOrRemove, DrinkCardContrller controller) {
+    return SizedBox(
+      width: 60,
+      child: MaterialButton(
+        onPressed: () {
+          addOrRemove == 'add'
+              ? controller.increaseTheNumberOfDrinks()
+              : controller.decreaseTheNumberOfDrinks();
+          //add one from this drink or remove one of the drink
+        },
+        child: Icon(
+          addOrRemove == 'add' ? Icons.add : Icons.remove,
+          color: skinColorWhite,
+        ),
+        // ),
       ),
     );
   }
@@ -117,4 +123,15 @@ class Drink {
     required this.name,
     required this.unitPriceInSP,
   });
+}
+
+class DrinkCardContrller extends GetxController {
+  RxInt numberOfDrinks = 0.obs;
+  void increaseTheNumberOfDrinks() {
+    numberOfDrinks.value++;
+  }
+
+  void decreaseTheNumberOfDrinks() {
+    numberOfDrinks > 0 ? numberOfDrinks.value-- : null;
+  }
 }
