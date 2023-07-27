@@ -5,6 +5,7 @@ import '../../../constant/theme.dart';
 import '../../widget/animation_title.dart';
 import '../../widget/drawer.dart';
 import '../../widget/event_card.dart';
+import '../../widget/new_event_card.dart';
 
 // ignore: must_be_immutable
 class EventPage extends StatelessWidget {
@@ -128,11 +129,12 @@ class EventPage extends StatelessWidget {
 
   Widget buildEventGridView() {
     return ListView.builder(
-      itemCount: events.length - 1,
+      itemCount: 3, //events.length - 1,
       itemBuilder: (context, index) {
-        return Padding(
-          padding: const EdgeInsets.symmetric(horizontal: 10, vertical: 15),
-          child: events[index],
+        return const Padding(
+          padding: EdgeInsets.symmetric(horizontal: 10, vertical: 15),
+          child: NewEventCard(),
+          // events[index],
         );
       },
     );
