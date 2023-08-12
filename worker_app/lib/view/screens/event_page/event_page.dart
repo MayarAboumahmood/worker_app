@@ -1,20 +1,24 @@
 import 'package:flutter/material.dart';
 import 'package:get/get.dart';
+import 'package:worker_app/view/widget/new_event_card.dart';
 import '../../../constant/sizes.dart';
 import '../../../constant/theme.dart';
 import '../../widget/animation_title.dart';
 import '../../widget/drawer.dart';
-import '../../widget/event_card.dart';
-import '../../widget/new_event_card.dart';
 
 // ignore: must_be_immutable
 class EventPage extends StatelessWidget {
-  List<EventCard> events = [
-    EventCard(
+  List<NewEventCard> events = [
+    NewEventCard(
       event: Event(
         artistsNames: ['artist one', 'artist two', 'artist three'],
         availablePlaces: 80,
-        beginDate: 'sometime',
+        beginDate: Date(
+            dayName: 'sunday',
+            dayNumber: '2',
+            month: 'june',
+            time: '6:30',
+            year: '2023'),
         description: 'very good',
         eventName: 'Event one',
         imagesNames: [
@@ -25,11 +29,16 @@ class EventPage extends StatelessWidget {
         ticketsPrice: 50,
       ),
     ),
-    EventCard(
+    NewEventCard(
       event: Event(
         artistsNames: ['artist one', 'artist two', 'artist three'],
         availablePlaces: 80,
-        beginDate: 'sometime',
+        beginDate: Date(
+            dayName: 'sunday',
+            dayNumber: '2',
+            month: 'june',
+            time: '6:30',
+            year: '2023'),
         description: 'very good',
         eventName: 'Event two',
         imagesNames: [
@@ -40,11 +49,16 @@ class EventPage extends StatelessWidget {
         ticketsPrice: 50,
       ),
     ),
-    EventCard(
+    NewEventCard(
         event: Event(
       artistsNames: ['artist one', 'artist two', 'artist three'],
       availablePlaces: 80,
-      beginDate: 'sometime',
+      beginDate: Date(
+          dayName: 'sunday',
+          dayNumber: '2',
+          month: 'june',
+          time: '6:30',
+          year: '2023'),
       description: 'very good',
       eventName: 'Event three',
       imagesNames: [
@@ -54,11 +68,16 @@ class EventPage extends StatelessWidget {
       ],
       ticketsPrice: 50,
     )),
-    EventCard(
+    NewEventCard(
         event: Event(
       artistsNames: ['artist one', 'artist two', 'artist three'],
       availablePlaces: 80,
-      beginDate: 'sometime',
+      beginDate: Date(
+          dayName: 'sunday',
+          dayNumber: '2',
+          month: 'june',
+          time: '6:30',
+          year: '2023'),
       description: 'very good',
       eventName: 'Event four',
       imagesNames: [
@@ -68,11 +87,16 @@ class EventPage extends StatelessWidget {
       ],
       ticketsPrice: 50,
     )),
-    EventCard(
+    NewEventCard(
         event: Event(
       artistsNames: ['artist one', 'artist two', 'artist three'],
       availablePlaces: 80,
-      beginDate: 'sometime',
+      beginDate: Date(
+          dayName: 'sunday',
+          dayNumber: '2',
+          month: 'june',
+          time: '6:30',
+          year: '2023'),
       description: 'very good',
       eventName: 'Event five',
       imagesNames: [
@@ -82,11 +106,16 @@ class EventPage extends StatelessWidget {
       ],
       ticketsPrice: 50,
     )),
-    EventCard(
+    NewEventCard(
         event: Event(
       artistsNames: ['artist one', 'artist two', 'artist three'],
       availablePlaces: 80,
-      beginDate: 'sometime',
+      beginDate: Date(
+          dayName: 'sunday',
+          dayNumber: '2',
+          month: 'june',
+          time: '6:30',
+          year: '2023'),
       description: 'very good',
       eventName: 'Event six',
       imagesNames: [
@@ -131,9 +160,9 @@ class EventPage extends StatelessWidget {
     return ListView.builder(
       itemCount: 3, //events.length - 1,
       itemBuilder: (context, index) {
-        return const Padding(
-          padding: EdgeInsets.symmetric(horizontal: 10, vertical: 15),
-          child: NewEventCard(),
+        return Padding(
+          padding: const EdgeInsets.symmetric(horizontal: 10, vertical: 15),
+          child: events[index],
           // events[index],
         );
       },

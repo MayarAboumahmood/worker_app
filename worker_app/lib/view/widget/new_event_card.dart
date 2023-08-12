@@ -1,63 +1,99 @@
+// ignore_for_file: public_member_api_docs, sort_constructors_first
 import 'package:flutter/material.dart';
 import 'package:get/get.dart';
 import 'package:worker_app/constant/fonts.dart';
 import 'package:worker_app/constant/text_style.dart';
-import 'package:worker_app/constant/theme.dart';
+
+import '../../main.dart';
 
 class NewEventCard extends StatelessWidget {
-  const NewEventCard({super.key});
-
+  final Event event;
+  NewEventCard({super.key, required this.event});
   @override
   Widget build(BuildContext context) {
-    return Container(
-        height: Get.size.height * .12,
-        width: Get.size.width * .95,
+    return GestureDetector(
+      onTap: () {
+        Get.toNamed('/EventInfo', arguments: event);
+      },
+      child: Container(
+          height: 85, //Get.size.height * .12,
+          width: Get.size.width * .95,
+          decoration: BoxDecoration(
+              border: Border.all(
+                color: Colors.black54,
+                width: 0.2,
+              ),
+              color: Get.isDarkMode
+                  ? const Color.fromARGB(255, 54, 54, 54)
+                  : Colors.grey[400],
+              borderRadius: const BorderRadius.only(
+                  topRight: Radius.circular(400),
+                  bottomRight: Radius.circular(400))),
+          child: Row(
+            crossAxisAlignment: CrossAxisAlignment.start,
+            mainAxisAlignment: MainAxisAlignment.spaceBetween,
+            children: [
+              Visibility(
+                visible: sharedPreferences!.getString('lang') != 'ar',
+                replacement: eventImage(),
+                child: dateBox(),
+              ),
+              Padding(
+                padding: const EdgeInsets.only(right: 30),
+                child: Column(
+                  mainAxisAlignment: MainAxisAlignment.spaceEvenly,
+                  crossAxisAlignment: CrossAxisAlignment.start,
+                  children: [
+                    Text(event.eventName, style: generalTextStyle(25)),
+                    timeContainer(event.beginDate.time),
+                  ],
+                ),
+              ),
+              Visibility(
+                visible: sharedPreferences!.getString('lang') != 'ar',
+                replacement: dateBox(),
+                child: eventImage(),
+              ),
+            ],
+          )),
+    );
+  }
+
+  Widget dateBox() {
+    return Padding(
+      padding: const EdgeInsets.all(6.0),
+      child: dateContainer(event.beginDate.month.toUpperCase(),
+          event.beginDate.dayNumber, event.beginDate.dayName.toUpperCase()),
+    );
+  }
+
+  Widget eventImage() {
+    return Padding(
+      padding: const EdgeInsets.only(left: 15.6, top: 6, right: 6, bottom: 6),
+      child: Container(
         decoration: BoxDecoration(
+            borderRadius: BorderRadius.circular(900),
             border: Border.all(
               color: Colors.black54,
               width: 0.2,
-            ),
-            color: Get.isDarkMode
-                ? const Color.fromARGB(255, 54, 54, 54)
-                : Colors.grey[400],
-            borderRadius: const BorderRadius.only(
-                topRight: Radius.circular(400),
-                bottomRight: Radius.circular(400))),
-        child: Row(
-          crossAxisAlignment: CrossAxisAlignment.start,
-          mainAxisAlignment: MainAxisAlignment.spaceBetween,
-          children: [
-            Padding(
-              padding: const EdgeInsets.all(5.0),
-              child: dateContainer(
-                  'july'.toUpperCase(), 9, 'sunday'.toUpperCase()),
-            ),
-            Padding(
-              padding: const EdgeInsets.only(right: 30),
-              child: Column(
-                mainAxisAlignment: MainAxisAlignment.spaceEvenly,
-                crossAxisAlignment: CrossAxisAlignment.start,
-                children: [
-                  Text('Event Name', style: generalTextStyle(25)),
-                  timeContainer('6:30 PM'),
-                ],
-              ),
-            ),
-            Padding(
-              padding: const EdgeInsets.all(6.0),
-              child: Center(
-                child: ClipOval(
-                    child: Image.asset('assets/images/The project icon 1.jpg')),
-              ),
-            )
-          ],
-        ));
+            )),
+        width: 100,
+        height: 100,
+        child: ClipRRect(
+          borderRadius: BorderRadius.circular(900),
+          child: Image.asset(
+            event.imagesNames[1],
+            fit: BoxFit.fill,
+          ),
+        ),
+      ),
+    );
   }
 
   Widget timeContainer(String time) {
     return Container(
       margin: const EdgeInsets.symmetric(horizontal: 5, vertical: 5),
-      height: Get.size.height * .04,
+      height: 28.3, //Get.size.height * .04,
       width: Get.size.width * .22,
       decoration: BoxDecoration(
           border: Border.all(
@@ -74,40 +110,75 @@ class NewEventCard extends StatelessWidget {
     );
   }
 
-  Widget dateContainer(String monthName, int monthNumber, String dayName) {
-    return Center(
-      child: Container(
-        height: Get.size.height * .11,
-        width: Get.size.height * .11,
-        decoration: BoxDecoration(
-          color: Get.isDarkMode
-              ? darkPrimaryColor
-              : const Color.fromARGB(255, 184, 212, 210),
+  Widget dateContainer(String monthName, String dayNumber, String dayName) {
+    return Container(
+      height: 78, //Get.size.height * .11,
+      width: 78, //Get.size.height * .11,
+      decoration: BoxDecoration(
+        border: Border.all(
+          color: Colors.black54,
+          width: 0.2,
         ),
-        child: Column(
-          // mainAxisAlignment: MainAxisAlignment.spaceEvenly,
-          children: [
-            // const Spacer(),
-            Text(
+        color: const Color.fromARGB(255, 184, 212, 210),
+      ),
+      child: Column(
+        children: [
+          Expanded(
+            flex: 1,
+            child: Text(
               monthName,
               style:
                   TextStyle(color: Colors.black26, fontFamily: jostFontFamily),
             ),
-            const SizedBox(
-              height: 1,
-            ),
-            Text(monthNumber.toString(),
+          ),
+          Expanded(
+            flex: 2,
+            child: Text(dayNumber,
                 style: TextStyle(fontSize: 31, fontFamily: jostFontFamily)),
-            const SizedBox(
-              height: 0,
-            ),
-            Text(dayName,
+          ),
+          Expanded(
+            flex: 1,
+            child: Text(dayName,
                 style: TextStyle(
                     color: Colors.black26, fontFamily: jostFontFamily)),
-            // const Spacer(),
-          ],
-        ),
+          ),
+        ],
       ),
     );
   }
+}
+
+class Event {
+  final List<String> imagesNames;
+  final String eventName;
+  final List<String> artistsNames;
+  final String description;
+  final double ticketsPrice;
+  final int availablePlaces;
+  final Date beginDate;
+
+  Event({
+    required this.imagesNames,
+    required this.eventName,
+    required this.artistsNames,
+    required this.description,
+    required this.ticketsPrice,
+    required this.availablePlaces,
+    required this.beginDate,
+  });
+}
+
+class Date {
+  String dayName;
+  String dayNumber;
+  String month;
+  String year;
+  String time;
+  Date({
+    required this.dayName,
+    required this.dayNumber,
+    required this.month,
+    required this.year,
+    required this.time,
+  });
 }
