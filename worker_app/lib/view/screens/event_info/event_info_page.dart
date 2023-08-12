@@ -1,12 +1,13 @@
 import 'package:auto_size_text/auto_size_text.dart';
 import 'package:flutter/material.dart';
 import 'package:get/get.dart';
+import 'package:worker_app/view/widget/event_card.dart';
+import 'package:worker_app/view/widget/new_event_card.dart';
 
 import '../../../constant/fonts.dart';
 import '../../../constant/sizes.dart';
 import '../../../constant/text_style.dart';
 import '../../../constant/theme.dart';
-import '../../widget/event_card.dart';
 
 class EventInfo extends StatelessWidget {
   EventInfo({super.key});
@@ -90,8 +91,7 @@ class EventInfo extends StatelessWidget {
           elementDivider(),
           const SizedBox(height: 3),
           setEventINfo(
-            'Date: '.tr + event.beginDate,
-          ),
+              '${'Date: '.tr}${event.beginDate.dayName}/${event.beginDate.month}/${event.beginDate.year}'),
           elementDivider(),
           const SizedBox(height: 3),
           setEventINfo(

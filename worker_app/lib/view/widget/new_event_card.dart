@@ -8,7 +8,7 @@ import '../../main.dart';
 
 class NewEventCard extends StatelessWidget {
   final Event event;
-  NewEventCard({super.key, required this.event});
+  const NewEventCard({super.key, required this.event});
   @override
   Widget build(BuildContext context) {
     return GestureDetector(

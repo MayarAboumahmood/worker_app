@@ -2,10 +2,11 @@
 import 'package:auto_size_text/auto_size_text.dart';
 import 'package:flutter/material.dart';
 import 'package:get/get.dart';
+import 'package:worker_app/constant/text_style.dart';
 
 import '../../constant/sizes.dart';
-import '../../constant/text_style.dart';
 import '../../constant/theme.dart';
+import '../screens/cart/cart_page.dart';
 
 // ignore: must_be_immutable
 class DrinkCard extends StatelessWidget {
@@ -14,9 +15,8 @@ class DrinkCard extends StatelessWidget {
   DrinkCard({super.key, required this.drink, this.onPressed});
   @override
   Widget build(BuildContext context) {
-    DrinkCardContrller controller = Get.put(
-      DrinkCardContrller(),
-      tag: drink.hashCode.toString(),
+    DrinkCardController controller = Get.put(
+      DrinkCardController(),
     );
     Sizes size = Sizes(context);
     return GestureDetector(
@@ -29,7 +29,7 @@ class DrinkCard extends StatelessWidget {
                 ? darkWoodBrownColor.withOpacity(0.9)
                 : woodBrownColor.withOpacity(0.9),
             borderRadius: BorderRadius.circular(size.buttonRadius)),
-        width: size.drinkCardWidth,
+        width: 100, //size.drinkCardWidth,
         height: 210,
         child: Column(
             crossAxisAlignment: CrossAxisAlignment.center,
@@ -64,7 +64,8 @@ class DrinkCard extends StatelessWidget {
                           addRemoveButton('add', controller),
                           const Spacer(),
                           Obx(() => Text(
-                                controller.numberOfDrinks.value.toString(),
+                                controller.numberOfDrinks[drink.id].value
+                                    .toString(),
                                 style: TextStyle(
                                   color: skinColorWhite,
                                 ),
@@ -96,14 +97,15 @@ class DrinkCard extends StatelessWidget {
     );
   }
 
-  Widget addRemoveButton(String addOrRemove, DrinkCardContrller controller) {
+  Widget addRemoveButton(
+      String addOrRemove, DrinkCardController drinkCardController) {
     return SizedBox(
       width: 60,
       child: MaterialButton(
         onPressed: () {
           addOrRemove == 'add'
-              ? controller.increaseTheNumberOfDrinks()
-              : controller.decreaseTheNumberOfDrinks();
+              ? drinkCardController.increaseTheNumberOfDrinks(drink.id, drink)
+              : drinkCardController.decreaseTheNumberOfDrinks(drink.id);
           //add one from this drink or remove one of the drink
         },
         child: Icon(
@@ -117,21 +119,55 @@ class DrinkCard extends StatelessWidget {
 }
 
 class Drink {
+  // String imageName;
+  int id;
   String name;
   int unitPriceInSP;
   Drink({
+    required this.id,
+    // required this.imageName,
     required this.name,
     required this.unitPriceInSP,
   });
 }
 
-class DrinkCardContrller extends GetxController {
-  RxInt numberOfDrinks = 0.obs;
-  void increaseTheNumberOfDrinks() {
-    numberOfDrinks.value++;
+class DrinkCardController extends GetxController {
+  List<RxInt> numberOfDrinks = <RxInt>[].obs;
+  Order order = Order();
+  void increaseTheNumberOfDrinks(int id, Drink drink) {
+    numberOfDrinks[id].value++;
+    if (ifAddForTheFirstTime(drink)) {
+      order.drinksWithAmount.add(DrinkAmount(drink: drink, amount: 1));
+    } else {
+      for (var element in order.drinksWithAmount) {
+        if (element.drink == drink) {
+          element.amount++;
+        }
+      }
+    }
   }
 
-  void decreaseTheNumberOfDrinks() {
-    numberOfDrinks > 0 ? numberOfDrinks.value-- : null;
+  bool ifAddForTheFirstTime(Drink drink) {
+    for (var element in order.drinksWithAmount) {
+      if (element.drink.name == drink.name) {
+        return false;
+      }
+    }
+    return true;
+  }
+
+  void decreaseTheNumberOfDrinks(int id) {
+    order.drinksWithAmount[id].amount--;
+    numberOfDrinks[id] > 0 ? numberOfDrinks[id].value-- : null;
+  }
+
+  void makeTheNumberofDriknsEqualsZero() {
+    for (var element in numberOfDrinks) {
+      element.value = 0;
+    }
+  }
+
+  void addNewElement() {
+    numberOfDrinks.add(0.obs);
   }
 }

@@ -1,5 +1,6 @@
 import 'package:flutter/material.dart';
 import 'package:get/get.dart';
+import 'package:sized_context/sized_context.dart';
 import 'package:worker_app/constant/text_style.dart';
 import 'package:worker_app/view/screens/bar/bar_page_controller.dart';
 
@@ -19,6 +20,8 @@ class BarPage extends StatelessWidget {
   Widget build(BuildContext context) {
     Sizes size = Sizes(context);
     BarPageController controller = Get.find();
+    final DrinkCardController drinkCardController =
+        Get.put(DrinkCardController());
     return DefaultTabController(
         length: 1,
         initialIndex: 0,
@@ -39,7 +42,10 @@ class BarPage extends StatelessWidget {
                               ? Alignment.bottomLeft
                               : Alignment.bottomRight,
                   child: FloatingActionButton.extended(
-                      onPressed: () {},
+                      onPressed: () {
+                        onpressedDone(
+                            controller.page.value, drinkCardController);
+                      },
                       label: Text('Done'.tr, style: generalTextStyle(null))),
                 ),
               )),
@@ -64,10 +70,9 @@ class BarPage extends StatelessWidget {
                   ),
                 ),
                 Obx(() {
-                  print('selectPage(controller)');
-                  print(selectPage(controller));
                   return TabBarView(
-                    children: selectPage(controller),
+                    children:
+                        selectPage(controller, context, drinkCardController),
                   );
                 }),
               ],
@@ -77,28 +82,35 @@ class BarPage extends StatelessWidget {
         ));
   }
 
-  List<Widget> selectPage(BarPageController controller) {
+  List<Widget> selectPage(BarPageController controller, BuildContext context,
+      DrinkCardController drinkCardController) {
     List<Widget> list = [
-      buildBarGridView(Colors.black),
-      buildBarGridView(Colors.blue),
+      buildBarGridView(Colors.black, context, drinkCardController),
+      buildBarGridView(Colors.blue, context, drinkCardController),
       reservationList(),
     ];
     return ([list[controller.page.value]]);
   }
 
-  Widget buildBarGridView(Color? color) {
+  Widget buildBarGridView(Color? color, BuildContext context,
+      DrinkCardController drinkCardContrller) {
     return GridView.builder(
       padding: const EdgeInsets.all(16),
-      gridDelegate: const SliverGridDelegateWithFixedCrossAxisCount(
-        crossAxisCount: 2,
+      gridDelegate: SliverGridDelegateWithFixedCrossAxisCount(
+        crossAxisCount: context.widthInches > 8.5
+            ? 4
+            : context.widthInches > 5.5
+                ? 3
+                : 2,
         mainAxisExtent: 230,
         crossAxisSpacing: 10,
         mainAxisSpacing: 16,
       ),
       itemCount: 16,
       itemBuilder: (context, index) {
+        drinkCardContrller.addNewElement();
         return DrinkCard(
-          drink: Drink(name: 'beer', unitPriceInSP: 15000),
+          drink: Drink(id: index, name: 'beer+$index', unitPriceInSP: 15000),
         );
       },
     );
@@ -122,5 +134,17 @@ class BarPage extends StatelessWidget {
         ),
       ],
     );
+  }
+
+  void onpressedDone(int index, DrinkCardController drinkCardController) {
+    index == 0
+        ? {
+            Get.toNamed('/Cart', arguments: drinkCardController.order),
+            Future.delayed(const Duration(milliseconds: 80), () {
+              drinkCardController.order.makeTheOrderEmpty();
+              drinkCardController.makeTheNumberofDriknsEqualsZero();
+            })
+          }
+        : null;
   }
 }
