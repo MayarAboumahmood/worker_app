@@ -8,6 +8,7 @@ import 'package:worker_app/view/screens/event_page/event_page.dart';
 import 'package:worker_app/view/screens/event_page/event_page_binding.dart';
 import 'package:worker_app/view/screens/landing/landing_page.dart';
 import 'package:worker_app/view/screens/settings/theme_binding.dart';
+import 'package:worker_app/view/screens/stock/stock_page.dart';
 
 appRoutes() => [
       GetPage(name: '/', page: () => Landing(), binding: ThemeBinding()),
@@ -22,4 +23,5 @@ appRoutes() => [
           page: () => EventInfo(),
           binding: EventInfoBinding()),
       GetPage(name: '/Cart', page: () => const CartPage()),
+      GetPage(name: '/Stock', page: () => const Stock()),
     ];

@@ -86,7 +86,8 @@ class BarPage extends StatelessWidget {
       DrinkCardController drinkCardController) {
     List<Widget> list = [
       buildBarGridView(Colors.black, context, drinkCardController),
-      buildBarGridView(Colors.blue, context, drinkCardController),
+      // buildBarGridView(Colors.blue, context, drinkCardController),
+      reservationList(),
       reservationList(),
     ];
     return ([list[controller.page.value]]);

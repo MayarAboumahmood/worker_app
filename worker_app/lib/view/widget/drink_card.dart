@@ -105,7 +105,7 @@ class DrinkCard extends StatelessWidget {
         onPressed: () {
           addOrRemove == 'add'
               ? drinkCardController.increaseTheNumberOfDrinks(drink.id, drink)
-              : drinkCardController.decreaseTheNumberOfDrinks(drink.id);
+              : drinkCardController.decreaseTheNumberOfDrinks(drink.id, drink);
           //add one from this drink or remove one of the drink
         },
         child: Icon(
@@ -134,20 +134,22 @@ class Drink {
 class DrinkCardController extends GetxController {
   List<RxInt> numberOfDrinks = <RxInt>[].obs;
   Order order = Order();
+  @override
+  void onInit() {
+    // for(){}//
+    super.onInit();
+  }
+
   void increaseTheNumberOfDrinks(int id, Drink drink) {
     numberOfDrinks[id].value++;
-    if (ifAddForTheFirstTime(drink)) {
+    if (ifDealingWithForTheFirstTime(drink)) {
       order.drinksWithAmount.add(DrinkAmount(drink: drink, amount: 1));
     } else {
-      for (var element in order.drinksWithAmount) {
-        if (element.drink == drink) {
-          element.amount++;
-        }
-      }
+      order.drinksWithAmount[id].amount++;
     }
   }
 
-  bool ifAddForTheFirstTime(Drink drink) {
+  bool ifDealingWithForTheFirstTime(Drink drink) {
     for (var element in order.drinksWithAmount) {
       if (element.drink.name == drink.name) {
         return false;
@@ -156,9 +158,17 @@ class DrinkCardController extends GetxController {
     return true;
   }
 
-  void decreaseTheNumberOfDrinks(int id) {
-    order.drinksWithAmount[id].amount--;
-    numberOfDrinks[id] > 0 ? numberOfDrinks[id].value-- : null;
+  void decreaseTheNumberOfDrinks(int id, Drink drink) {
+    if (ifDealingWithForTheFirstTime(drink)) {
+      order.drinksWithAmount.add(DrinkAmount(drink: drink, amount: 0));
+    }
+    order.drinksWithAmount[id].amount > 0
+        ? order.drinksWithAmount[id].amount--
+        : null;
+    numberOfDrinks[id].value > 0 ? numberOfDrinks[id].value-- : null;
+
+    print('order.drinksWithAmount[id].amount');
+    print(order.drinksWithAmount[id].amount);
   }
 
   void makeTheNumberofDriknsEqualsZero() {
