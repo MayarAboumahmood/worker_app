@@ -12,6 +12,7 @@ import '../../widget/bottom_nav_bar.dart';
 import '../../widget/drawer.dart';
 import '../../widget/drink_card.dart';
 import '../door/door_page.dart';
+import '../orders/order_page.dart';
 
 class BarPage extends StatelessWidget {
   const BarPage({Key? key}) : super(key: key);
@@ -53,8 +54,8 @@ class BarPage extends StatelessWidget {
                 ),
                 Obx(() {
                   return TabBarView(
-                    children:
-                        selectPage(controller, context, drinkCardController),
+                    children: selectPage(
+                        controller, context, drinkCardController, size),
                   );
                 }),
               ],
@@ -91,11 +92,11 @@ class BarPage extends StatelessWidget {
   }
 
   List<Widget> selectPage(BarPageController controller, BuildContext context,
-      DrinkCardController drinkCardController) {
+      DrinkCardController drinkCardController, Sizes size) {
     List<Widget> list = [
       buildBarGridView(Colors.black, context, drinkCardController),
       // buildBarGridView(Colors.blue, context, drinkCardController),
-      attendanceList(),
+      buildOrderList(size),
       attendanceList(),
     ];
     return ([list[controller.page.value]]);
