@@ -78,7 +78,7 @@ class Sizes {
     appBarTextFieldWidth =
         width * .8; //it's just an icon here so we not going to use it.
     wideNormalButtonTextSize = 18;
-    wideNormalButtonWidth = width * .85;
+    wideNormalButtonWidth = 250;
     cardButtonTextSize = width * .1;
     normalButtonInsidePaddin = width * .08;
     bigButtonTextSize = height * .04;
@@ -110,7 +110,7 @@ class Sizes {
     smallEventCardHeight = 130;
     smallEventCardWidth = 220;
     appBarTextFieldWidth = 300;
-    wideNormalButtonWidth = context.widthInches > 5 ? 300 : width * .85;
+    wideNormalButtonWidth = 300;
     wideNormalButtonTextSize = 20;
     cardButtonTextSize = width < height ? height * .02 : width * .012;
     normalButtonInsidePaddin = width * .03;
@@ -153,7 +153,7 @@ class Sizes {
     print('set size for tablet');
     appBarTextFieldWidth = 50;
     moveBetweenLoginandregisterText = 15;
-    wideNormalButtonWidth = context.widthInches > 5 ? 300 : width * .85;
+    wideNormalButtonWidth = 300;
     wideNormalButtonTextSize = 20;
     cardButtonTextSize = width < height
         ? height * .014
