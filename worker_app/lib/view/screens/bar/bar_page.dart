@@ -26,29 +26,32 @@ class BarPage extends StatelessWidget {
         length: 1,
         initialIndex: 0,
         child: Scaffold(
-          floatingActionButton: Obx(() => SizedBox(
-                height: 100,
-                child: AnimatedAlign(
-                  duration: const Duration(milliseconds: 500),
-                  alignment: controller.page.value == 2
-                      ? sharedPreferences!.getString('lang') == 'en'
-                          ? Alignment.topRight
-                          : sharedPreferences!.getString('lang') == 'ar'
-                              ? Alignment.topLeft
-                              : Alignment.topRight
-                      : sharedPreferences!.getString('lang') == 'en'
-                          ? Alignment.bottomRight
-                          : sharedPreferences!.getString('lang') == 'ar'
-                              ? Alignment.bottomLeft
-                              : Alignment.bottomRight,
-                  child: FloatingActionButton.extended(
-                      onPressed: () {
-                        onpressedDone(
-                            controller.page.value, drinkCardController);
-                      },
-                      label: Text('Done'.tr, style: generalTextStyle(null))),
-                ),
-              )),
+          floatingActionButton: controller.page.value == 0
+              ? Obx(() => SizedBox(
+                    height: 100,
+                    child: AnimatedAlign(
+                      duration: const Duration(milliseconds: 500),
+                      alignment: controller.page.value == 2
+                          ? sharedPreferences!.getString('lang') == 'en'
+                              ? Alignment.topRight
+                              : sharedPreferences!.getString('lang') == 'ar'
+                                  ? Alignment.topLeft
+                                  : Alignment.topRight
+                          : sharedPreferences!.getString('lang') == 'en'
+                              ? Alignment.bottomRight
+                              : sharedPreferences!.getString('lang') == 'ar'
+                                  ? Alignment.bottomLeft
+                                  : Alignment.bottomRight,
+                      child: FloatingActionButton.extended(
+                          onPressed: () {
+                            onpressedDone(
+                                controller.page.value, drinkCardController);
+                          },
+                          label:
+                              Text('Done'.tr, style: generalTextStyle(null))),
+                    ),
+                  ))
+              : null,
           extendBody: true,
           appBar: createAppBar(size),
           drawer: ProjectDrawer(),
@@ -87,8 +90,8 @@ class BarPage extends StatelessWidget {
     List<Widget> list = [
       buildBarGridView(Colors.black, context, drinkCardController),
       // buildBarGridView(Colors.blue, context, drinkCardController),
-      reservationList(),
-      reservationList(),
+      attendanceList(),
+      attendanceList(),
     ];
     return ([list[controller.page.value]]);
   }

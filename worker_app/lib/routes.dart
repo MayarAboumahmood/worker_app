@@ -2,7 +2,7 @@ import 'package:get/get.dart';
 import 'package:worker_app/view/screens/bar/bar_page.dart';
 import 'package:worker_app/view/screens/bar/bar_page_binding.dart';
 import 'package:worker_app/view/screens/cart/cart_page.dart';
-import 'package:worker_app/view/screens/event_info/event_binding.dart';
+import 'package:worker_app/view/screens/event_info/event_info_binding.dart';
 import 'package:worker_app/view/screens/event_info/event_info_page.dart';
 import 'package:worker_app/view/screens/event_page/event_page.dart';
 import 'package:worker_app/view/screens/event_page/event_page_binding.dart';

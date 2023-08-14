@@ -1,6 +1,6 @@
 // import 'package:auto_size_text/auto_size_text.dart';
-import 'package:flutter/material.dart';
-import 'package:get/get.dart';
+// import 'package:flutter/material.dart';
+// import 'package:get/get.dart';
 // import 'package:worker_app/constant/fonts.dart';
 // import '../../constant/sizes.dart';
 // import '../../constant/text_style.dart';
@@ -214,27 +214,27 @@ import 'package:get/get.dart';
 //   });
 // }
 
-class EventCardController extends GetxController {
-  final RxInt pageIndex = 0.obs;
-  final PageController pageController = PageController();
+// class EventCardController extends GetxController {
+//   final RxInt pageIndex = 0.obs;
+//   final PageController pageController = PageController();
 
-  @override
-  void onClose() {
-    pageController.dispose();
-    super.onClose();
-  }
+//   @override
+//   void onClose() {
+//     pageController.dispose();
+//     super.onClose();
+//   }
 
-  void setPageIndex(int index) {
-    pageIndex.value = index;
-  }
+//   void setPageIndex(int index) {
+//     pageIndex.value = index;
+//   }
 
-  void onSlide(int direction) {
-    if (direction == 1) {
-      pageController.nextPage(
-          duration: const Duration(milliseconds: 300), curve: Curves.ease);
-    } else {
-      pageController.previousPage(
-          duration: const Duration(milliseconds: 300), curve: Curves.ease);
-    }
-  }
-}
+//   void onSlide(int direction) {
+//     if (direction == 1) {
+//       pageController.nextPage(
+//           duration: const Duration(milliseconds: 300), curve: Curves.ease);
+//     } else {
+//       pageController.previousPage(
+//           duration: const Duration(milliseconds: 300), curve: Curves.ease);
+//     }
+//   }
+// }
