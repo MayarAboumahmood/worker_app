@@ -95,9 +95,11 @@ class CartPage extends StatelessWidget {
 
 class Order {
   List<DrinkAmount> drinksWithAmount = [];
-  Order() {
-    drinksWithAmount;
-  }
+  int tableNumber = 0;
+  Order({
+    drinksWithAmount,
+    required tabelNumber,
+  });
   double calculatePrice(int id) {
     double price = 0;
     for (int i = 0; i < drinksWithAmount[id].amount.toInt(); i++) {

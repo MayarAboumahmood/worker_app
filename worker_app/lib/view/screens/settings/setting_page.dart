@@ -288,14 +288,13 @@ class Setting extends StatelessWidget {
                   fontSize: 14,
                   color: Get.isDarkMode ? skinColorWhite : backGroundDarkColor),
             ),
-            // SizedBox(width: Get.size.width*.1,),
             const Spacer(),
             GetX<ThemeController>(builder: (themeController) {
               return GestureDetector(
                   onTap: () {
                     themeController.changeTheme();
                     Get.back();
-                    Future.delayed(const Duration(milliseconds: 50), () {
+                    Future.delayed(const Duration(milliseconds: 80), () {
                       Get.offAllNamed('/');
                     });
                   },

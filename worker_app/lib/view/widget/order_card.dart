@@ -32,24 +32,46 @@ Widget orderCard(List<Order> orders, int index, BuildContext context,
                       itemCount: orders.length,
                       itemBuilder: ((context, index) => Column(
                             children: [
-                              Text(
-                                '${orders[index].drinksWithAmount[index].drink.name}/',
-                                style: TextStyle(
-                                  fontFamily: jostFontFamily,
-                                  color: Get.isDarkMode
-                                      ? skinColorWhite
-                                      : backGroundDarkColor,
-                                  fontSize: 18,
-                                  fontWeight: FontWeight.bold,
+                              SizedBox(
+                                height: 20,
+                                child: ListView.builder(
+                                  itemCount: orders.length,
+                                  itemBuilder: ((context, innerIndex) => Text(
+                                        '${orders[index].drinksWithAmount[innerIndex].drink.name}/',
+                                        style: TextStyle(
+                                          fontFamily: jostFontFamily,
+                                          color: Get.isDarkMode
+                                              ? skinColorWhite
+                                              : backGroundDarkColor,
+                                          fontSize: 18,
+                                          fontWeight: FontWeight.bold,
+                                        ),
+                                      )),
                                 ),
                               ),
                               const SizedBox(height: 8),
-                              Text(
-                                  '${'Price'.tr}: \$${orders[index].calculatePrice(index)} S.P',
-                                  style: generalTextStyle(16)),
+                              SizedBox(
+                                height: 20,
+                                child: ListView.builder(
+                                    itemCount:
+                                        orders[index].drinksWithAmount.length,
+                                    itemBuilder: ((context, innerIndex) => Text(
+                                        '${'Price'.tr}: \$${orders[index].calculatePrice(innerIndex)} S.P',
+                                        style: generalTextStyle(16)))),
+                              ),
+                              const SizedBox(height: 8),
+                              SizedBox(
+                                height: 20,
+                                child: ListView.builder(
+                                    itemCount:
+                                        orders[index].drinksWithAmount.length,
+                                    itemBuilder: ((context, innerIndex) => Text(
+                                        '${'Amount Ordered'.tr}: ${orders[index].drinksWithAmount[innerIndex].amount}',
+                                        style: generalTextStyle(16)))),
+                              ),
                               const SizedBox(height: 8),
                               Text(
-                                  '${'Amount Ordered'.tr}: ${orders[index].drinksWithAmount[index].amount}',
+                                  '${'Table Number'.tr}: ${orders[index].tableNumber}', //this should not be in the listview.builder because in this way it will be repeted.
                                   style: generalTextStyle(16)),
                             ],
                           ))),

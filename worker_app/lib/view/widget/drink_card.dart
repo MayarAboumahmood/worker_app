@@ -133,7 +133,7 @@ class Drink {
 
 class DrinkCardController extends GetxController {
   List<RxInt> numberOfDrinks = <RxInt>[].obs;
-  Order order = Order();
+  Order order = Order(tabelNumber: 1);
   void increaseTheNumberOfDrinks(int id, Drink drink) {
     numberOfDrinks[id].value++;
     if (ifDealingWithForTheFirstTime(drink)) {
