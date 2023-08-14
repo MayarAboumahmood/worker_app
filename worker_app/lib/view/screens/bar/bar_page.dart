@@ -26,32 +26,11 @@ class BarPage extends StatelessWidget {
         length: 1,
         initialIndex: 0,
         child: Scaffold(
-          floatingActionButton: controller.page.value == 0
-              ? Obx(() => SizedBox(
-                    height: 100,
-                    child: AnimatedAlign(
-                      duration: const Duration(milliseconds: 500),
-                      alignment: controller.page.value == 2
-                          ? sharedPreferences!.getString('lang') == 'en'
-                              ? Alignment.topRight
-                              : sharedPreferences!.getString('lang') == 'ar'
-                                  ? Alignment.topLeft
-                                  : Alignment.topRight
-                          : sharedPreferences!.getString('lang') == 'en'
-                              ? Alignment.bottomRight
-                              : sharedPreferences!.getString('lang') == 'ar'
-                                  ? Alignment.bottomLeft
-                                  : Alignment.bottomRight,
-                      child: FloatingActionButton.extended(
-                          onPressed: () {
-                            onpressedDone(
-                                controller.page.value, drinkCardController);
-                          },
-                          label:
-                              Text('Done'.tr, style: generalTextStyle(null))),
-                    ),
-                  ))
-              : null,
+          floatingActionButton: Obx(() => Visibility(
+                visible: controller.page.value == 0,
+                replacement: const Text(''),
+                child: floatingDoneButton(controller, drinkCardController),
+              )),
           extendBody: true,
           appBar: createAppBar(size),
           drawer: ProjectDrawer(),
@@ -82,6 +61,32 @@ class BarPage extends StatelessWidget {
             ),
           ),
           bottomNavigationBar: const BottomNavBar(),
+        ));
+  }
+
+  Widget floatingDoneButton(
+      BarPageController controller, DrinkCardController drinkCardController) {
+    return Obx(() => SizedBox(
+          height: 100,
+          child: AnimatedAlign(
+            duration: const Duration(milliseconds: 500),
+            alignment: controller.page.value == 2
+                ? sharedPreferences!.getString('lang') == 'en'
+                    ? Alignment.topRight
+                    : sharedPreferences!.getString('lang') == 'ar'
+                        ? Alignment.topLeft
+                        : Alignment.topRight
+                : sharedPreferences!.getString('lang') == 'en'
+                    ? Alignment.bottomRight
+                    : sharedPreferences!.getString('lang') == 'ar'
+                        ? Alignment.bottomLeft
+                        : Alignment.bottomRight,
+            child: FloatingActionButton.extended(
+                onPressed: () {
+                  onpressedDone(controller.page.value, drinkCardController);
+                },
+                label: Text('Done'.tr, style: generalTextStyle(null))),
+          ),
         ));
   }
 
