@@ -40,6 +40,14 @@ List<List<Order>> ordersList = [
 Widget buildOrderList(Sizes size) {
   return ListView.builder(
       itemCount: ordersList.length,
-      itemBuilder: ((context, index) =>
-          orderCard(ordersList[index], index, context, size, 'somethings')));
+      itemBuilder: ((context, index) => orderCard(
+          ['drink one', 'drink two', 'drink three'],
+          '40000',
+          '4',
+          context,
+          size,
+          'something good goooood',
+          2)));
 }
+/*List<String> drinksNames, String price, String amount,
+    BuildContext context, Sizes size, String description, int tableNumber */
