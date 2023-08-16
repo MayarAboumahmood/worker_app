@@ -11,18 +11,18 @@ Widget orderCard(List<String> drinksNames, String price, String amount,
     BuildContext context, Sizes size, String description, int tableNumber) {
   return Padding(
       padding: const EdgeInsets.symmetric(vertical: 12, horizontal: 8),
-      child: Card(
-        shape: RoundedRectangleBorder(
+      child: Container(
+        height: drinksNames.length * 40 + 200,
+        decoration: BoxDecoration(
           borderRadius: BorderRadius.circular(8),
-          side: BorderSide(
+          color: Get.isDarkMode
+              ? const Color.fromARGB(255, 77, 77, 77)
+              : Colors.grey[400],
+          border: Border.all(
             color: Get.isDarkMode ? darkPrimaryColor : primaryColor,
             width: 1.0,
           ),
         ),
-        color: Get.isDarkMode
-            ? const Color.fromARGB(255, 77, 77, 77)
-            : Colors.grey[400],
-        elevation: 2,
         child: Padding(
           padding: const EdgeInsets.all(16.0),
           child: SizedBox(
@@ -32,16 +32,37 @@ Widget orderCard(List<String> drinksNames, String price, String amount,
                   crossAxisAlignment: CrossAxisAlignment.start,
                   children: [
                     SizedBox(
-                      height: 20,
-                      child: Text(
-                        drinksNames.join('\n'),
-                        style: TextStyle(
-                          fontFamily: jostFontFamily,
-                          color: Get.isDarkMode
-                              ? skinColorWhite
-                              : backGroundDarkColor,
-                          fontSize: 18,
-                          fontWeight: FontWeight.bold,
+                      height: /*the length of the list * 30 */
+                          drinksNames.length * 40,
+                      child: ListView.builder(
+                        physics: const NeverScrollableScrollPhysics(),
+                        itemCount: drinksNames.length,
+                        itemBuilder: (context, index) => Column(
+                          children: [
+                            Text(
+                              '${drinksNames[index]}: $amount',
+                              style: TextStyle(
+                                fontFamily: jostFontFamily,
+                                color: Get.isDarkMode
+                                    ? skinColorWhite
+                                    : backGroundDarkColor,
+                                fontSize: 18,
+                                fontWeight: FontWeight.bold,
+                              ),
+                            ),
+                            Padding(
+                              padding:
+                                  const EdgeInsets.symmetric(horizontal: 10),
+                              child: Visibility(
+                                visible: index != drinksNames.length - 1,
+                                child: Divider(
+                                  color: Get.isDarkMode
+                                      ? darkPrimaryColor
+                                      : primaryColor,
+                                ),
+                              ),
+                            ),
+                          ],
                         ),
                       ),
                     ),
@@ -50,11 +71,6 @@ Widget orderCard(List<String> drinksNames, String price, String amount,
                     SizedBox(
                         height: 20,
                         child: Text('${'Price'.tr}: \$$price S.P',
-                            style: generalTextStyle(16))),
-                    const SizedBox(height: 8),
-                    SizedBox(
-                        height: 20,
-                        child: Text('${'Amount Ordered'.tr}: $amount',
                             style: generalTextStyle(16))),
                     const SizedBox(height: 8),
                     Text('${'Table Number'.tr}: $tableNumber',
