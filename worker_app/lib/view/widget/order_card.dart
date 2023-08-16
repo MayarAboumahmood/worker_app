@@ -8,12 +8,15 @@ import 'package:worker_app/constant/theme.dart';
 import 'package:worker_app/view/widget/divider_with_word.dart';
 import 'package:worker_app/view/widget/my_button.dart';
 
-Widget orderCard(List<String> drinksNames, String price, String amount,
-    BuildContext context, Sizes size, String description, int tableNumber) {
+import '../screens/orders/orders_contrller.dart';
+
+
+Widget orderCard(OrderController controller,int index,
+    BuildContext context, Sizes size) {
   return Padding(
       padding: const EdgeInsets.symmetric(vertical: 12, horizontal: 8),
       child: Container(
-        height: drinksNames.length * 40 + 200,
+        height: controller.finalListData[index].orderDrinks.length * 40 + 200,
         decoration: BoxDecoration(
           borderRadius: BorderRadius.circular(8),
           color: Get.isDarkMode
@@ -33,14 +36,14 @@ Widget orderCard(List<String> drinksNames, String price, String amount,
                   crossAxisAlignment: CrossAxisAlignment.start,
                   children: [
                     SizedBox(
-                      height: drinksNames.length * 40,
+                      height: controller.finalListData[index].orderDrinks.length * 40,
                       child: ListView.builder(
                         physics: const NeverScrollableScrollPhysics(),
-                        itemCount: drinksNames.length,
+                        itemCount: controller.finalListData[index].orderDrinks.length,
                         itemBuilder: (context, index) => Column(
                           children: [
                             Text(
-                              '${drinksNames[index]}: $amount',
+                              '${controller.finalListData[index].orderDrinks[index].drinkName}: ${controller.finalListData[index].orderDrinks[index].quantity}',
                               style: TextStyle(
                                 fontFamily: jostFontFamily,
                                 color: Get.isDarkMode
@@ -54,7 +57,7 @@ Widget orderCard(List<String> drinksNames, String price, String amount,
                               padding:
                                   const EdgeInsets.symmetric(horizontal: 10),
                               child: Visibility(
-                                visible: index != drinksNames.length - 1,
+                                visible: index != controller.finalListData[index].orderDrinks.length - 1,
                                 child: Divider(
                                   color: Get.isDarkMode
                                       ? darkPrimaryColor
@@ -70,13 +73,13 @@ Widget orderCard(List<String> drinksNames, String price, String amount,
                     const SizedBox(height: 8),
                     SizedBox(
                         height: 20,
-                        child: Text('${'Price'.tr}: \$$price S.P',
+                        child: Text('${'Price'.tr}: \$${controller.calculatePriceFromOrder(index)} S.P',
                             style: generalTextStyle(16))),
                     const SizedBox(height: 8),
-                    Text('${'Table Number'.tr}: $tableNumber',
+                    Text('${'Table Number'.tr}: ${controller.finalListData[index].sectionNumber}',
                         style: generalTextStyle(16)),
                     Text(
-                      description,
+                      controller.finalListData[index].description,
                       style: generalTextStyle(10),
                     ),
                     const SizedBox(

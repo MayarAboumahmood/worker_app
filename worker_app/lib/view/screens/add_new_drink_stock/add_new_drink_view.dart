@@ -9,8 +9,10 @@ import 'package:worker_app/view/widget/divider_with_word.dart';
 import 'package:worker_app/view/widget/general_input_text_field.dart';
 import 'package:worker_app/view/widget/my_button.dart';
 import '../../../constant/sizes.dart';
+import '../../../constant/status_request.dart';
 import '../../../constant/theme.dart';
 import '../../../main.dart';
+import '../../widget/no_internet_page.dart';
 
 // ignore: must_be_immutable
 class AddNewDrink extends StatelessWidget {
@@ -20,13 +22,13 @@ class AddNewDrink extends StatelessWidget {
   Widget build(BuildContext context) {
     Sizes size = Sizes(context);
     return
-        //  GetBuilder<AddNewDrinkController>(
-        //   builder: (ctx) => controller.statuseRequest ==
-        //           StatuseRequest.offlinefailure
-        //       ? noInternetPage(size, controller)
-        //       : Form(
-        //           key: controller.formstate,
-        // child:
+         GetBuilder<AddNewDrinkController>(
+          builder: (ctx) => controller.statuseRequest ==
+                  StatuseRequest.offlinefailure
+              ? noInternetPage(size, controller)
+              : Form(
+                  key: controller.formstate,
+        child:
         Container(
       height: Get.size.height * .9,
       width: context.widthInches > 5.5 ? 400 : Get.size.width * .85,
@@ -194,23 +196,23 @@ class AddNewDrink extends StatelessWidget {
               mycolor: Get.isDarkMode ? darkPrimaryColor : primaryColor,
               myRadius: size.buttonRadius,
               ontap: () {
-                // controller.onPressDone();
+                controller.onPressDone();
               },
               mywidth: size.wideNormalButtonWidth,
               myheight: size.normalButtonHeight,
               myShadow: 0,
               child:
-                  // controller.statuseRequest == StatuseRequest.loading
-                  // ?
-                  //  Container(
-                  //     padding: const EdgeInsets.all(2),
-                  //     child: CircularProgressIndicator(
-                  //       color: Get.isDarkMode
-                  //           ? skinColorWhite
-                  //           : backGroundDarkColor,
-                  //     ),
-                  //   )
-                  // :
+                  controller.statuseRequest == StatuseRequest.loading
+                  ?
+                   Container(
+                      padding: const EdgeInsets.all(2),
+                      child: CircularProgressIndicator(
+                        color: Get.isDarkMode
+                            ? skinColorWhite
+                            : backGroundDarkColor,
+                      ),
+                    )
+                  :
                   AutoSizeText(
                 'Done'.tr,
                 overflow: TextOverflow.ellipsis,
@@ -225,7 +227,7 @@ class AddNewDrink extends StatelessWidget {
           ],
         ),
       ),
-    );
+    )));
   }
 
   Row createAppBar(Sizes size) {

@@ -17,6 +17,11 @@ static String makeOrderByWorker='${baseAPI}worker/makeOrderByWorker';
 
 static String showDrinks='${baseAPI}drinks';
 
+////////stock
+static String showAllDrinks = '${baseAPI}drinks';
+  static String addDrink = '${baseAPI}drinks/add';
+  static String updateDrink = '${baseAPI}drinks/update';
+  static String deleteDrink = '${baseAPI}drinks/delete';
 
 
 ///////orders

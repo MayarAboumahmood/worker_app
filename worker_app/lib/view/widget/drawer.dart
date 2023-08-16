@@ -67,7 +67,7 @@ class ProjectDrawer extends StatelessWidget {
           SizedBox(height: Get.size.height * .02),
           SizedBox(height: Get.size.height * .02),
           drawerChid(context, Icons.storage_rounded, 'Stock', () {
-            Get.offNamed('/StockPage');
+            Get.toNamed('/StockPage');
           }),
           SizedBox(height: Get.size.height * .02),
           drawerChid(context, Icons.settings, 'Settings', () {
