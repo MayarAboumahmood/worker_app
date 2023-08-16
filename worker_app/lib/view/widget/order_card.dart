@@ -33,8 +33,7 @@ Widget orderCard(List<String> drinksNames, String price, String amount,
                   crossAxisAlignment: CrossAxisAlignment.start,
                   children: [
                     SizedBox(
-                      height: /*the length of the list * 30 */
-                          drinksNames.length * 40,
+                      height: drinksNames.length * 40,
                       child: ListView.builder(
                         physics: const NeverScrollableScrollPhysics(),
                         itemCount: drinksNames.length,

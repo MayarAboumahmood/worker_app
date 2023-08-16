@@ -15,21 +15,22 @@ import 'event_info_controller.dart';
 class EventInfo extends StatelessWidget {
   EventInfo({super.key});
   final EventCardController controller = Get.find();
-  EventInfoController dataController=Get.find();
+  final EventInfoController dataController = Get.find();
   @override
   Widget build(BuildContext context) {
     Sizes size = Sizes(context);
     return GetBuilder<EventInfoController>(
-                  builder: (ctx) => controller.statuseRequest ==
-                          StatuseRequest.offlinefailure
-                      ? noInternetPage(size, dataController)
-                      : controller.statuseRequest == StatuseRequest.loading
-                          ? Text("loading....".tr, style: generalTextStyle(14))
-                          : whenShowTheBodyAfterLoadingAndInternet(context,size),
-                );
+      builder: (ctx) =>
+          controller.statuseRequest == StatuseRequest.offlinefailure
+              ? noInternetPage(size, dataController)
+              : controller.statuseRequest == StatuseRequest.loading
+                  ? Text("loading....".tr, style: generalTextStyle(14))
+                  : whenShowTheBodyAfterLoadingAndInternet(context, size),
+    );
   }
 
- whenShowTheBodyAfterLoadingAndInternet(BuildContext context,Sizes size) {return Scaffold(
+  whenShowTheBodyAfterLoadingAndInternet(BuildContext context, Sizes size) {
+    return Scaffold(
       body: SafeArea(child: cardBody(size)),
       floatingActionButton: FloatingActionButton.extended(
           onPressed: () {},
@@ -38,7 +39,8 @@ class EventInfo extends StatelessWidget {
                 Get.offNamed('/Bar');
               },
               child: Text('Work here'.tr, style: generalTextStyle(null)))),
-    );}
+    );
+  }
 
   Widget cardBody(Sizes size) {
     return SizedBox(
@@ -72,7 +74,8 @@ class EventInfo extends StatelessWidget {
           ],
         )));
   }
-Widget eventInfo() {
+
+  Widget eventInfo() {
     return Padding(
       padding: const EdgeInsets.symmetric(horizontal: 10),
       child: Column(
@@ -93,7 +96,8 @@ Widget eventInfo() {
           const Divider(
             height: 10,
           ),
-          setEventINfo('Artists: ${dataController.model.artist.map((artist) => artist.artistName).join(', ')}'),
+          setEventINfo(
+              'Artists: ${dataController.model.artist.map((artist) => artist.artistName).join(', ')}'),
           elementDivider(),
           const SizedBox(height: 3),
           setEventINfo(
@@ -118,7 +122,6 @@ Widget eventInfo() {
     );
   }
 
-
   Widget elementDivider() {
     return const Divider(endIndent: 200);
   }
@@ -133,20 +136,16 @@ Widget eventInfo() {
           itemCount: dataController.model.images.length,
           itemBuilder: (context, index) {
             return ClipRRect(
-              borderRadius: BorderRadius.only(
-                topLeft: Radius.circular(size.buttonRadius),
-                topRight: Radius.circular(size.buttonRadius),
-              ),
-              child:  dataController.model.images.isEmpty 
-                        ? Image.asset('assets/images/The project icon.jpg',fit:BoxFit.fill)
-                        : Image.network(
-                            "${ServerConstApis.loadImages}${ dataController.model.images[index].picture}",fit:BoxFit.fill)
-        
-      
-              
-              
-               
-            );
+                borderRadius: BorderRadius.only(
+                  topLeft: Radius.circular(size.buttonRadius),
+                  topRight: Radius.circular(size.buttonRadius),
+                ),
+                child: dataController.model.images.isEmpty
+                    ? Image.asset('assets/images/The project icon.jpg',
+                        fit: BoxFit.fill)
+                    : Image.network(
+                        "${ServerConstApis.loadImages}${dataController.model.images[index].picture}",
+                        fit: BoxFit.fill));
           },
         );
       },

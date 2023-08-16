@@ -4,7 +4,6 @@ import 'package:flutter/material.dart';
 import 'package:get/get.dart';
 import 'package:worker_app/constant/fonts.dart';
 import 'package:worker_app/view/widget/cart_card.dart';
-import 'package:worker_app/view/widget/drink_card.dart';
 import 'package:worker_app/view/widget/my_button.dart';
 
 import '../../../constant/sizes.dart';
@@ -14,12 +13,12 @@ import '../../widget/animation_title.dart';
 import 'cart_controller.dart';
 
 class CartPage extends StatelessWidget {
- CartPage({super.key});
-  CartController controller = Get.put(CartController());
+  CartPage({super.key});
+  final CartController controller = Get.put(CartController());
 
   @override
   Widget build(BuildContext context) {
- final Sizes size = Sizes(context);
+    final Sizes size = Sizes(context);
     return Scaffold(
       appBar: createAppBar(size),
       body: Column(
@@ -52,10 +51,9 @@ class CartPage extends StatelessWidget {
               mycolor: Get.isDarkMode ? darkPrimaryColor : primaryColor,
               myRadius: size.buttonRadius,
               ontap: () {
-                  controller.onpressDone();
-              
+                controller.onpressDone();
+
                 //send the data to the backend and go back to the prev page.
-               
               },
               mywidth: size.normalButtonWidht,
               myheight: size.normalButtonHeight,

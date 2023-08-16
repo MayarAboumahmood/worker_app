@@ -62,16 +62,14 @@ class ReservationCard extends StatelessWidget {
                   const SizedBox(
                     width: 6,
                   ),
-                  addRemoveButton('add', controller),
-                  // Obx(() =>
-                  Text(
-                    '0',
-                    style: TextStyle(
-                      color: skinColorWhite,
-                    ),
-                    // )
-                  ),
-                  addRemoveButton('remove', controller),
+                  addRemoveButton('add', controller, reservation),
+                  Obx(() {
+                    return Text(
+                      controller.numberOfPeople[1].value.toString(),
+                      style: generalTextStyle(null),
+                    );
+                  }),
+                  addRemoveButton('remove', controller, reservation),
                   const SizedBox(
                     width: 6,
                   ),
@@ -87,19 +85,23 @@ class ReservationCard extends StatelessWidget {
 }
 
 Widget addRemoveButton(
-    String addOrRemove, ReservationCardController drinkCardController) {
+  String addOrRemove,
+  ReservationCardController reservationController,
+  Reservation reservation,
+) {
   return SizedBox(
     width: 60,
     child: MaterialButton(
       onPressed: () {
-        // addOrRemove == 'add'
-        // ? drinkCardController.increaseTheNumberOfDrinks(drink.id, drink)
-        // : drinkCardController.decreaseTheNumberOfDrinks(drink.id, drink);
-        //add one from this drink or remove one of the drink
+        addOrRemove == 'add'
+            ? reservationController.increaseTheNumberOfPeople(
+                reservation.eventId, reservation)
+            : reservationController.decreaseTheNumberOfPeople(
+                reservation.id, reservation);
       },
       child: Icon(
         addOrRemove == 'add' ? Icons.add : Icons.remove,
-        color: skinColorWhite,
+        color: Get.isDarkMode ? skinColorWhite : backGroundDarkColor,
       ),
       // ),
     ),
@@ -113,36 +115,282 @@ class ReservationCardController extends GetxController {
     showTrueSign.toggle();
   }
 
-  List<RxInt> numberOfPeople = <RxInt>[].obs;
-  // void increaseTheNumberOfDrinks(int id, Drink drink) {
-  //   numberOfPeople[id].value++;
-  //     order.drinksWithAmount[id].amount++;
-  //   }
+  List<RxInt> numberOfPeople = <RxInt>[
+    0.obs,
+    0.obs,
+    0.obs,
+    0.obs,
+    0.obs,
+    0.obs,
+    0.obs,
+    0.obs,
+    0.obs,
+    0.obs,
+    0.obs,
+    0.obs,
+    0.obs,
+    0.obs,
+    0.obs,
+    0.obs,
+    0.obs,
+    0.obs,
+    0.obs,
+    0.obs,
+    0.obs,
+    0.obs,
+    0.obs,
+    0.obs,
+    0.obs,
+    0.obs,
+    0.obs,
+    0.obs,
+    0.obs,
+    0.obs,
+    0.obs,
+    0.obs,
+    0.obs,
+    0.obs,
+    0.obs,
+    0.obs,
+    0.obs,
+    0.obs,
+    0.obs,
+    0.obs,
+    0.obs,
+    0.obs,
+    0.obs,
+    0.obs,
+    0.obs,
+    0.obs,
+    0.obs,
+    0.obs,
+    0.obs,
+    0.obs,
+    0.obs,
+    0.obs,
+    0.obs,
+    0.obs,
+    0.obs,
+    0.obs,
+    0.obs,
+    0.obs,
+    0.obs,
+    0.obs,
+    0.obs,
+    0.obs,
+    0.obs,
+    0.obs,
+    0.obs,
+    0.obs,
+    0.obs,
+    0.obs,
+    0.obs,
+    0.obs,
+    0.obs,
+    0.obs,
+    0.obs,
+    0.obs,
+    0.obs,
+    0.obs,
+    0.obs,
+    0.obs,
+    0.obs,
+    0.obs,
+    0.obs,
+    0.obs,
+    0.obs,
+    0.obs,
+    0.obs,
+    0.obs,
+    0.obs,
+    0.obs,
+    0.obs,
+    0.obs,
+    0.obs,
+    0.obs,
+    0.obs,
+    0.obs,
+    0.obs,
+    0.obs,
+    0.obs,
+    0.obs,
+    0.obs,
+    0.obs,
+    0.obs,
+    0.obs,
+    0.obs,
+    0.obs,
+    0.obs,
+    0.obs,
+    0.obs,
+    0.obs,
+    0.obs,
+    0.obs,
+    0.obs,
+    0.obs,
+    0.obs,
+    0.obs,
+    0.obs,
+    0.obs,
+    0.obs,
+    0.obs,
+    0.obs,
+    0.obs,
+    0.obs,
+    0.obs,
+    0.obs,
+    0.obs,
+    0.obs,
+    0.obs,
+    0.obs,
+    0.obs,
+    0.obs,
+    0.obs,
+    0.obs,
+    0.obs,
+    0.obs,
+    0.obs,
+    0.obs,
+    0.obs,
+    0.obs,
+    0.obs,
+    0.obs,
+    0.obs,
+    0.obs,
+    0.obs,
+    0.obs,
+    0.obs,
+    0.obs,
+    0.obs,
+    0.obs,
+    0.obs,
+    0.obs,
+    0.obs,
+    0.obs,
+    0.obs,
+    0.obs,
+    0.obs,
+    0.obs,
+    0.obs,
+    0.obs,
+    0.obs,
+    0.obs,
+    0.obs,
+    0.obs,
+    0.obs,
+    0.obs,
+    0.obs,
+    0.obs,
+    0.obs,
+    0.obs,
+    0.obs,
+    0.obs,
+    0.obs,
+    0.obs,
+    0.obs,
+    0.obs,
+    0.obs,
+    0.obs,
+    0.obs,
+    0.obs,
+    0.obs,
+    0.obs,
+    0.obs,
+    0.obs,
+    0.obs,
+    0.obs,
+    0.obs,
+    0.obs,
+    0.obs,
+    0.obs,
+    0.obs,
+    0.obs,
+    0.obs,
+    0.obs,
+    0.obs,
+    0.obs,
+    0.obs,
+    0.obs,
+    0.obs,
+    0.obs,
+    0.obs,
+    0.obs,
+    0.obs,
+    0.obs,
+    0.obs,
+    0.obs,
+    0.obs,
+    0.obs,
+    0.obs,
+    0.obs,
+    0.obs,
+    0.obs,
+    0.obs,
+    0.obs,
+    0.obs,
+    0.obs,
+    0.obs,
+    0.obs,
+    0.obs,
+    0.obs,
+    0.obs,
+    0.obs,
+    0.obs,
+    0.obs,
+    0.obs,
+    0.obs,
+    0.obs,
+    0.obs,
+    0.obs,
+    0.obs,
+    0.obs,
+    0.obs,
+    0.obs,
+    0.obs,
+    0.obs,
+    0.obs,
+    0.obs,
+    0.obs,
+    0.obs,
+    0.obs,
+    0.obs,
+    0.obs,
+    0.obs,
+    0.obs,
+    0.obs,
+    0.obs,
+    0.obs,
+    0.obs,
+    0.obs,
+    0.obs,
+    0.obs,
+    0.obs,
+    0.obs,
+    0.obs,
+    0.obs,
+    0.obs,
+    0.obs,
+    0.obs,
+    0.obs,
+    0.obs,
+    0.obs,
+    0.obs,
+    0.obs,
+    0.obs,
+    0.obs,
+    0.obs
+  ].obs;
 
-  // bool ifDealingWithForTheFirstTime(Drink drink) {
-  //   for (var element in order.drinksWithAmount) {
-  //     if (element.drink.name == drink.name) {
-  //       return false;
-  //     }
-  //   }
-  //   return true;
-  // }
-
-  // void decreaseTheNumberOfDrinks(int id, Drink drink) {
-  //   if (ifDealingWithForTheFirstTime(drink)) {
-  //     order.drinksWithAmount.add(DrinkAmount(drink: drink, amount: 0));
-  //   }
-  //   order.drinksWithAmount[id].amount > 0
-  //       ? order.drinksWithAmount[id].amount--
-  //       : null;
-  //   numberOfPeople[id].value > 0 ? numberOfPeople[id].value-- : null;
-
-  //  }
-
-  void makeTheNumberofDriknsEqualsZero() {
-    for (var element in numberOfPeople) {
-      element.value = 0;
+  void increaseTheNumberOfPeople(int id, Reservation reservation) {
+    if (numberOfPeople[id].value < reservation.number) {
+      numberOfPeople[id].value++;
+      reservation.number++;
     }
+  }
+
+  void decreaseTheNumberOfPeople(int id, Reservation reservation) {
+    reservation.number > 0 ? reservation.number-- : null;
+    numberOfPeople[id].value > 0 ? numberOfPeople[id].value-- : null;
   }
 
   void addNewElement() {
