@@ -44,10 +44,29 @@ Widget buildOrderList(Sizes size) {
   EventPageController controller=Get.put(EventPageController());
   return GetBuilder<EventPageController>(
     builder: (context) {
-      return ListView.builder(
+  return ListView.builder(
+      itemCount: 3,
+      itemBuilder: ((context, index) => orderCard(
+          ['drink one', 'drink two', 'drink three'],
+          '40000',
+          '4',
+          context,
+          size,
+          'something good goooood',
+          2)));   
+    }
+  );
+  
+}
+/*List<String> drinksNames, String price, String amount,
+    BuildContext context, Sizes size, String description, int tableNumber */
+
+
+
+    /*
+    
+     return ListView.builder(
           itemCount: controller.finalListData.length,
           itemBuilder: ((context, index) =>
               orderCard(index, context, size, 'somethings')));
-    }
-  );
-}
+     */
