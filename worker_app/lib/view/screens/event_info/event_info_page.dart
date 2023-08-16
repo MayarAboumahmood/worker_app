@@ -4,19 +4,32 @@ import 'package:get/get.dart';
 import 'package:worker_app/view/widget/new_event_card.dart';
 
 import '../../../constant/fonts.dart';
+import '../../../constant/server_const.dart';
 import '../../../constant/sizes.dart';
+import '../../../constant/status_request.dart';
 import '../../../constant/text_style.dart';
 import '../../../constant/theme.dart';
+import '../../widget/no_internet_page.dart';
+import 'event_info_controller.dart';
 
 class EventInfo extends StatelessWidget {
   EventInfo({super.key});
-  final Event event = Get.arguments;
   final EventCardController controller = Get.find();
-
+  EventInfoController dataController=Get.find();
   @override
   Widget build(BuildContext context) {
     Sizes size = Sizes(context);
-    return Scaffold(
+    return GetBuilder<EventInfoController>(
+                  builder: (ctx) => controller.statuseRequest ==
+                          StatuseRequest.offlinefailure
+                      ? noInternetPage(size, dataController)
+                      : controller.statuseRequest == StatuseRequest.loading
+                          ? Text("loading....".tr, style: generalTextStyle(14))
+                          : whenShowTheBodyAfterLoadingAndInternet(context,size),
+                );
+  }
+
+ whenShowTheBodyAfterLoadingAndInternet(BuildContext context,Sizes size) {return Scaffold(
       body: SafeArea(child: cardBody(size)),
       floatingActionButton: FloatingActionButton.extended(
           onPressed: () {},
@@ -25,8 +38,7 @@ class EventInfo extends StatelessWidget {
                 Get.offNamed('/Bar');
               },
               child: Text('Work here'.tr, style: generalTextStyle(null)))),
-    );
-  }
+    );}
 
   Widget cardBody(Sizes size) {
     return SizedBox(
@@ -60,8 +72,7 @@ class EventInfo extends StatelessWidget {
           ],
         )));
   }
-
-  Widget eventInfo() {
+Widget eventInfo() {
     return Padding(
       padding: const EdgeInsets.symmetric(horizontal: 10),
       child: Column(
@@ -72,7 +83,7 @@ class EventInfo extends StatelessWidget {
             height: 10,
           ),
           Text(
-            event.eventName,
+            dataController.model.title,
             style: TextStyle(
                 color: Get.isDarkMode ? skinColorWhite : backGroundDarkColor,
                 fontSize: 23,
@@ -82,32 +93,31 @@ class EventInfo extends StatelessWidget {
           const Divider(
             height: 10,
           ),
+          setEventINfo('Artists: ${dataController.model.artist.map((artist) => artist.artistName).join(', ')}'),
+          elementDivider(),
+          const SizedBox(height: 3),
           setEventINfo(
-            'Artists: '.tr +
-                event.artistsNames.join(
-                    "\n"), //event.artist[index].name+event.artist[index].playWith
+            '${'Date: '.tr}${dataController.model.beginDate.day}/${dataController.model.beginDate.month}/${dataController.model.beginDate.year}',
           ),
           elementDivider(),
           const SizedBox(height: 3),
           setEventINfo(
-              '${'Date: '.tr}${event.beginDate.dayName}/${event.beginDate.month}/${event.beginDate.year}'),
-          elementDivider(),
-          const SizedBox(height: 3),
-          setEventINfo(
-            'Available Places: '.tr + event.availablePlaces.toString(),
+            'Available Places: '.tr +
+                dataController.model.availablePlaces.toString(),
           ),
           elementDivider(),
           const SizedBox(height: 3),
           setEventINfo(
-            '${'Ticket Price: '.tr}${event.ticketsPrice} ${'S.P'.tr}',
+            '${'Ticket Price: '.tr}${dataController.model.ticketPrice} ${'S.P'.tr}',
           ),
           elementDivider(),
           const SizedBox(height: 3),
-          setEventINfo('Description: '.tr + event.description),
+          setEventINfo('Description: '.tr + dataController.model.description),
         ],
       ),
     );
   }
+
 
   Widget elementDivider() {
     return const Divider(endIndent: 200);
@@ -120,17 +130,22 @@ class EventInfo extends StatelessWidget {
         return PageView.builder(
           onPageChanged: controller.setPageIndex,
           controller: controller.pageController,
-          itemCount: event.imagesNames.length,
+          itemCount: dataController.model.images.length,
           itemBuilder: (context, index) {
             return ClipRRect(
               borderRadius: BorderRadius.only(
                 topLeft: Radius.circular(size.buttonRadius),
                 topRight: Radius.circular(size.buttonRadius),
               ),
-              child: Image.asset(
-                event.imagesNames[index],
-                fit: BoxFit.fill,
-              ),
+              child:  dataController.model.images.isEmpty 
+                        ? Image.asset('assets/images/The project icon.jpg',fit:BoxFit.fill)
+                        : Image.network(
+                            "${ServerConstApis.loadImages}${ dataController.model.images[index].picture}",fit:BoxFit.fill)
+        
+      
+              
+              
+               
             );
           },
         );
@@ -143,7 +158,7 @@ class EventInfo extends StatelessWidget {
       return Row(
         mainAxisAlignment: MainAxisAlignment.center,
         children: List.generate(
-          event.imagesNames.length,
+          dataController.model.images.length,
           (index) =>
               buildDot(index: index, currentIndex: controller.pageIndex.value),
         ),

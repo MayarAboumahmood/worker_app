@@ -6,7 +6,7 @@ import 'package:worker_app/constant/text_style.dart';
 import 'package:worker_app/constant/theme.dart';
 import 'package:worker_app/view/screens/cart/cart_page.dart';
 
-Widget cartCard(Order order, int index, BuildContext context, Sizes size) {
+Widget cartCard(MakeOrder order, int index, BuildContext context, Sizes size) {
   return Padding(
     padding: const EdgeInsets.symmetric(vertical: 12, horizontal: 8),
     child: Card(

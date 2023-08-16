@@ -9,14 +9,17 @@ import 'package:worker_app/view/widget/my_button.dart';
 
 import '../../../constant/sizes.dart';
 import '../../../constant/theme.dart';
+import '../../../data/Models/drink_model.dart';
 import '../../widget/animation_title.dart';
+import 'cart_controller.dart';
 
 class CartPage extends StatelessWidget {
-  const CartPage({super.key});
+ CartPage({super.key});
+  CartController controller = Get.put(CartController());
+
   @override
   Widget build(BuildContext context) {
-    Order order = Get.arguments;
-    final Sizes size = Sizes(context);
+ final Sizes size = Sizes(context);
     return Scaffold(
       appBar: createAppBar(size),
       body: Column(
@@ -24,16 +27,17 @@ class CartPage extends StatelessWidget {
           SizedBox(
             height: Get.size.height * .7,
             child: ListView.builder(
-                itemCount: order.drinksWithAmount.length,
-                itemBuilder: ((context, index) =>
-                        cartCard(order, index, context, size)
-                    // cartElement(order, index, context, size)
-                    )),
+                itemCount: controller.order.drinksWithAmount.length,
+                itemBuilder: ((context, index) {
+                  print(index);
+                  return cartCard(controller.order, index, context, size);
+                  // cartElement(order, index, context, size)
+                })),
           ),
           Padding(
             padding: const EdgeInsets.all(8.0),
             child: Text(
-              '${'Total price'.tr}: ${order.calculateTotalPrice()}S.P',
+              '${'Total price'.tr}: ${controller.order.calculateTotalPrice()}S.P',
               style: TextStyle(
                 fontFamily: jostFontFamily,
                 color: Get.isDarkMode ? skinColorWhite : backGroundDarkColor,
@@ -48,8 +52,10 @@ class CartPage extends StatelessWidget {
               mycolor: Get.isDarkMode ? darkPrimaryColor : primaryColor,
               myRadius: size.buttonRadius,
               ontap: () {
+                  controller.onpressDone();
+              
                 //send the data to the backend and go back to the prev page.
-                Get.back();
+               
               },
               mywidth: size.normalButtonWidht,
               myheight: size.normalButtonHeight,
@@ -93,17 +99,12 @@ class CartPage extends StatelessWidget {
   }
 }
 
-class Order {
+class MakeOrder {
   List<DrinkAmount> drinksWithAmount = [];
-  int tableNumber = 0;
-  Order({
-    drinksWithAmount,
-    required tabelNumber,
-  });
   double calculatePrice(int id) {
     double price = 0;
     for (int i = 0; i < drinksWithAmount[id].amount.toInt(); i++) {
-      price += drinksWithAmount[id].drink.unitPriceInSP;
+      price += drinksWithAmount[id].drink.price;
     }
     return price;
   }
@@ -112,7 +113,7 @@ class Order {
     double totalPrice = 0;
     for (var element in drinksWithAmount) {
       for (int i = 0; i < element.amount; i++) {
-        totalPrice += element.drink.unitPriceInSP;
+        totalPrice += element.drink.price;
       }
     }
     return totalPrice;
@@ -124,7 +125,7 @@ class Order {
 }
 
 class DrinkAmount {
-  Drink drink;
+  DrinkModel drink;
   int amount;
   DrinkAmount({
     required this.drink,
