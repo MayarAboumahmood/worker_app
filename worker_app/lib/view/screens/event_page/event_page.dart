@@ -2,130 +2,17 @@ import 'package:flutter/material.dart';
 import 'package:get/get.dart';
 import 'package:worker_app/view/widget/new_event_card.dart';
 import '../../../constant/sizes.dart';
+import '../../../constant/status_request.dart';
+import '../../../constant/text_style.dart';
 import '../../../constant/theme.dart';
 import '../../widget/animation_title.dart';
 import '../../widget/drawer.dart';
+import '../../widget/no_internet_page.dart';
+import 'event_page_controller.dart';
 
 // ignore: must_be_immutable
 class EventPage extends StatelessWidget {
-  List<NewEventCard> events = [
-    NewEventCard(
-      event: Event(
-        artistsNames: ['artist one', 'artist two', 'artist three'],
-        availablePlaces: 80,
-        beginDate: Date(
-            dayName: 'sunday',
-            dayNumber: '2',
-            month: 'june',
-            time: '6:30',
-            year: '2023'),
-        description: 'very good',
-        eventName: 'Event one',
-        imagesNames: [
-          'assets/images/concert.png',
-          'assets/images/medium page background image.jpg',
-          'assets/images/tickets.png'
-        ],
-        ticketsPrice: 50,
-      ),
-    ),
-    NewEventCard(
-      event: Event(
-        artistsNames: ['artist one', 'artist two', 'artist three'],
-        availablePlaces: 80,
-        beginDate: Date(
-            dayName: 'sunday',
-            dayNumber: '2',
-            month: 'june',
-            time: '6:30',
-            year: '2023'),
-        description: 'very good',
-        eventName: 'Event two',
-        imagesNames: [
-          'assets/images/concert.png',
-          'assets/images/medium page background image.jpg',
-          'assets/images/tickets.png'
-        ],
-        ticketsPrice: 50,
-      ),
-    ),
-    NewEventCard(
-        event: Event(
-      artistsNames: ['artist one', 'artist two', 'artist three'],
-      availablePlaces: 80,
-      beginDate: Date(
-          dayName: 'sunday',
-          dayNumber: '2',
-          month: 'june',
-          time: '6:30',
-          year: '2023'),
-      description: 'very good',
-      eventName: 'Event three',
-      imagesNames: [
-        'assets/images/concert.png',
-        'assets/images/medium page background image.jpg',
-        'assets/images/tickets.png'
-      ],
-      ticketsPrice: 50,
-    )),
-    NewEventCard(
-        event: Event(
-      artistsNames: ['artist one', 'artist two', 'artist three'],
-      availablePlaces: 80,
-      beginDate: Date(
-          dayName: 'sunday',
-          dayNumber: '2',
-          month: 'june',
-          time: '6:30',
-          year: '2023'),
-      description: 'very good',
-      eventName: 'Event four',
-      imagesNames: [
-        'assets/images/concert.png',
-        'assets/images/medium page background image.jpg',
-        'assets/images/tickets.png'
-      ],
-      ticketsPrice: 50,
-    )),
-    NewEventCard(
-        event: Event(
-      artistsNames: ['artist one', 'artist two', 'artist three'],
-      availablePlaces: 80,
-      beginDate: Date(
-          dayName: 'sunday',
-          dayNumber: '2',
-          month: 'june',
-          time: '6:30',
-          year: '2023'),
-      description: 'very good',
-      eventName: 'Event five',
-      imagesNames: [
-        'assets/images/concert.png',
-        'assets/images/medium page background image.jpg',
-        'assets/images/tickets.png'
-      ],
-      ticketsPrice: 50,
-    )),
-    NewEventCard(
-        event: Event(
-      artistsNames: ['artist one', 'artist two', 'artist three'],
-      availablePlaces: 80,
-      beginDate: Date(
-          dayName: 'sunday',
-          dayNumber: '2',
-          month: 'june',
-          time: '6:30',
-          year: '2023'),
-      description: 'very good',
-      eventName: 'Event six',
-      imagesNames: [
-        'assets/images/concert.png',
-        'assets/images/medium page background image.jpg',
-        'assets/images/tickets.png'
-      ],
-      ticketsPrice: 50,
-    )),
-  ];
+  EventPageController controller = Get.find();
   EventPage({super.key});
   @override
   Widget build(BuildContext context) {
@@ -133,7 +20,18 @@ class EventPage extends StatelessWidget {
     return Scaffold(
       drawer: ProjectDrawer(),
       appBar: createAppBar(size),
-      body: SafeArea(
+      body:GetBuilder<EventPageController>(
+                  builder: (ctx) => controller.statuseRequest ==
+                          StatuseRequest.offlinefailure
+                      ? noInternetPage(size, controller)
+                      : controller.statuseRequest == StatuseRequest.loading
+                          ? Text("loading....".tr, style: generalTextStyle(14))
+                          : whenShowTheBodyAfterLoadingAndInternet(context),
+                ),
+    )
+      ;
+  }
+  Widget whenShowTheBodyAfterLoadingAndInternet(BuildContext context){return  SafeArea(
         child: Stack(
           children: [
             Container(
@@ -152,17 +50,16 @@ class EventPage extends StatelessWidget {
             buildEventGridView()
           ],
         ),
-      ),
-    );
-  }
+      );
+    }
 
   Widget buildEventGridView() {
     return ListView.builder(
-      itemCount: 3, //events.length - 1,
+      itemCount: controller.finalListData.length, //events.length - 1,
       itemBuilder: (context, index) {
         return Padding(
           padding: const EdgeInsets.symmetric(horizontal: 10, vertical: 15),
-          child: events[index],
+          child: NewEventCard(event: controller.finalListData[index]),
           // events[index],
         );
       },

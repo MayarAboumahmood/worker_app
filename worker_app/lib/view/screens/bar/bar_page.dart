@@ -96,34 +96,38 @@ class BarPage extends StatelessWidget {
     List<Widget> list = [
       buildBarGridView(Colors.black, context, drinkCardController),
       // buildBarGridView(Colors.blue, context, drinkCardController),
-      buildOrderList(size),
+     buildOrderList(size),
       attendanceList(),
     ];
     return ([list[controller.page.value]]);
   }
 
-  Widget buildBarGridView(Color? color, BuildContext context,
+  Widget buildBarGridView(Color? color, BuildContext ccontext,
       DrinkCardController drinkCardContrller) {
-    return GridView.builder(
+    return GetBuilder(
+        init: drinkCardContrller,
+        builder: (context) {
+          return
+    GridView.builder(
       padding: const EdgeInsets.all(16),
       gridDelegate: SliverGridDelegateWithFixedCrossAxisCount(
-        crossAxisCount: context.widthInches > 8.5
+        crossAxisCount: ccontext.widthInches > 8.5
             ? 4
-            : context.widthInches > 5.5
+            : ccontext.widthInches > 5.5
                 ? 3
                 : 2,
         mainAxisExtent: 230,
         crossAxisSpacing: 10,
         mainAxisSpacing: 16,
       ),
-      itemCount: 16,
-      itemBuilder: (context, index) {
-        drinkCardContrller.addNewElement();
-        return DrinkCard(
-          drink: Drink(id: index, name: 'beer+$index', unitPriceInSP: 15000),
-        );
+       itemCount: drinkCardContrller.finalListData.length,
+            itemBuilder: (context, index) {
+              return DrinkCard(
+                id: index,
+                drink: drinkCardContrller.finalListData[index],
+              );
       },
-    );
+      );});
   }
 
   PreferredSizeWidget? createAppBar(Sizes size) {
@@ -146,15 +150,13 @@ class BarPage extends StatelessWidget {
     );
   }
 
-  void onpressedDone(int index, DrinkCardController drinkCardController) {
-    index == 0
-        ? {
-            Get.toNamed('/Cart', arguments: drinkCardController.order),
-            Future.delayed(const Duration(milliseconds: 80), () {
-              drinkCardController.order.makeTheOrderEmpty();
-              drinkCardController.makeTheNumberofDriknsEqualsZero();
-            })
-          }
-        : null;
+   void onpressedDone(int index, DrinkCardController drinkCardController) {
+    if (index == 0) {
+      Get.toNamed('/Cart', arguments: drinkCardController.order);
+    }
+    // else if(index ==1){
+    //   PlacesController controller=Get.find();
+    //   controller.onpressDone();
+    // }
   }
 }
