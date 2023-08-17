@@ -64,6 +64,7 @@ class ReservationCard extends StatelessWidget {
                   ),
                   addRemoveButton('add', controller, reservation),
                   Obx(() {
+                    controller.myOnStart(reservation);
                     return Text(
                       controller.numberOfPeople[reservation.id].value
                           .toString(),
@@ -382,20 +383,36 @@ class ReservationCardController extends GetxController {
     0.obs
   ].obs;
 
+  void myOnStart(Reservation reservation) {
+    numberOfPeople[reservation.id].value = reservation.cameNumber;
+  }
+
   void increaseTheNumberOfPeople(Reservation reservation) {
-    if (numberOfPeople[reservation.id].value < reservation.cameNumber) {
+    print('reservation.id: ');
+    print(reservation.id);
+    print('');
+    print('reservation.cameNumber: ');
+    print(reservation.cameNumber);
+    print('');
+    print('numberOfPeople[reservation.id].value: ');
+    print(numberOfPeople[reservation.id].value);
+    print('');
+    print('reservation.totalNumber: ');
+    print(reservation.totalNumber);
+
+    if (reservation.cameNumber < reservation.totalNumber) {
+      print('i am innnnnnnnnnnnnnnn');
       numberOfPeople[reservation.id].value++;
-      reservation.totalNumber++;
+      reservation.cameNumber++;
       update();
     }
   }
 
   void decreaseTheNumberOfPeople(Reservation reservation) {
-    reservation.totalNumber > 0 ? reservation.totalNumber-- : null;
-    numberOfPeople[reservation.id].value > 0
-        ? numberOfPeople[reservation.id].value--
-        : null;
-    update();
+    if (reservation.cameNumber > 0) {
+      reservation.cameNumber--;
+      numberOfPeople[reservation.id].value--;
+    }
   }
 
   void addNewElement() {

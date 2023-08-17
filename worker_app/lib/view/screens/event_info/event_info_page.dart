@@ -153,16 +153,16 @@ class EventInfo extends StatelessWidget {
   }
 
   Widget buildDots() {
-    return Obx(() {
-      return Row(
-        mainAxisAlignment: MainAxisAlignment.center,
-        children: List.generate(
-          dataController.model.images.length,
-          (index) =>
-              buildDot(index: index, currentIndex: controller.pageIndex.value),
-        ),
-      );
-    });
+    // return Obx(() {
+    return Row(
+      mainAxisAlignment: MainAxisAlignment.center,
+      children: List.generate(
+        dataController.model.images.length,
+        (index) => buildDot(
+            index: index, currentIndex: dataController.pageIndex.value),
+      ),
+    );
+    // });
   }
 
   Widget setEventINfo(String title) {

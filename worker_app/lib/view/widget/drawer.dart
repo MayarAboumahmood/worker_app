@@ -73,6 +73,13 @@ class ProjectDrawer extends StatelessWidget {
           drawerChid(context, Icons.settings, 'Settings', () {
             showSettingsDialog(context);
           }),
+          SizedBox(height: Get.size.height * .02),
+          Visibility(
+            visible: Get.currentRoute != '/EventPage',
+            child: drawerChid(context, Icons.event, 'Events', () {
+              Get.offAllNamed('/EventPage');
+            }),
+          ),
         ]),
       ),
     );

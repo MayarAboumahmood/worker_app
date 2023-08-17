@@ -62,7 +62,7 @@ class EventPageController extends GetxController
   }
 
   Future<List<EventModel>> whenGetDataSuccess(response) async {
-    List responsedata = response['data']['past'];
+    List responsedata = response['data']['upComing'];
     print(responsedata);
     for (int i = 0; i < responsedata.length; i++) {
       // print(i);
