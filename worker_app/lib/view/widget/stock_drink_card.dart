@@ -11,11 +11,10 @@ import '../../constant/theme.dart';
 
 // ignore: must_be_immutable
 class StockDrinkCard extends StatelessWidget {
-
   // StockCardController controller = Get.put(StockCardController());
   final Function() onPressed;
   final DrinkModel model;
-  StockDrinkCard(this.onPressed, this. model);
+  StockDrinkCard(this.onPressed, this.model);
   @override
   Widget build(BuildContext context) {
     Sizes size = Sizes(context);
@@ -45,10 +44,10 @@ class StockDrinkCard extends StatelessWidget {
                   child: Stack(
                     children: [
                       Positioned.fill(
-                        child:  model.image == ''
-                        ? Image.asset('assets/images/The project icon.jpg')
-                        : Image.network(
-                            "${ServerConstApis.loadImages}${model.image}"),
+                        child: model.image == ''
+                            ? Image.asset('assets/images/The project icon.jpg')
+                            : Image.network(
+                                "${ServerConstApis.loadImages}${model.image}"),
                       ),
                       Positioned.fill(
                         child: Container(
@@ -64,12 +63,11 @@ class StockDrinkCard extends StatelessWidget {
                             ),
                             const Spacer(),
                             Text(
-                                  model.quantity
-                                      .toString(),
-                                  style: TextStyle(
-                                    color: skinColorWhite,
-                                  ),
-                                ),
+                              model.quantity.toString(),
+                              style: TextStyle(
+                                color: skinColorWhite,
+                              ),
+                            ),
                             const Spacer(),
                           ],
                         ),
@@ -79,14 +77,14 @@ class StockDrinkCard extends StatelessWidget {
                 ),
               ),
               AutoSizeText(
-                model!.name,
+                model.name,
                 style: generalTextStyle(20),
               ),
               const SizedBox(
                 height: 3,
               ),
               AutoSizeText(
-                '${model!.price} S.P',
+                '${model.price} S.P',
                 style: generalTextStyle(15),
               ),
             ]),
@@ -94,4 +92,3 @@ class StockDrinkCard extends StatelessWidget {
     );
   }
 }
-

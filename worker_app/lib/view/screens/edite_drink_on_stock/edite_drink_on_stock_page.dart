@@ -4,7 +4,6 @@ import 'package:get/get.dart';
 import 'package:sized_context/sized_context.dart';
 import 'package:worker_app/constant/text_style.dart';
 import 'package:worker_app/view/widget/costum_text_field.dart';
-import 'package:worker_app/view/widget/drink_card.dart';
 import '../../../constant/fonts.dart';
 import '../../../constant/server_const.dart';
 import '../../../constant/sizes.dart';
@@ -25,7 +24,7 @@ class EditeDrinkOnStockPage extends StatelessWidget {
   EditeDrinkOnStockPage(this.initModel, {super.key});
   @override
   Widget build(BuildContext context) {
-    controller.model=initModel;
+    controller.model = initModel;
     Sizes size = Sizes(context);
     return GetBuilder<EditeDrinkOnStockController>(
       builder: (ctx) => controller.statuseRequest ==
