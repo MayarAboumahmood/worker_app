@@ -13,6 +13,7 @@ class LoginService {
     try {
       if (await checkInternet()) {
         Uri url = Uri.parse(ServerConstApis.signIn);
+        print(data);
         http.Response response = await http.post(
           url,
           body: data,
