@@ -31,7 +31,10 @@ class DateTimeParser {
   }
 }
 
-String getDayName(int weekday) {
+String getDayNameOfMonth(int year, int month, int day) {
+  DateTime date = DateTime(year, month, day);
+  int weekday = date.weekday;
+
   switch (weekday) {
     case DateTime.monday:
       return 'Monday';
@@ -48,6 +51,9 @@ String getDayName(int weekday) {
     case DateTime.sunday:
       return 'Sunday';
     default:
-      return 'no';
+      return 'Invalid Day';
   }
 }
+
+
+

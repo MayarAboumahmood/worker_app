@@ -15,11 +15,10 @@ class CartService {
         print("start");
         Uri url = Uri.parse(ServerConstApis.makeOrderByWorker);
         Map<String, String> headers = {
-          "Access-Control-Allow-Origin": "*",
+          // "Access-Control-Allow-Origin": "*",
           "x-access-token": token
         };
-        print("befor ");
-        print(data);
+       
         var response = await http.post(url, headers: headers, body: data);
         print(response.body);
         if (response.statusCode == 200 || response.statusCode == 201) {

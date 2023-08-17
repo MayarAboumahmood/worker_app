@@ -43,9 +43,8 @@ late int eventId;
   @override
   void onInit() async {
     eventId=Get.arguments;
-   // statuseRequest = await checkIfTheInternetIsConectedBeforGoingToThePage();
-    await sendingARequestAndHandlingData();
  statuseRequest = await checkIfTheInternetIsConectedBeforGoingToThePage();
+    await sendingARequestAndHandlingData();
    
     super.onInit();
   }
