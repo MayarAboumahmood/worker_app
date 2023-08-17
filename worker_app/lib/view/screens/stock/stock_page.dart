@@ -6,7 +6,6 @@ import 'package:worker_app/constant/theme.dart';
 import 'package:worker_app/view/screens/edite_drink_on_stock/edite_drink_on_stock_page.dart';
 import 'package:worker_app/view/screens/stock/stock_controller.dart';
 import 'package:worker_app/view/widget/animation_title.dart';
-import 'package:worker_app/view/widget/drink_card.dart';
 
 import '../../../data/Models/drink_model.dart';
 import '../../widget/stock_drink_card.dart';
@@ -18,44 +17,42 @@ class Stock extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     final Sizes size = Sizes(context);
-    return GetBuilder<StockController>(
-      builder: (ccontext) {
-        return Scaffold(
-            floatingActionButton: FloatingActionButton(
-                onPressed: () {
-                  showAddDrinkDialog(context);
-                },
-                child: Icon(
-                  Icons.add,
-                  color: Get.isDarkMode ? backGroundDarkColor : skinColorWhite,
-                )),
-            appBar: createAppBar(size),
-            body: GridView.builder(
-              padding: const EdgeInsets.all(16),
-              gridDelegate: SliverGridDelegateWithFixedCrossAxisCount(
-                crossAxisCount: context.widthInches > 8.5
-                    ? 4
-                    : context.widthInches > 5.5
-                        ? 3
-                        : 2,
-                mainAxisExtent: 230,
-                crossAxisSpacing: 10,
-                mainAxisSpacing: 16,
-              ),
-              itemCount: controller.finalListData.length,
-              itemBuilder: (context, index) {
-                //controller.addNewElement();
-                return StockDrinkCard(
-                  () {
-                    showEditeDrinkOnStockDialog(
-                        context, controller.finalListData[index]);
-                  },
-                  controller.finalListData[index],
-                );
+    return GetBuilder<StockController>(builder: (ccontext) {
+      return Scaffold(
+          floatingActionButton: FloatingActionButton(
+              onPressed: () {
+                showAddDrinkDialog(context);
               },
-            ));
-      }
-    );
+              child: Icon(
+                Icons.add,
+                color: Get.isDarkMode ? backGroundDarkColor : skinColorWhite,
+              )),
+          appBar: createAppBar(size),
+          body: GridView.builder(
+            padding: const EdgeInsets.all(16),
+            gridDelegate: SliverGridDelegateWithFixedCrossAxisCount(
+              crossAxisCount: context.widthInches > 8.5
+                  ? 4
+                  : context.widthInches > 5.5
+                      ? 3
+                      : 2,
+              mainAxisExtent: 230,
+              crossAxisSpacing: 10,
+              mainAxisSpacing: 16,
+            ),
+            itemCount: controller.finalListData.length,
+            itemBuilder: (context, index) {
+              //controller.addNewElement();
+              return StockDrinkCard(
+                () {
+                  showEditeDrinkOnStockDialog(
+                      context, controller.finalListData[index]);
+                },
+                controller.finalListData[index],
+              );
+            },
+          ));
+    });
   }
 
   PreferredSizeWidget? createAppBar(Sizes size) {
@@ -64,15 +61,15 @@ class Stock extends StatelessWidget {
       backgroundColor: Get.isDarkMode ? darkPrimaryColor : primaryColor,
       title: AnimationAppBarTitle(title: 'Stock Page'.tr),
       leading: IconButton(
-          icon: Icon(
-            Icons.arrow_back,
-            color: Get.isDarkMode ? skinColorWhite : backGroundDarkColor,
-            size: size.appBarIconSize,
-          ),
-          onPressed: () {
-Get.back();
-          },
+        icon: Icon(
+          Icons.arrow_back,
+          color: Get.isDarkMode ? skinColorWhite : backGroundDarkColor,
+          size: size.appBarIconSize,
         ),
+        onPressed: () {
+          Get.back();
+        },
+      ),
       actions: [
         IconButton(
           icon: Icon(
