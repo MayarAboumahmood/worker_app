@@ -70,12 +70,12 @@ class OrderController extends GetxController
     return finalListData;
   }
 
-  double calculatePriceFromOrder(List<OrderDrink> orders) {
+  double calculatePriceFromOrder(int index) {
     double price = 0;
-    for (int i = 0; i < orders.length; i++) {
-      price += orders[i].drinkPrice * orders[i].quantity;
+    for (int i = 0; i < finalListData[index].orderDrinks.length; i++) {
+      price +=  finalListData[index].orderDrinks[i].drinkPrice *  finalListData[index].orderDrinks[i].quantity;
     }
-    update();
+   
     return price;
   }
 

@@ -2,8 +2,10 @@ class CustomerOrderModel {
   final int orderID;
   final int sectionNumber;
   final List<OrderDrink> orderDrinks;
+  final String description;
 
   CustomerOrderModel({
+    required this.description,
     required this.orderID,
     required this.sectionNumber,
     required this.orderDrinks,
@@ -16,6 +18,7 @@ class CustomerOrderModel {
         .toList();
 
      return CustomerOrderModel(
+      description: json['description']??"No Notes",
       orderID: json['order_id'] ?? 0,
       sectionNumber: json['reservation'] != null
           ? json['reservation']['section_number'] ?? 0
