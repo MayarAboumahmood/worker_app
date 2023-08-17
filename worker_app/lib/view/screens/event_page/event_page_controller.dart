@@ -17,10 +17,10 @@ class EventPageController extends GetxController
   StatuseRequest? statuseRequest = (StatuseRequest.init);
   @override
   void onInit() async {
-   // statuseRequest = await checkIfTheInternetIsConectedBeforGoingToThePage();
+    // statuseRequest = await checkIfTheInternetIsConectedBeforGoingToThePage();
     finalListData = await sendingARequestAndHandlingData();
- statuseRequest = await checkIfTheInternetIsConectedBeforGoingToThePage();
-   
+    statuseRequest = await checkIfTheInternetIsConectedBeforGoingToThePage();
+
     super.onInit();
   }
 
@@ -62,12 +62,13 @@ class EventPageController extends GetxController
   }
 
   Future<List<EventModel>> whenGetDataSuccess(response) async {
-    List responsedata = response['data']['upComing'];
-    // print(responsedata);
+    List responsedata = response['data']['past'];
+    print(responsedata);
     for (int i = 0; i < responsedata.length; i++) {
       // print(i);
       finalListData.add(EventModel.fromMap(responsedata[i]));
     }
+    print(finalListData.length);
 // print("${finalListData[0].beginDate.hour}:${finalListData[0].beginDate.minute}");
     update();
     return finalListData;

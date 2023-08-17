@@ -52,7 +52,7 @@ class ReservationCard extends StatelessWidget {
               style: generalTextStyle(null),
             ),
             subtitle: Text(
-              "${'Number of people'.tr}: ${reservation.number}",
+              "${'Number of people'.tr}: ${reservation.totalNumber}",
               style: generalTextStyle(null),
             ),
             trailing: SizedBox(
@@ -65,7 +65,8 @@ class ReservationCard extends StatelessWidget {
                   addRemoveButton('add', controller, reservation),
                   Obx(() {
                     return Text(
-                      controller.numberOfPeople[1].value.toString(),
+                      controller.numberOfPeople[reservation.id].value
+                          .toString(),
                       style: generalTextStyle(null),
                     );
                   }),
@@ -90,14 +91,12 @@ Widget addRemoveButton(
   Reservation reservation,
 ) {
   return SizedBox(
-    width: 60,
+    width: 50,
     child: MaterialButton(
       onPressed: () {
         addOrRemove == 'add'
-            ? reservationController.increaseTheNumberOfPeople(
-                reservation.eventId, reservation)
-            : reservationController.decreaseTheNumberOfPeople(
-                reservation.id, reservation);
+            ? reservationController.increaseTheNumberOfPeople(reservation)
+            : reservationController.decreaseTheNumberOfPeople(reservation);
       },
       child: Icon(
         addOrRemove == 'add' ? Icons.add : Icons.remove,
@@ -114,6 +113,8 @@ class ReservationCardController extends GetxController {
   void toggleTrueSign() {
     showTrueSign.toggle();
   }
+
+  // List<RxInt> numberOfPeople2 = <RxInt>[];
 
   List<RxInt> numberOfPeople = <RxInt>[
     0.obs,
@@ -381,16 +382,20 @@ class ReservationCardController extends GetxController {
     0.obs
   ].obs;
 
-  void increaseTheNumberOfPeople(int id, Reservation reservation) {
-    if (numberOfPeople[id].value < reservation.number) {
-      numberOfPeople[id].value++;
-      reservation.number++;
+  void increaseTheNumberOfPeople(Reservation reservation) {
+    if (numberOfPeople[reservation.id].value < reservation.cameNumber) {
+      numberOfPeople[reservation.id].value++;
+      reservation.totalNumber++;
+      update();
     }
   }
 
-  void decreaseTheNumberOfPeople(int id, Reservation reservation) {
-    reservation.number > 0 ? reservation.number-- : null;
-    numberOfPeople[id].value > 0 ? numberOfPeople[id].value-- : null;
+  void decreaseTheNumberOfPeople(Reservation reservation) {
+    reservation.totalNumber > 0 ? reservation.totalNumber-- : null;
+    numberOfPeople[reservation.id].value > 0
+        ? numberOfPeople[reservation.id].value--
+        : null;
+    update();
   }
 
   void addNewElement() {

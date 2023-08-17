@@ -7,25 +7,34 @@ import '../../widget/reservation_card.dart';
 
 List<Widget> cameReservatons = [
   ReservationCard(
-      reservation: Reservation(id: 0, eventId: 1, name: 'someone', number: 2)),
+      reservation: Reservation(
+          id: 0, eventId: 1, name: 'someone', totalNumber: 2, cameNumber: 0)),
   ReservationCard(
-      reservation: Reservation(id: 1, eventId: 1, name: 'someone2', number: 5)),
+      reservation: Reservation(
+          id: 1, eventId: 1, name: 'someone2', totalNumber: 5, cameNumber: 0)),
   ReservationCard(
-      reservation: Reservation(id: 2, eventId: 1, name: 'someone3', number: 1)),
+      reservation: Reservation(
+          id: 2, eventId: 1, name: 'someone3', totalNumber: 3, cameNumber: 0)),
   ReservationCard(
-      reservation: Reservation(id: 3, eventId: 1, name: 'someone4', number: 1)),
+      reservation: Reservation(
+          id: 3, eventId: 1, name: 'someone4', totalNumber: 1, cameNumber: 0)),
 ];
 List<Widget> notCameReservatons = [
   ReservationCard(
-      reservation: Reservation(id: 4, eventId: 1, name: 'someone', number: 2)),
+      reservation: Reservation(
+          id: 4, eventId: 1, name: 'someone', totalNumber: 2, cameNumber: 2)),
   ReservationCard(
-      reservation: Reservation(id: 5, eventId: 2, name: 'someone2', number: 5)),
+      reservation: Reservation(
+          id: 5, eventId: 2, name: 'someone2', totalNumber: 2, cameNumber: 2)),
   ReservationCard(
-      reservation: Reservation(id: 6, eventId: 3, name: 'someone3', number: 1)),
+      reservation: Reservation(
+          id: 6, eventId: 3, name: 'someone3', totalNumber: 2, cameNumber: 2)),
   ReservationCard(
-      reservation: Reservation(id: 7, eventId: 4, name: 'someone4', number: 1)),
+      reservation: Reservation(
+          id: 7, eventId: 4, name: 'someone4', totalNumber: 2, cameNumber: 2)),
   ReservationCard(
-      reservation: Reservation(id: 8, eventId: 5, name: 'someone5', number: 2)),
+      reservation: Reservation(
+          id: 8, eventId: 5, name: 'someone5', totalNumber: 2, cameNumber: 2)),
 ];
 
 Widget attendanceList() {
@@ -59,13 +68,15 @@ Widget attendanceList() {
 
 class Reservation {
   String name;
-  int number;
+  int totalNumber;
+  int cameNumber;
   int eventId;
   int id;
 
   Reservation({
     required this.name,
-    required this.number,
+    required this.totalNumber,
+    required this.cameNumber,
     required this.eventId,
     required this.id,
   });
