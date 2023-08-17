@@ -21,9 +21,9 @@ class EventInfo extends StatelessWidget {
     Sizes size = Sizes(context);
     return GetBuilder<EventInfoController>(
       builder: (ctx) =>
-          controller.statuseRequest == StatuseRequest.offlinefailure
+          dataController.statuseRequest == StatuseRequest.offlinefailure
               ? noInternetPage(size, dataController)
-              : controller.statuseRequest == StatuseRequest.loading
+              : dataController.statuseRequest == StatuseRequest.loading
                   ? Text("loading....".tr, style: generalTextStyle(14))
                   : whenShowTheBodyAfterLoadingAndInternet(context, size),
     );

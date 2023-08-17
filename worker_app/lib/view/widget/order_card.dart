@@ -88,8 +88,13 @@ Widget orderCard(OrderController controller,int index,
                     Row(
                       mainAxisAlignment: MainAxisAlignment.spaceBetween,
                       children: [
-                        approveDenyButton('Approve', () {}, Colors.green),
-                        approveDenyButton('Deny', () {}, Colors.red),
+                        approveDenyButton('Approve', () {
+                          controller.onPressApproveToOrder(controller.finalListData[index].orderID);
+                        }, Colors.green),
+                        approveDenyButton('Deny', () {
+                          
+                          controller.onPressDenyToOrder(controller.finalListData[index].orderID);
+                        }, Colors.red),
                       ],
                     )
                   ],

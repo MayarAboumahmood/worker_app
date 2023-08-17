@@ -66,7 +66,7 @@ class NewEventCard extends StatelessWidget {
     return Padding(
       padding: const EdgeInsets.all(6.0),
       child: dateContainer(event.beginDate.month.toString(),
-          event.beginDate.day.toString(),getDayName(event.beginDate.day)
+          event.beginDate.day.toString(),event.beginDate.dayName??"NO"
           
          
           ),
