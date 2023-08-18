@@ -1,9 +1,5 @@
 class ServerConstApis {
-<<<<<<< HEAD
   static String baseAPI = 'http://192.168.232.5:3000/';
-=======
-  static String baseAPI = 'http://127.0.0.1:3000/';
->>>>>>> 4884c00d41f52ef3947b56e9d2fbf63707044d30
 
 ///// sign
   static String signUp = '${baseAPI}customers/signup';
@@ -37,10 +33,10 @@ class ServerConstApis {
   static String makeReservation = '${baseAPI}reservations/make-reservation';
   static String setSection = '${baseAPI}reservations/setSection';
 
-
   /////////// door
   static String showReservation = '${baseAPI}worker/show-reservations';
 
 /////////forImages
+  static String loadImages = baseAPI;
   static String loadImages = baseAPI;
 }
