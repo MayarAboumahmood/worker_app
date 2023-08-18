@@ -4,13 +4,12 @@ import 'package:worker_app/constant/text_style.dart';
 import 'package:worker_app/constant/theme.dart';
 import '../../data/Models/door_model.dart';
 import '../screens/door/door_controller.dart';
-import '../screens/door/door_page.dart';
 
 class ReservationCard extends StatelessWidget {
   final ReservationResponse reservation;
-  final index;
-  DoorController controller=Get.find();
-   ReservationCard({super.key, required this.reservation,required this.index});
+  final int index;
+  final DoorController controller = Get.find();
+  ReservationCard({super.key, required this.reservation, required this.index});
 
   @override
   Widget build(BuildContext context) {
@@ -29,7 +28,7 @@ class ReservationCard extends StatelessWidget {
               width: 40,
               child: TextButton(
                 onPressed: () {
-                   controller.toggleTrueSign();
+                  controller.toggleTrueSign();
                 },
                 child: Obx(() => Container(
                     height: 30,
@@ -68,12 +67,11 @@ class ReservationCard extends StatelessWidget {
                   ),
                   addRemoveButton('add', controller, index),
                   // Obx(() {
-                    // controller.myOnStart(reservation);
-                    Text(
-                      controller.numberOfPepole[index]
-                          .toString(),
-                      style: generalTextStyle(null),
-                    ),
+                  // controller.myOnStart(reservation);
+                  Text(
+                    controller.numberOfPepole[index].toString(),
+                    style: generalTextStyle(null),
+                  ),
                   // }),
                   addRemoveButton('remove', controller, index),
                   const SizedBox(

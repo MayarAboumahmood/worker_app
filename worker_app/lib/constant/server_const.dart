@@ -38,5 +38,4 @@ class ServerConstApis {
 
 /////////forImages
   static String loadImages = baseAPI;
-  static String loadImages = baseAPI;
 }
