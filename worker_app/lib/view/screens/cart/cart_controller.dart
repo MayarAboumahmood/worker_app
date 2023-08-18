@@ -45,15 +45,23 @@ class CartController extends GetxController  implements StatuseRequestController
   sendData() async {
   String token = await prefService.readString('token');
     
-  List<Map<String, dynamic>> drinksMapList = order.drinksWithAmount
-    .map((drinkAmount) => {
-      "drink_id": drinkAmount.drink.id,
-      "quantity": drinkAmount.amount,
-    })
-    .toList();
+  // List<Map<String, dynamic>> drinksMapList = order.drinksWithAmount
+  //   .map((drinkAmount) => {
+  //     "drink_id": drinkAmount.drink.id,
+  //     "quantity": drinkAmount.amount,
+  //   })
+  //   .toList();
     
+  String finalOrder='';
+   for (var i = 0; i < order.drinksWithAmount.length; i++) {
+      if (order.drinksWithAmount.length - 1 == i) {
+        finalOrder +="${order.drinksWithAmount[i].drink.id}:${order.drinksWithAmount[i].amount}";
+      } else {
+        finalOrder +="${order.drinksWithAmount[i].drink.id}:${order.drinksWithAmount[i].amount},";
+       }
+    }
   Map<String, dynamic> data = {
-    "drinks": drinksMapList,
+    "drinks": finalOrder,
   };
     
   Either<StatuseRequest, Map<dynamic, dynamic>> response =
