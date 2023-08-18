@@ -10,13 +10,12 @@ import 'package:worker_app/view/widget/my_button.dart';
 
 import '../screens/orders/orders_contrller.dart';
 
-
-Widget orderCard(OrderController controller,int index,
-    BuildContext context, Sizes size) {
+Widget orderCard(
+    OrderController controller, int index, BuildContext context, Sizes size) {
   return Padding(
       padding: const EdgeInsets.symmetric(vertical: 12, horizontal: 8),
       child: Container(
-        height: controller.finalListData[index].orderDrinks.length * 40 + 200,
+        height: controller.finalListData[index].orderDrinks.length * 45 + 200,
         decoration: BoxDecoration(
           borderRadius: BorderRadius.circular(8),
           color: Get.isDarkMode
@@ -36,10 +35,13 @@ Widget orderCard(OrderController controller,int index,
                   crossAxisAlignment: CrossAxisAlignment.start,
                   children: [
                     SizedBox(
-                      height: controller.finalListData[index].orderDrinks.length * 40,
+                      height:
+                          controller.finalListData[index].orderDrinks.length *
+                              45,
                       child: ListView.builder(
                         physics: const NeverScrollableScrollPhysics(),
-                        itemCount: controller.finalListData[index].orderDrinks.length,
+                        itemCount:
+                            controller.finalListData[index].orderDrinks.length,
                         itemBuilder: (context, index) => Column(
                           children: [
                             Text(
@@ -57,7 +59,10 @@ Widget orderCard(OrderController controller,int index,
                               padding:
                                   const EdgeInsets.symmetric(horizontal: 10),
                               child: Visibility(
-                                visible: index != controller.finalListData[index].orderDrinks.length - 1,
+                                visible: index !=
+                                    controller.finalListData[index].orderDrinks
+                                            .length -
+                                        1,
                                 child: Divider(
                                   color: Get.isDarkMode
                                       ? darkPrimaryColor
@@ -73,10 +78,12 @@ Widget orderCard(OrderController controller,int index,
                     const SizedBox(height: 8),
                     SizedBox(
                         height: 20,
-                        child: Text('${'Price'.tr}: \$${controller.calculatePriceFromOrder(index)} S.P',
+                        child: Text(
+                            '${'Price'.tr}: \$${controller.calculatePriceFromOrder(index)} S.P',
                             style: generalTextStyle(16))),
                     const SizedBox(height: 8),
-                    Text('${'Table Number'.tr}: ${controller.finalListData[index].sectionNumber}',
+                    Text(
+                        '${'Table Number'.tr}: ${controller.finalListData[index].sectionNumber}',
                         style: generalTextStyle(16)),
                     Text(
                       controller.finalListData[index].description,
@@ -89,11 +96,12 @@ Widget orderCard(OrderController controller,int index,
                       mainAxisAlignment: MainAxisAlignment.spaceBetween,
                       children: [
                         approveDenyButton('Approve', () {
-                          controller.onPressApproveToOrder(controller.finalListData[index].orderID);
+                          controller.onPressApproveToOrder(
+                              controller.finalListData[index].orderID);
                         }, Colors.green),
                         approveDenyButton('Deny', () {
-                          
-                          controller.onPressDenyToOrder(controller.finalListData[index].orderID);
+                          controller.onPressDenyToOrder(
+                              controller.finalListData[index].orderID);
                         }, Colors.red),
                       ],
                     )

@@ -80,7 +80,7 @@ class NewEventCard extends StatelessWidget {
                 color: Colors.black54,
                 width: 0.2,
               )),
-          width: 100,
+          width: 85,
           height: 100,
           child: ClipRRect(
               borderRadius: BorderRadius.circular(900),
