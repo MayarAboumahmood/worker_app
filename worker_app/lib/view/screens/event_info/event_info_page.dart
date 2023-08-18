@@ -36,7 +36,7 @@ class EventInfo extends StatelessWidget {
           onPressed: () {},
           label: TextButton(
               onPressed: () {
-                Get.offNamed('/Bar');
+                Get.offNamed('/Bar',arguments: dataController.eventId);
               },
               child: Text('Work here'.tr, style: generalTextStyle(null)))),
     );

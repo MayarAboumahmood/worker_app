@@ -33,6 +33,7 @@ class LoginController extends GetxController
   }
 
   void onpresslogin() async {
+
     FormState? formdata = formstate.currentState;
     if (formdata!.validate()) {
       formdata.save();
@@ -85,7 +86,7 @@ class LoginController extends GetxController
 
   whenLoginSuccess(response) async {
     await prefService.createString('token', response['token']); // storing token
-    Get.offNamed('/Bar');
+    Get.offNamed('/EventPage');
     update();
   }
 }

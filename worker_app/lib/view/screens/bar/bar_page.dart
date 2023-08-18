@@ -97,7 +97,7 @@ class BarPage extends StatelessWidget {
       buildBarGridView(Colors.black, context, drinkCardController),
       // buildBarGridView(Colors.blue, context, drinkCardController),
      buildOrderList(size),
-      attendanceList(),
+      attendanceList(context,controller.eventId),
     ];
     return ([list[controller.page.value]]);
   }

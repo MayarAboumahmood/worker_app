@@ -165,6 +165,7 @@ class LoginPage extends StatelessWidget {
       mycolor: Get.isDarkMode ? darkPrimaryColor : primaryColor,
       myRadius: size.buttonRadius,
       ontap: () {
+        print("object");
          controller.onpresslogin();
        // Get.offNamed('/Bar');
       },

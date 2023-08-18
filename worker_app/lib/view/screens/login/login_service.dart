@@ -9,6 +9,7 @@ import '../../../data/checkInternet/check_internet.dart';
 
 class LoginService {
   Future<Either<StatuseRequest, Map>> login(Map<String, String> data) async {
+    
     //Either for return two data type in the same time
     try {
       if (await checkInternet()) {
