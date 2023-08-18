@@ -3,7 +3,6 @@ import 'package:get/get.dart';
 import '../../../constant/status_request.dart';
 
 import '../../../data/Models/door_model.dart';
-import '../../../data/Models/event_model.dart';
 import '../../../general_controller/statuse_request_controller.dart';
 import '../../../main.dart';
 import '../../widget/no_internet_page.dart';
@@ -23,7 +22,7 @@ class DoorController extends GetxController
     // statuseRequest = await checkIfTheInternetIsConectedBeforGoingToThePage();
     await sendingARequestAndHandlingData();
     statuseRequest = await checkIfTheInternetIsConectedBeforGoingToThePage();
-eventID=0;
+    eventID = 0;
     super.onInit();
   }
 
@@ -49,11 +48,9 @@ eventID=0;
 
   getdata() async {
     String token = await prefService.readString('token');
-   Map<String,String> data={
-   "event_id":eventID.toString()
-   };
+    Map<String, String> data = {"event_id": eventID.toString()};
     Either<StatuseRequest, Map<dynamic, dynamic>> response =
-        await service.getDoorReservations(token,data);
+        await service.getDoorReservations(token, data);
 
     return response.fold((l) => l, (r) => r);
   }
@@ -65,7 +62,8 @@ eventID=0;
       return StatuseRequest.success;
     }
   }
-List<int > numberOfPepole=[];
+
+  List<int> numberOfPepole = [];
   Future<List<ReservationResponse>> whenGetDataSuccess(response) async {
     List notComeData = response['data']['notCome'];
     List comeData = response['data']['hasCome'];
@@ -74,13 +72,13 @@ List<int > numberOfPepole=[];
       // print(i);
       finalListDataNotCome
           .add(ReservationResponse.fromJson(notComeData[i], "notCome"));
-         numberOfPepole.add( finalListDataCome[i].attendanceNumber!);
+      numberOfPepole.add(finalListDataCome[i].attendanceNumber!);
     }
 
     for (int i = 0; i < comeData.length; i++) {
       // print(i);
       finalListDataCome.add(ReservationResponse.fromJson(comeData[i], "come"));
-         numberOfPepole.add( finalListDataNotCome[i].attendanceNumber!);
+      numberOfPepole.add(finalListDataNotCome[i].attendanceNumber!);
     }
 
 // print("${finalListData[0].beginDate.hour}:${finalListData[0].beginDate.minute}");
@@ -95,22 +93,22 @@ List<int > numberOfPepole=[];
     //   print('i am innnnnnnnnnnnnnnn');
     //   finalListDataNotCome[reservationID].attendanceNumber=(finalListDataNotCome[reservationID].attendanceNumber+1)!;
     //   reservation.cameNumber++;
-      update();
+    update();
     // }
   }
 
   void decreaseTheNumberOfPeople(int reservationID) {
     numberOfPepole[reservationID]--;
-  //   if (reservation.cameNumber > 0) {
-  //     reservation.cameNumber--;
-  //     numberOfPeople[reservation.id].value--;
-  //   }
-  update();
+    //   if (reservation.cameNumber > 0) {
+    //     reservation.cameNumber--;
+    //     numberOfPeople[reservation.id].value--;
+    //   }
+    update();
   }
-    RxBool showTrueSign = false.obs;
+
+  RxBool showTrueSign = false.obs;
 
   void toggleTrueSign() {
     showTrueSign.toggle();
   }
-
 }
