@@ -47,7 +47,7 @@ class NewEventCard extends StatelessWidget {
                   crossAxisAlignment: CrossAxisAlignment.start,
                   children: [
                     SizedBox(
-                      width: 185,
+                      width: Get.size.width * .45,
                       child: Text(event.title,
                           overflow: TextOverflow.ellipsis,
                           style: generalTextStyle(20)),
