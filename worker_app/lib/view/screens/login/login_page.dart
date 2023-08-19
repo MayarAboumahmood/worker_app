@@ -1,4 +1,3 @@
-
 import 'package:flutter/material.dart';
 import 'package:get/get.dart';
 import '../../../constant/fonts.dart';
@@ -6,7 +5,6 @@ import '../../../constant/sizes.dart';
 import 'package:auto_size_text/auto_size_text.dart';
 
 import '../../../constant/status_request.dart';
-import '../../../constant/text_style.dart';
 import '../../../constant/theme.dart';
 import '../../widget/costum_text_field.dart';
 import '../../widget/my_button.dart';
@@ -26,9 +24,6 @@ class LoginPage extends StatelessWidget {
         body: bodyAllStatuse(context));
   }
 
-  /// need to correct indicator in done button in line 236
-  /// correct design when no internet statuse in line 35
-  ///
   Widget bodyAllStatuse(BuildContext context) {
     Sizes size = Sizes(context);
 
@@ -166,8 +161,8 @@ class LoginPage extends StatelessWidget {
       myRadius: size.buttonRadius,
       ontap: () {
         print("object");
-         controller.onpresslogin();
-       // Get.offNamed('/Bar');
+        controller.onpresslogin();
+        // Get.offNamed('/Bar');
       },
       mywidth: size.normalButtonWidht,
       myheight: size.normalButtonHeight,
@@ -212,38 +207,10 @@ class LoginPage extends StatelessWidget {
           emailTextFeild(size),
           SizedBox(height: Get.size.height * .1),
           passwordTextFeild(size),
-          SizedBox(height: Get.size.height * .03),
-          moveToRegister(size),
           SizedBox(height: Get.size.height * .1),
           theDoneButton(size),
           SizedBox(
             height: Get.size.height * .1,
-          ),
-        ],
-      ),
-    );
-  }
-
-  Widget moveToRegister(Sizes size) {
-    return Padding(
-      padding: const EdgeInsets.symmetric(horizontal: 20),
-      child: Row(
-        children: [
-          AutoSizeText("Don't have an account?".tr,
-              style: generalTextStyle(
-                  null /*size.moveBetweenLoginandregisterText*/)),
-          GestureDetector(
-            child: AutoSizeText(
-              "Click here".tr,
-              style: TextStyle(
-                  color: Get.isDarkMode
-                      ? Themes.customdarktheme.primaryColor
-                      : Themes.customlighttheme.primaryColor,
-                  fontSize: null /*size.moveBetweenLoginandregisterText*/),
-            ),
-            onTap: () {
-              Get.offAllNamed('/Register');
-            },
           ),
         ],
       ),

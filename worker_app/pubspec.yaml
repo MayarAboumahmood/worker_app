@@ -41,6 +41,7 @@ dependencies:
   connectivity_plus: ^4.0.1
   path_provider: ^2.0.5
   file_picker: 5.2.1
+  flutter_client_sse: ^1.0.0
   curved_navigation_bar: ^1.0.3
 
   # The following adds the Cupertino Icons font to your application.
