@@ -8,9 +8,9 @@ import '../screens/door/door_controller.dart';
 // ignore: must_be_immutable
 class ReservationCard extends StatelessWidget {
   final ReservationResponse reservation;
-  final index;
-  DoorController controller=Get.find();
-   ReservationCard({super.key, required this.reservation,required this.index});
+  final int index;
+  final DoorController controller = Get.find();
+  ReservationCard({super.key, required this.reservation, required this.index});
 
   @override
   Widget build(BuildContext context) {

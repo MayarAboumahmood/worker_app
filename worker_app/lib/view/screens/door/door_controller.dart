@@ -3,7 +3,6 @@ import 'package:get/get.dart';
 import '../../../constant/status_request.dart';
 
 import '../../../data/Models/door_model.dart';
-import '../../../data/Models/event_model.dart';
 import '../../../general_controller/statuse_request_controller.dart';
 import '../../../main.dart';
 import '../../widget/no_internet_page.dart';

@@ -22,7 +22,7 @@ class DrinkCard extends StatelessWidget {
   DrinkModel drink;
   int id;
   Function()? onPressed;
-  DrinkCard({super.key, required this.id,required this.drink, this.onPressed});
+  DrinkCard({super.key, required this.id, required this.drink, this.onPressed});
   @override
   Widget build(BuildContext context) {
     DrinkCardController controller = Get.put(
@@ -40,7 +40,7 @@ class DrinkCard extends StatelessWidget {
                 : woodBrownColor.withOpacity(0.9),
             borderRadius: BorderRadius.circular(size.buttonRadius)),
         width: 100, //size.drinkCardWidth,
-        height: 210,
+        height: 220,
         child: Column(
             crossAxisAlignment: CrossAxisAlignment.center,
             mainAxisAlignment: MainAxisAlignment.start,
@@ -74,11 +74,9 @@ class DrinkCard extends StatelessWidget {
                           addRemoveButton('add', controller),
                           const Spacer(),
                           Obx(() => Text(
-                                controller.numberOfDrinks[id].value
-                                    .toString(),
+                                controller.numberOfDrinks[id].value.toString(),
                                 style: TextStyle(
                                   color: skinColorWhite,
-                               
                                 ),
                               )),
                           const Spacer(),
@@ -92,9 +90,14 @@ class DrinkCard extends StatelessWidget {
                   ),
                 ),
               ),
-              AutoSizeText(
-                drink.name,
-                style: generalTextStyle(20),
+              Padding(
+                padding: const EdgeInsets.symmetric(horizontal: 5),
+                child: AutoSizeText(
+                  drink.name,
+                  maxLines: 2,
+                  overflow: TextOverflow.ellipsis,
+                  style: generalTextStyle(17),
+                ),
               ),
               const SizedBox(
                 height: 3,
@@ -114,10 +117,10 @@ class DrinkCard extends StatelessWidget {
       width: 60,
       child: MaterialButton(
         onPressed: () {
-            addOrRemove == 'add'
+          addOrRemove == 'add'
               ? drinkCardController.increaseTheNumberOfDrinks(id, drink)
               : drinkCardController.decreaseTheNumberOfDrinks(id);
-        //  add one from this drink or remove one of the drink
+          //  add one from this drink or remove one of the drink
         },
         child: Icon(
           addOrRemove == 'add' ? Icons.add : Icons.remove,
@@ -128,8 +131,6 @@ class DrinkCard extends StatelessWidget {
     );
   }
 }
-
-
 
 class DrinkCardController extends GetxController
     implements StatuseRequestController {
@@ -194,7 +195,8 @@ class DrinkCardController extends GetxController
     update();
     return finalListData;
   }
-  MakeOrder order=MakeOrder();
+
+  MakeOrder order = MakeOrder();
   void increaseTheNumberOfDrinks(int id, DrinkModel drink) {
     numberOfDrinks[id].value++;
     if (ifAddForTheFirstTime(drink)) {
