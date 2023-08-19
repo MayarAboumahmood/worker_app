@@ -28,6 +28,8 @@ Widget cartCard(MakeOrder order, int index, BuildContext context, Sizes size) {
           children: [
             Text(
               order.drinksWithAmount[index].drink.name,
+              maxLines: 2,
+              overflow: TextOverflow.ellipsis,
               style: TextStyle(
                 fontFamily: jostFontFamily,
                 color: Get.isDarkMode ? skinColorWhite : backGroundDarkColor,

@@ -55,11 +55,15 @@ class DrinkCard extends StatelessWidget {
                   child: Stack(
                     children: [
                       Positioned.fill(
-                        child: Image.asset(
-                          // drink.imageName;
-                          'assets/images/medium page background image.jpg',
-                          fit: BoxFit.fill,
-                        ),
+                        child: drink.image == ''
+                            ? Image.asset(
+                                'assets/images/medium page background image.jpg',
+                                fit: BoxFit.fill,
+                              )
+                            : Image.network(
+                                drink.image,
+                                fit: BoxFit.fill,
+                              ),
                       ),
                       Positioned.fill(
                         child: Container(
