@@ -90,11 +90,14 @@ class DrinkCard extends StatelessWidget {
                   ),
                 ),
               ),
-              AutoSizeText(
-                drink.name,
-                maxLines: 2,
-                overflow: TextOverflow.ellipsis,
-                style: generalTextStyle(18),
+              Padding(
+                padding: const EdgeInsets.symmetric(horizontal: 5),
+                child: AutoSizeText(
+                  drink.name,
+                  maxLines: 2,
+                  overflow: TextOverflow.ellipsis,
+                  style: generalTextStyle(17),
+                ),
               ),
               const SizedBox(
                 height: 3,
