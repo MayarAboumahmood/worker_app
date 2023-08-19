@@ -23,7 +23,7 @@ class DoorController extends GetxController
     // statuseRequest = await checkIfTheInternetIsConectedBeforGoingToThePage();
     await sendingARequestAndHandlingData();
     statuseRequest = await checkIfTheInternetIsConectedBeforGoingToThePage();
-eventID=0;
+    eventID = 64;
     super.onInit();
   }
 
@@ -49,11 +49,9 @@ eventID=0;
 
   getdata() async {
     String token = await prefService.readString('token');
-   Map<String,String> data={
-   "event_id":eventID.toString()
-   };
+    Map<String, String> data = {"event_id": eventID.toString()};
     Either<StatuseRequest, Map<dynamic, dynamic>> response =
-        await service.getDoorReservations(token,data);
+        await service.getDoorReservations(token, data);
 
     return response.fold((l) => l, (r) => r);
   }
@@ -65,52 +63,123 @@ eventID=0;
       return StatuseRequest.success;
     }
   }
-List<int > numberOfPepole=[];
+
+  List<int> numberOfPepole = [];
   Future<List<ReservationResponse>> whenGetDataSuccess(response) async {
     List notComeData = response['data']['notCome'];
     List comeData = response['data']['hasCome'];
 
     for (int i = 0; i < notComeData.length; i++) {
-      // print(i);
-      finalListDataNotCome
-          .add(ReservationResponse.fromJson(notComeData[i], "notCome"));
-         numberOfPepole.add( finalListDataCome[i].attendanceNumber!);
+      finalListDataNotCome.add(ReservationResponse.fromJson(notComeData[i]));
+      numberOfPepole.add(finalListDataNotCome[i].attendanceNumber!);
+      showTrueSign.add(false.obs);
     }
 
     for (int i = 0; i < comeData.length; i++) {
       // print(i);
-      finalListDataCome.add(ReservationResponse.fromJson(comeData[i], "come"));
-         numberOfPepole.add( finalListDataNotCome[i].attendanceNumber!);
+      finalListDataCome.add(ReservationResponse.fromJson(comeData[i]));
+      numberOfPepole.add(finalListDataCome[i].attendanceNumber!);
+      showTrueSign.add(false.obs);
     }
-
+    print(showTrueSign.length);
 // print("${finalListData[0].beginDate.hour}:${finalListData[0].beginDate.minute}");
     update();
     return finalListDataCome;
   }
 
-  void increaseTheNumberOfPeople(int reservationID) {
-    numberOfPepole[reservationID]++;
-    // if (finalListDataNotCome[reservationID].attendanceNumber <
-    //     finalListDataNotCome[reservationID].numberOfPlaces) {
-    //   print('i am innnnnnnnnnnnnnnn');
-    //   finalListDataNotCome[reservationID].attendanceNumber=(finalListDataNotCome[reservationID].attendanceNumber+1)!;
-    //   reservation.cameNumber++;
+  List<ReservationResponse> reservationChanged = [];
+  void increaseTheNumberOfPeople(int reservationID, int numberOfPlaces) {
+    if (numberOfPepole[reservationID] < numberOfPlaces) {
+     numberOfPepole[reservationID]++;
+      if(numberOfPepole[reservationID] == numberOfPlaces){
+        showTrueSign[reservationID].value=true;
+      }
       update();
-    // }
+    }
   }
 
-  void decreaseTheNumberOfPeople(int reservationID) {
-    numberOfPepole[reservationID]--;
-  //   if (reservation.cameNumber > 0) {
-  //     reservation.cameNumber--;
-  //     numberOfPeople[reservation.id].value--;
-  //   }
-  update();
-  }
-    RxBool showTrueSign = false.obs;
-
-  void toggleTrueSign() {
-    showTrueSign.toggle();
+  void decreaseTheNumberOfPeople(
+      int reservationID,  int numberOfPlaces) {
+        if(numberOfPepole[reservationID] == numberOfPlaces ){
+        showTrueSign[reservationID].value=false;
+      }
+    if (numberOfPepole[reservationID] > 0) {
+      numberOfPepole[reservationID]--;
+    }
+    update();
   }
 
+  List<RxBool> showTrueSign = [];
+
+  void toggleTrueSign(int reservationID,int numberOfPlaces,int attendanceNumber) {
+    if(showTrueSign[reservationID].value){
+      showTrueSign[reservationID].value=false;
+      numberOfPepole[reservationID]=attendanceNumber;
+      update();
+    }else{
+      numberOfPepole[reservationID]=numberOfPlaces;
+      showTrueSign[reservationID].value=true;
+      update();
+    }
+  }
+
+  ///////  send
+
+  onPressDone() async {
+    // print("drrrrrrrrrrrrrrr");
+    statuseRequest = StatuseRequest.loading;
+    update();
+    dynamic response =
+        await sendData(); // check if the return data is statuseRequest or real data
+    statuseRequest = handlingData(response); //return the statuseResponse
+    if (statuseRequest == StatuseRequest.success) {
+      return whenSendDataSuccess(response);
+    } else if (statuseRequest == StatuseRequest.authfailuer) {
+      snackBarForErrors("Auth error", "Please login again");
+      Get.offAllNamed('LoginPage');
+    } else {
+      // when happen a mestake we handel it here
+      [];
+    }
+    update();
+    return [];
+  }
+
+  sendData() async {
+    String token = await prefService.readString('token');
+    List<Map<String, String>> data = [];
+    for (var i = 0; i < finalListDataNotCome.length; i++) {
+      if (numberOfPepole[i] != finalListDataNotCome[i].attendanceNumber!) {
+        data.add({
+          "reservation_id": finalListDataNotCome[i].reservationId.toString(),
+          "attendance_number": numberOfPepole[i].toString()
+        });
+      }
+    }
+     for (var i = 0; i < finalListDataCome.length; i++) {
+      if (numberOfPepole[i+finalListDataNotCome.length] != finalListDataCome[i].attendanceNumber!) {
+        data.add({
+          "reservation_id": finalListDataCome[i].reservationId.toString(),
+          "attendance_number": numberOfPepole[i].toString()
+        });
+      }
+    }
+    var d;
+    for (var i = 0; i < data.length; i++) {
+      
+      Either<StatuseRequest, Map<dynamic, dynamic>>  response= await service.sendReservatoin(token,data[i]);
+    d= response.fold((l) => l, (r) => r);
+    }
+
+   statuseRequest = handlingData(d); //return the statuseResponse
+    if (statuseRequest == StatuseRequest.success) {
+      return whenSendDataSuccess(d);
+    } 
+  }
+
+  whenSendDataSuccess(response) async {
+    snackBarForErrors("Edit Done","The reservations edited ");
+    
+    // sendingARequestAndHandlingData();
+  }
 }

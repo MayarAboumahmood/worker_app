@@ -87,21 +87,29 @@ class OrderController extends GetxController
     return amount;
   }
 
-  onPressApproveToOrder(int id) async {
+  onPressApproveToOrder(int id, int idFinal) async {
     String token = await prefService.readString('token');
     Map<String, String> data = {"order_id": id.toString()};
     Either<StatuseRequest, Map<dynamic, dynamic>> response =
         await service.approveOrder(token, data);
 
-    return response.fold((l) => l, (r) => r);
+    statuseRequest=handlingData(response);
+if (statuseRequest == StatuseRequest.success) {
+      finalListData.removeAt(idFinal);
+      update();
+    } 
   }
 
-  onPressDenyToOrder(int id) async {
+  onPressDenyToOrder(int id,int idFinal) async {
     String token = await prefService.readString('token');
     Map<String, String> data = {"order_id": id.toString()};
     Either<StatuseRequest, Map<dynamic, dynamic>> response =
         await service.denyOrder(token, data);
-
-    return response.fold((l) => l, (r) => r);
+statuseRequest=handlingData(response);
+if (statuseRequest == StatuseRequest.success) {
+      finalListData.removeAt(idFinal);
+      update();
+    } 
+    // return response.fold((l) => l, (r) => r);
   }
 }

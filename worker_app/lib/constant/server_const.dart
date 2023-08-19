@@ -27,7 +27,7 @@ class ServerConstApis {
 
   static String showOrders = '${baseAPI}orders/show-all-orders';
   static String approveOrder = '${baseAPI}worker/approveOrder';
-  static String denyOrder = '${baseAPI}worker/retractOrder';
+  static String denyOrder = '${baseAPI}worker/deleteOrderByWorker';
 
 ///////////reservation
   static String makeReservation = '${baseAPI}reservations/make-reservation';
@@ -36,6 +36,7 @@ class ServerConstApis {
 
   /////////// door
   static String showReservation = '${baseAPI}worker/show-reservations';
+  static String sendreservation = '${baseAPI}worker/confirmArrival';
 
 /////////forImages
   static String loadImages = baseAPI;

@@ -19,7 +19,6 @@ class EventService {
         };
 
         var response = await http.get(url, headers: headers);
-print(response.body);
         if (response.statusCode == 200 || response.statusCode == 201) {
           final responsebody = jsonDecode(response.body);
 

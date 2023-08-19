@@ -24,34 +24,45 @@ Widget attendanceList(BuildContext context,int eventId) {
 }
 
 whenShowTheBodyAfterLoadingAndInternet(context,DoorController controller) {
+Widget getnotcome(){
+  List<Widget> h=[];
+  for (var i = 0; i < controller.finalListDataNotCome.length; i++) {
+    h.add(ReservationCard(reservation: controller.finalListDataNotCome[i],index: controller.finalListDataCome.length+i)
+    );
+  }
+  return Column(children: h,);
+  }Widget getcome(){
+  List<Widget> g=[];
+  for (var i = 0; i < controller.finalListDataCome.length; i++) {
+    g.add(ReservationCard(reservation: controller.finalListDataCome[i],index:i)
+  );
+  }
+   return Column(children: g,);
+ }
+  List<Widget> getData(){
+  List<Widget> h=[];
+  h.add(dividerWithWord('haven not come yet'.tr));
+  h.add(getnotcome());
+    h.add( dividerWithWord('haven  come yet'.tr));
+       h.add(getcome());
+       return h;                 
+
+}
+List<Widget> finall=getData();
   return ListView.builder(
     padding: const EdgeInsets.symmetric(vertical: 20),
-    itemCount: controller.finalListDataCome.length+controller.finalListDataNotCome.length + 2,
+    itemCount:  finall.length,
     itemBuilder: (context, index) {
       return Padding(
         padding: const EdgeInsets.symmetric(horizontal: 10, vertical: 15),
-        child: index == 0
-            ? Column(
-                children: [
-                  dividerWithWord('haven not come yet'.tr),
-                  const SizedBox(height: 10),
-                ],
-              )
-            : index - 1 < controller.finalListDataCome .length
-                ? ReservationCard(reservation: controller.finalListDataCome[index],index:controller.finalListDataNotCome.length+index)
-                : index - 1 == controller.finalListDataCome.length
-                    ? Column(
-                        children: [
-                          dividerWithWord('haven not come yet'.tr),
-                          const SizedBox(height: 10),
-                        ],
-                      )
-                    : ReservationCard(reservation: controller.finalListDataNotCome[index],index:index)
-                ,
+        child:
+        finall[index]       ,
       );
     },
   );
+
 }
+
 
 class Reservation {
   String name;

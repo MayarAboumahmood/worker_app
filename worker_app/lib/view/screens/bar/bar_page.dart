@@ -11,6 +11,7 @@ import '../../widget/animation_title.dart';
 import '../../widget/bottom_nav_bar.dart';
 import '../../widget/drawer.dart';
 import '../../widget/drink_card.dart';
+import '../door/door_controller.dart';
 import '../door/door_page.dart';
 import '../orders/order_page.dart';
 
@@ -28,7 +29,7 @@ class BarPage extends StatelessWidget {
         initialIndex: 0,
         child: Scaffold(
           floatingActionButton: Obx(() => Visibility(
-                visible: controller.page.value == 0,
+                visible: controller.page.value != 1,
                 replacement: const Text(''),
                 child: floatingDoneButton(controller, drinkCardController),
               )),
@@ -154,9 +155,9 @@ class BarPage extends StatelessWidget {
     if (index == 0) {
       Get.toNamed('/Cart', arguments: drinkCardController.order);
     }
-    // else if(index ==1){
-    //   PlacesController controller=Get.find();
-    //   controller.onpressDone();
-    // }
+    else if(index ==2){
+      DoorController controller=Get.find();
+      controller.sendData();
+    }
   }
 }
