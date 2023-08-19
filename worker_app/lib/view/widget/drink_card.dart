@@ -6,6 +6,7 @@ import 'package:flutter/material.dart';
 import 'package:get/get.dart';
 import 'package:worker_app/view/widget/snak_bar_for_errors.dart';
 
+import '../../constant/server_const.dart';
 import '../../constant/sizes.dart';
 import '../../constant/status_request.dart';
 import '../../constant/text_style.dart';
@@ -61,7 +62,7 @@ class DrinkCard extends StatelessWidget {
                                 fit: BoxFit.fill,
                               )
                             : Image.network(
-                                drink.image,
+                                "${ServerConstApis.loadImages}${drink.image}",
                                 fit: BoxFit.fill,
                               ),
                       ),
