@@ -20,38 +20,39 @@ class EventPage extends StatelessWidget {
     return Scaffold(
       drawer: ProjectDrawer(),
       appBar: createAppBar(size),
-      body:GetBuilder<EventPageController>(
-                  builder: (ctx) => controller.statuseRequest ==
-                          StatuseRequest.offlinefailure
-                      ? noInternetPage(size, controller)
-                      : controller.statuseRequest == StatuseRequest.loading
-                          ? Text("loading....".tr, style: generalTextStyle(14))
-                          : whenShowTheBodyAfterLoadingAndInternet(context),
-                ),
-    )
-      ;
+      body: GetBuilder<EventPageController>(
+        builder: (ctx) =>
+            controller.statuseRequest == StatuseRequest.offlinefailure
+                ? noInternetPage(size, controller)
+                : controller.statuseRequest == StatuseRequest.loading
+                    ? Text("loading....".tr, style: generalTextStyle(14))
+                    : whenShowTheBodyAfterLoadingAndInternet(context),
+      ),
+    );
   }
-  Widget whenShowTheBodyAfterLoadingAndInternet(BuildContext context){return  SafeArea(
-        child: Stack(
-          children: [
-            Container(
-              color: Get.isDarkMode ? darkPrimaryColor : primaryColor,
-            ),
-            Container(
-              margin: const EdgeInsets.only(top: 30),
-              decoration: BoxDecoration(
-                color: Get.isDarkMode ? backGroundDarkColor : skinColorWhite,
-                borderRadius: const BorderRadius.only(
-                  topLeft: Radius.circular(15),
-                  topRight: Radius.circular(15),
-                ),
+
+  Widget whenShowTheBodyAfterLoadingAndInternet(BuildContext context) {
+    return SafeArea(
+      child: Stack(
+        children: [
+          Container(
+            color: Get.isDarkMode ? darkPrimaryColor : primaryColor,
+          ),
+          Container(
+            margin: const EdgeInsets.only(top: 30),
+            decoration: BoxDecoration(
+              color: Get.isDarkMode ? backGroundDarkColor : skinColorWhite,
+              borderRadius: const BorderRadius.only(
+                topLeft: Radius.circular(15),
+                topRight: Radius.circular(15),
               ),
             ),
-            buildEventGridView()
-          ],
-        ),
-      );
-    }
+          ),
+          buildEventGridView()
+        ],
+      ),
+    );
+  }
 
   Widget buildEventGridView() {
     return ListView.builder(
@@ -71,18 +72,6 @@ class EventPage extends StatelessWidget {
       elevation: 0.4,
       backgroundColor: Get.isDarkMode ? darkPrimaryColor : primaryColor,
       title: AnimationAppBarTitle(title: 'Events'.tr),
-      actions: [
-        IconButton(
-          icon: Icon(
-            Icons.search,
-            color: Get.isDarkMode ? skinColorWhite : backGroundDarkColor,
-            size: size.appBarIconSize,
-          ),
-          onPressed: () {
-            // Perform search action
-          },
-        ),
-      ],
     );
   }
 }

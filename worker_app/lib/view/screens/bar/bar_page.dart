@@ -22,6 +22,8 @@ class BarPage extends StatelessWidget {
   Widget build(BuildContext context) {
     Sizes size = Sizes(context);
     BarPageController controller = Get.find();
+    // final DrinkSearchController drinkSearchController =
+    //     Get.put(DrinkSearchController());
     final DrinkCardController drinkCardController =
         Get.put(DrinkCardController());
     return DefaultTabController(
@@ -34,7 +36,7 @@ class BarPage extends StatelessWidget {
                 child: floatingDoneButton(controller, drinkCardController),
               )),
           extendBody: true,
-          appBar: createAppBar(size),
+          appBar: createAppBar(size, controller),
           drawer: ProjectDrawer(),
           body: SafeArea(
             child: Stack(
@@ -97,8 +99,8 @@ class BarPage extends StatelessWidget {
     List<Widget> list = [
       buildBarGridView(Colors.black, context, drinkCardController),
       // buildBarGridView(Colors.blue, context, drinkCardController),
-     buildOrderList(size),
-      attendanceList(context,controller.eventId),
+      buildOrderList(size),
+      attendanceList(context, controller.eventId),
     ];
     return ([list[controller.page.value]]);
   }
@@ -108,30 +110,30 @@ class BarPage extends StatelessWidget {
     return GetBuilder(
         init: drinkCardContrller,
         builder: (context) {
-          return
-    GridView.builder(
-      padding: const EdgeInsets.all(16),
-      gridDelegate: SliverGridDelegateWithFixedCrossAxisCount(
-        crossAxisCount: ccontext.widthInches > 8.5
-            ? 4
-            : ccontext.widthInches > 5.5
-                ? 3
-                : 2,
-        mainAxisExtent: 230,
-        crossAxisSpacing: 10,
-        mainAxisSpacing: 16,
-      ),
-       itemCount: drinkCardContrller.finalListData.length,
+          return GridView.builder(
+            padding: const EdgeInsets.all(16),
+            gridDelegate: SliverGridDelegateWithFixedCrossAxisCount(
+              crossAxisCount: ccontext.widthInches > 8.5
+                  ? 4
+                  : ccontext.widthInches > 5.5
+                      ? 3
+                      : 2,
+              mainAxisExtent: 230,
+              crossAxisSpacing: 10,
+              mainAxisSpacing: 16,
+            ),
+            itemCount: drinkCardContrller.finalListData.length,
             itemBuilder: (context, index) {
               return DrinkCard(
                 id: index,
                 drink: drinkCardContrller.finalListData[index],
               );
-      },
-      );});
+            },
+          );
+        });
   }
 
-  PreferredSizeWidget? createAppBar(Sizes size) {
+  PreferredSizeWidget? createAppBar(Sizes size, BarPageController controller) {
     return AppBar(
       elevation: 0.4,
       backgroundColor: Get.isDarkMode ? darkPrimaryColor : primaryColor,
@@ -144,19 +146,18 @@ class BarPage extends StatelessWidget {
             size: size.appBarIconSize,
           ),
           onPressed: () {
-            // Perform search action
+            Get.toNamed('/SearchPage', arguments: controller.page.value);
           },
         ),
       ],
     );
   }
 
-   void onpressedDone(int index, DrinkCardController drinkCardController) {
+  void onpressedDone(int index, DrinkCardController drinkCardController) {
     if (index == 0) {
       Get.toNamed('/Cart', arguments: drinkCardController.order);
-    }
-    else if(index ==2){
-      DoorController controller=Get.find();
+    } else if (index == 2) {
+      DoorController controller = Get.find();
       controller.sendData();
     }
   }

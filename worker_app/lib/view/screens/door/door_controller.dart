@@ -89,19 +89,18 @@ class DoorController extends GetxController
   List<ReservationResponse> reservationChanged = [];
   void increaseTheNumberOfPeople(int reservationID, int numberOfPlaces) {
     if (numberOfPepole[reservationID] < numberOfPlaces) {
-     numberOfPepole[reservationID]++;
-      if(numberOfPepole[reservationID] == numberOfPlaces){
-        showTrueSign[reservationID].value=true;
+      numberOfPepole[reservationID]++;
+      if (numberOfPepole[reservationID] == numberOfPlaces) {
+        showTrueSign[reservationID].value = true;
       }
       update();
     }
   }
 
-  void decreaseTheNumberOfPeople(
-      int reservationID,  int numberOfPlaces) {
-        if(numberOfPepole[reservationID] == numberOfPlaces ){
-        showTrueSign[reservationID].value=false;
-      }
+  void decreaseTheNumberOfPeople(int reservationID, int numberOfPlaces) {
+    if (numberOfPepole[reservationID] == numberOfPlaces) {
+      showTrueSign[reservationID].value = false;
+    }
     if (numberOfPepole[reservationID] > 0) {
       numberOfPepole[reservationID]--;
     }
@@ -110,14 +109,15 @@ class DoorController extends GetxController
 
   List<RxBool> showTrueSign = [];
 
-  void toggleTrueSign(int reservationID,int numberOfPlaces,int attendanceNumber) {
-    if(showTrueSign[reservationID].value){
-      showTrueSign[reservationID].value=false;
-      numberOfPepole[reservationID]=attendanceNumber;
+  void toggleTrueSign(
+      int reservationID, int numberOfPlaces, int attendanceNumber) {
+    if (showTrueSign[reservationID].value) {
+      showTrueSign[reservationID].value = false;
+      numberOfPepole[reservationID] = attendanceNumber;
       update();
-    }else{
-      numberOfPepole[reservationID]=numberOfPlaces;
-      showTrueSign[reservationID].value=true;
+    } else {
+      numberOfPepole[reservationID] = numberOfPlaces;
+      showTrueSign[reservationID].value = true;
       update();
     }
   }
@@ -155,8 +155,9 @@ class DoorController extends GetxController
         });
       }
     }
-     for (var i = 0; i < finalListDataCome.length; i++) {
-      if (numberOfPepole[i+finalListDataNotCome.length] != finalListDataCome[i].attendanceNumber!) {
+    for (var i = 0; i < finalListDataCome.length; i++) {
+      if (numberOfPepole[i + finalListDataNotCome.length] !=
+          finalListDataCome[i].attendanceNumber!) {
         data.add({
           "reservation_id": finalListDataCome[i].reservationId.toString(),
           "attendance_number": numberOfPepole[i].toString()
@@ -165,20 +166,20 @@ class DoorController extends GetxController
     }
     var d;
     for (var i = 0; i < data.length; i++) {
-      
-      Either<StatuseRequest, Map<dynamic, dynamic>>  response= await service.sendReservatoin(token,data[i]);
-    d= response.fold((l) => l, (r) => r);
+      Either<StatuseRequest, Map<dynamic, dynamic>> response =
+          await service.sendReservatoin(token, data[i]);
+      d = response.fold((l) => l, (r) => r);
     }
 
-   statuseRequest = handlingData(d); //return the statuseResponse
+    statuseRequest = handlingData(d); //return the statuseResponse
     if (statuseRequest == StatuseRequest.success) {
       return whenSendDataSuccess(d);
-    } 
+    }
   }
 
   whenSendDataSuccess(response) async {
-    snackBarForErrors("Edit Done","The reservations edited ");
-    
+    snackBarForErrors("Edit Done", "The reservations edited ");
+
     // sendingARequestAndHandlingData();
   }
 }

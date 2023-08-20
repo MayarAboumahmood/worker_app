@@ -32,13 +32,20 @@ class EventInfo extends StatelessWidget {
   whenShowTheBodyAfterLoadingAndInternet(BuildContext context, Sizes size) {
     return Scaffold(
       body: SafeArea(child: cardBody(size)),
-      floatingActionButton:dataController.isConfirmed.value? FloatingActionButton.extended(
-          onPressed: () {},
-          label: TextButton(
-              onPressed: () {
-                Get.offNamed('/Bar', arguments: dataController.eventId);
-              },
-              child: Text('Work here'.tr, style: generalTextStyle(null),),),):null,
+      floatingActionButton: dataController.isConfirmed.value
+          ? FloatingActionButton.extended(
+              onPressed: () {},
+              label: TextButton(
+                onPressed: () {
+                  Get.offNamed('/Bar', arguments: dataController.eventId);
+                },
+                child: Text(
+                  'Work here'.tr,
+                  style: generalTextStyle(null),
+                ),
+              ),
+            )
+          : null,
     );
   }
 
@@ -52,6 +59,7 @@ class EventInfo extends StatelessWidget {
           mainAxisAlignment: MainAxisAlignment.start,
           children: [
             SizedBox(
+              width: double.infinity,
               height: 250,
               child: GestureDetector(
                   onHorizontalDragEnd: (details) {
@@ -127,29 +135,34 @@ class EventInfo extends StatelessWidget {
   }
 
   Widget buildImagesList(Sizes size) {
-    return AnimatedBuilder(
-      animation: controller.pageController,
-      builder: (context, child) {
-        return PageView.builder(
-          onPageChanged: controller.setPageIndex,
-          controller: controller.pageController,
-          itemCount: dataController.model.images.length,
-          itemBuilder: (context, index) {
-            return ClipRRect(
-                borderRadius: BorderRadius.only(
-                  topLeft: Radius.circular(size.buttonRadius),
-                  topRight: Radius.circular(size.buttonRadius),
-                ),
-                child: dataController.model.images.isEmpty
-                    ? Image.asset('assets/images/The project icon.jpg',
-                        fit: BoxFit.fill)
-                    : Image.network(
-                        "${ServerConstApis.loadImages}${dataController.model.images[index].picture}",
-                        fit: BoxFit.fill));
-          },
-        );
-      },
-    );
+    return dataController.model.images.isEmpty
+        ? Image.asset(
+            'assets/images/The project icon.jpg',
+            fit: BoxFit.fill,
+          )
+        : AnimatedBuilder(
+            animation: controller.pageController,
+            builder: (context, child) {
+              return PageView.builder(
+                onPageChanged: controller.setPageIndex,
+                controller: controller.pageController,
+                itemCount: dataController.model.images.length,
+                itemBuilder: (context, index) {
+                  return ClipRRect(
+                      borderRadius: BorderRadius.only(
+                        topLeft: Radius.circular(size.buttonRadius),
+                        topRight: Radius.circular(size.buttonRadius),
+                      ),
+                      child: dataController.model.images.isEmpty
+                          ? Image.asset('assets/images/The project icon.jpg',
+                              fit: BoxFit.fill)
+                          : Image.network(
+                              "${ServerConstApis.loadImages}${dataController.model.images[index].picture}",
+                              fit: BoxFit.fill));
+                },
+              );
+            },
+          );
   }
 
   Widget buildDots() {
