@@ -131,7 +131,7 @@ class EventInfo extends StatelessWidget {
     return  AnimatedBuilder(
             animation: dataController.pageController,
             builder: (context, child) {
-              return PageView.builder(
+              return dataController.model!.images.isEmpty?Image.asset('assets/images/The project icon.jpg',fit: BoxFit.fill,) : PageView.builder(
                 onPageChanged: dataController.setPageIndex,
                 controller: dataController.pageController,
                 itemCount: dataController.model!.images.length,
@@ -141,10 +141,7 @@ class EventInfo extends StatelessWidget {
                         topLeft: Radius.circular(size.buttonRadius),
                         topRight: Radius.circular(size.buttonRadius),
                       ),
-                      child: dataController.model!.images.isEmpty
-                          ? Image.asset('assets/images/The project icon.jpg',
-                              fit: BoxFit.fill)
-                          : Image.network(
+                      child: Image.network(
                               "${ServerConstApis.loadImages}${dataController.model!.images[index].picture}",
                               fit: BoxFit.fill));
                 },
