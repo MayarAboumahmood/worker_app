@@ -32,13 +32,13 @@ class EventInfo extends StatelessWidget {
   whenShowTheBodyAfterLoadingAndInternet(BuildContext context, Sizes size) {
     return Scaffold(
       body: SafeArea(child: cardBody(size)),
-      floatingActionButton: FloatingActionButton.extended(
+      floatingActionButton:dataController.isConfirmed.value? FloatingActionButton.extended(
           onPressed: () {},
           label: TextButton(
               onPressed: () {
                 Get.offNamed('/Bar',arguments: dataController.eventId);
               },
-              child: Text('Work here'.tr, style: generalTextStyle(null)))),
+              child: Text('Work here'.tr, style: generalTextStyle(null),),),):null,
     );
   }
 

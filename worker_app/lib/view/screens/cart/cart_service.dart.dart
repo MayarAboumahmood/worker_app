@@ -20,6 +20,7 @@ class CartService {
         };
        
         var response = await http.post(url, headers: headers, body:data);
+        print(response.body);
         //  "1:3,"
         if (response.statusCode == 200 || response.statusCode == 201) {
           final responsebody = jsonDecode(response.body);

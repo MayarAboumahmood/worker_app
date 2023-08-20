@@ -4,6 +4,7 @@ import 'package:get/get.dart';
 import '../../../constant/status_request.dart';
 import '../../../general_controller/statuse_request_controller.dart';
 import '../../../main.dart';
+import '../../widget/drink_card.dart';
 import '../../widget/snak_bar_for_errors.dart';
 import 'cart_page.dart';
 import 'cart_service.dart.dart';
@@ -80,6 +81,9 @@ class CartController extends GetxController  implements StatuseRequestController
   }
 
   whenLoginSuccess(response) async {
+    DrinkCardController drinkCardController=Get.find();
+    order.drinksWithAmount=[];
+    drinkCardController.makeTheNumberofDriknsEqualsZero();
      Get.back();
     update();
   }

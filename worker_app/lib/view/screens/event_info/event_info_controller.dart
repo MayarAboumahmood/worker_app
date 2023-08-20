@@ -17,7 +17,7 @@ class EventInfoController extends GetxController  implements StatuseRequestContr
 EventInfoService service=EventInfoService();
  EventInfoModel model=EventInfoModel(title: 'title', availablePlaces: 2, beginDate: MyDate(day:1, month: 1, year: 1, hour:1, minute:1), id: 1, description: "description", ticketPrice: 2500, images: [], artist: [], bandName: "");
 late int eventId;
- 
+ RxBool isConfirmed=true.obs;
   @override
   void onClose() {
     pageController.dispose();
