@@ -37,7 +37,7 @@ Widget orderCard(
                     SizedBox(
                       height:
                           controller.finalListData[index].orderDrinks.length *
-                              45,
+                              42,
                       child: ListView.builder(
                         physics: const NeverScrollableScrollPhysics(),
                         itemCount:
@@ -46,6 +46,8 @@ Widget orderCard(
                           children: [
                             Text(
                               '${controller.finalListData[index].orderDrinks[index].drinkName}: ${controller.finalListData[index].orderDrinks[index].quantity}',
+                              maxLines: 1,
+                              overflow: TextOverflow.ellipsis,
                               style: TextStyle(
                                 fontFamily: jostFontFamily,
                                 color: Get.isDarkMode
@@ -96,11 +98,12 @@ Widget orderCard(
                       mainAxisAlignment: MainAxisAlignment.spaceBetween,
                       children: [
                         approveDenyButton('Approve', () {
-                          controller.onPressApproveToOrder(controller.finalListData[index].orderID,index);
+                          controller.onPressApproveToOrder(
+                              controller.finalListData[index].orderID, index);
                         }, Colors.green),
                         approveDenyButton('Deny', () {
-                          
-                          controller.onPressDenyToOrder(controller.finalListData[index].orderID,index);
+                          controller.onPressDenyToOrder(
+                              controller.finalListData[index].orderID, index);
                         }, Colors.red),
                       ],
                     )
