@@ -6,6 +6,6 @@ class EventInfoBinding implements Bindings {
   @override
   void dependencies() {
     Get.put(EventInfoController());
-    Get.put(EventCardController());
+    // Get.put(EventCardController());
   }
 }

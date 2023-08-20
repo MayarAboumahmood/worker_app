@@ -11,13 +11,15 @@ import '../../widget/no_internet_page.dart';
 import '../../widget/snak_bar_for_errors.dart';
 import 'event_info_service.dart';
 
-class EventInfoController extends GetxController  implements StatuseRequestController{
+class EventInfoController extends GetxController
+    implements StatuseRequestController {
   final RxInt pageIndex = 0.obs;
   final PageController pageController = PageController();
-EventInfoService service=EventInfoService();
- EventInfoModel model=EventInfoModel(title: 'title', availablePlaces: 2, beginDate: MyDate(day:1, month: 1, year: 1, hour:1, minute:1), id: 1, description: "description", ticketPrice: 2500, images: [], artist: [], bandName: "");
-late int eventId;
- RxBool isConfirmed=true.obs;
+  EventInfoService service = EventInfoService();
+  EventInfoModel? model;
+  late int eventId;
+  bool isConfirmed = false;
+
   @override
   void onClose() {
     pageController.dispose();
@@ -38,14 +40,33 @@ late int eventId;
     }
   }
 
-   @override
+  @override
   StatuseRequest? statuseRequest = (StatuseRequest.init);
   @override
   void onInit() async {
-    eventId=Get.arguments;
- statuseRequest = await checkIfTheInternetIsConectedBeforGoingToThePage();
-    await sendingARequestAndHandlingData();
-   
+    // isConfirmed=false;
+    eventId = Get.arguments;
+    print("===========================");
+// if(await prefService.isContainKey('eventID')){
+    String g = await prefService.readString('enentI');
+
+    g = g.toString().substring(6);
+    if (g == eventId.toString()) {
+      print("event equals");
+      isConfirmed = true;
+    } else {
+      print("r");
+      isConfirmed = false;
+    }
+// }
+// else{
+//   isConfirmed=false;
+// }
+    eventId = Get.arguments;
+    print("===========================");
+    model = await sendingARequestAndHandlingData();
+    statuseRequest = await checkIfTheInternetIsConectedBeforGoingToThePage();
+
     super.onInit();
   }
 
@@ -66,16 +87,13 @@ late int eventId;
       [];
     }
     update();
-    
   }
 
   getdata() async {
     String token = await prefService.readString('token');
-    Map<String, String> data = {
-    "event_id":eventId.toString()
-};
+    Map<String, String> data = {"event_id": eventId.toString()};
     Either<StatuseRequest, Map<dynamic, dynamic>> response =
-        await service.getEventInfo(token,data);
+        await service.getEventInfo(token, data);
 
     return response.fold((l) => l, (r) => r);
   }
@@ -89,11 +107,10 @@ late int eventId;
   }
 
   Future<EventInfoModel> whenGetDataSuccess(response) async {
-  Map<String ,dynamic> data=response['data'];
- model=EventInfoModel.fromMap(data);
- print(model.title);
-  update();
-    return model;
-  }
+    Map<String, dynamic> data = response['data'];
+    model = EventInfoModel.fromMap(data);
 
+    update();
+    return model!;
+  }
 }

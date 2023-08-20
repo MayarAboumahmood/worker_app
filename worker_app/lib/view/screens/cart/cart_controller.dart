@@ -60,9 +60,12 @@ class CartController extends GetxController  implements StatuseRequestController
       } else {
         finalOrder +="${order.drinksWithAmount[i].drink.id}:${order.drinksWithAmount[i].amount},";
        }
-    }
+    }String g=await prefService.readString('enentI');
+
+g=g.toString().substring(6);
   Map<String, dynamic> data = {
     "drinks": finalOrder,
+    "event_id":g
   };
     
   Either<StatuseRequest, Map<dynamic, dynamic>> response =
