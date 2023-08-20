@@ -121,5 +121,13 @@ const Map<String, String> ar = {
   'S.P': 'ليرة سورية',
   'Bar': 'البار',
   'Orders': 'الطلبات',
-  'Door': 'الباب'
+  'Door': 'الباب',
+  'Worker app': 'تطبيق العامل',
+  'Cart page': 'صفحة الجرد',
+  'Total price': 'السعر الاجمالي',
+  'Price': 'السعر',
+  'Amount Ordered': 'الكمية المطلوبة',
+  'Have not come yet': 'لم يأتو بعد',
+  'Have already came': 'جائو بالفعل',
+  'Stock Page': 'صفحة المخزون',
 };

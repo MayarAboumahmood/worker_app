@@ -45,9 +45,14 @@ class StockDrinkCard extends StatelessWidget {
                     children: [
                       Positioned.fill(
                         child: model.image == ''
-                            ? Image.asset('assets/images/The project icon.jpg')
+                            ? Image.asset(
+                                'assets/images/The project icon.jpg',
+                                fit: BoxFit.fill,
+                              )
                             : Image.network(
-                                "${ServerConstApis.loadImages}${model.image}"),
+                                "${ServerConstApis.loadImages}${model.image}",
+                                fit: BoxFit.fill,
+                              ),
                       ),
                       Positioned.fill(
                         child: Container(
@@ -76,9 +81,14 @@ class StockDrinkCard extends StatelessWidget {
                   ),
                 ),
               ),
-              AutoSizeText(
-                model.name,
-                style: generalTextStyle(20),
+              Padding(
+                padding: const EdgeInsets.symmetric(horizontal: 5),
+                child: AutoSizeText(
+                  model.name,
+                  maxLines: 2,
+                  overflow: TextOverflow.ellipsis,
+                  style: generalTextStyle(17),
+                ),
               ),
               const SizedBox(
                 height: 3,

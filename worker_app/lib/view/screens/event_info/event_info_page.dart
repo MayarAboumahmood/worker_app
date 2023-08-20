@@ -36,7 +36,7 @@ class EventInfo extends StatelessWidget {
           onPressed: () {},
           label: TextButton(
               onPressed: () {
-                Get.offNamed('/Bar',arguments: dataController.eventId);
+                Get.offNamed('/Bar', arguments: dataController.eventId);
               },
               child: Text('Work here'.tr, style: generalTextStyle(null),),),):null,
     );
@@ -97,7 +97,7 @@ class EventInfo extends StatelessWidget {
             height: 10,
           ),
           setEventINfo(
-              'Artists: ${dataController.model.artist.map((artist) => artist.artistName).join(', ')}'),
+              '${'Artists: '.tr}${dataController.model.artist.map((artist) => artist.artistName).join(', ')}'),
           elementDivider(),
           const SizedBox(height: 3),
           setEventINfo(

@@ -6,6 +6,7 @@ import 'package:flutter/material.dart';
 import 'package:get/get.dart';
 import 'package:worker_app/view/widget/snak_bar_for_errors.dart';
 
+import '../../constant/server_const.dart';
 import '../../constant/sizes.dart';
 import '../../constant/status_request.dart';
 import '../../constant/text_style.dart';
@@ -55,11 +56,15 @@ class DrinkCard extends StatelessWidget {
                   child: Stack(
                     children: [
                       Positioned.fill(
-                        child: Image.asset(
-                          // drink.imageName;
-                          'assets/images/medium page background image.jpg',
-                          fit: BoxFit.fill,
-                        ),
+                        child: drink.image == ''
+                            ? Image.asset(
+                                'assets/images/medium page background image.jpg',
+                                fit: BoxFit.fill,
+                              )
+                            : Image.network(
+                                "${ServerConstApis.loadImages}${drink.image}",
+                                fit: BoxFit.fill,
+                              ),
                       ),
                       Positioned.fill(
                         child: Container(
