@@ -44,12 +44,9 @@ class EventInfoController extends GetxController
   StatuseRequest? statuseRequest = (StatuseRequest.init);
   @override
   void onInit() async {
-    // isConfirmed=false;
     eventId = Get.arguments;
-    print("===========================");
-// if(await prefService.isContainKey('eventID')){
+    model = await sendingARequestAndHandlingData();
     String g = await prefService.readString('enentI');
-
     g = g.toString().substring(6);
     if (g == eventId.toString()) {
       print("event equals");
@@ -58,13 +55,7 @@ class EventInfoController extends GetxController
       print("r");
       isConfirmed = false;
     }
-// }
-// else{
-//   isConfirmed=false;
-// }
-    eventId = Get.arguments;
-    print("===========================");
-    model = await sendingARequestAndHandlingData();
+
     statuseRequest = await checkIfTheInternetIsConectedBeforGoingToThePage();
 
     super.onInit();

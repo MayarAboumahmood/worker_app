@@ -129,12 +129,7 @@ class EventInfo extends StatelessWidget {
   }
 
   Widget buildImagesList(Sizes size) {
-    return dataController.model!.images.isEmpty
-        ? Image.asset(
-            'assets/images/The project icon.jpg',
-            fit: BoxFit.fill,
-          )
-        : AnimatedBuilder(
+    return  AnimatedBuilder(
             animation: dataController.pageController,
             builder: (context, child) {
               return PageView.builder(

@@ -51,6 +51,7 @@ class EventService {
         var response = await http.get(url, headers: headers);
         if (response.statusCode == 200 || response.statusCode == 201) {
           final responsebody = jsonDecode(response.body);
+          print(response.body);
 
           return Right(responsebody);
         } else if (response.statusCode == 401) {
