@@ -107,7 +107,8 @@ class Setting extends StatelessWidget {
   Widget logOut(Sizes size, BuildContext context) {
     return MaterialButton(
       onPressed: () {
-        //log out from the account.
+        Get.offAllNamed('/');
+        prefService.remove('token');
       },
       child: Container(
         padding: EdgeInsets.symmetric(
