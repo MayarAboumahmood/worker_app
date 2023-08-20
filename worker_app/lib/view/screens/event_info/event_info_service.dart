@@ -6,9 +6,7 @@ import '../../../constant/server_const.dart';
 import '../../../constant/status_request.dart';
 import '../../../data/checkInternet/check_internet.dart';
 import 'package:http/http.dart' as http;
-import 'package:flutter_client_sse/flutter_client_sse.dart';
 
-import '../../../main.dart';
 
 class EventInfoService {
   Future<Either<StatuseRequest, Map>> getEventInfo(
