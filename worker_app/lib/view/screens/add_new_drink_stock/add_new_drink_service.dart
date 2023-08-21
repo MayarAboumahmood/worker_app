@@ -11,25 +11,22 @@ import '../../../constant/status_request.dart';
 import '../../../data/checkInternet/check_internet.dart';
 
 class AddDrinkService {
-  Future<Either<StatuseRequest, Map>> addDrink(
-      Map<String,String> data, Uint8List image,String imageName, String token) async {
+  Future<Either<StatuseRequest, Map>> addDrink(Map<String, String> data,
+      Uint8List image, String imageName, String token) async {
     //Either for return two data type in the same time
     try {
       if (await checkInternet()) {
         print("starting in service");
         Uri url = Uri.parse(ServerConstApis.addDrink);
-       
+
         Map<String, String> headers = {
           "Access-Control-Allow-Origin": "*",
           "x-access-token": token
         };
-    
 
         var request = http.MultipartRequest("POST", url);
-        var multipartFile = http.MultipartFile.fromBytes(
-          "picture",
-          image,filename: imageName
-        );
+        var multipartFile =
+            http.MultipartFile.fromBytes("picture", image, filename: imageName);
         request.files.add(multipartFile);
         request.fields.addAll(data);
         request.headers.addAll(headers);
