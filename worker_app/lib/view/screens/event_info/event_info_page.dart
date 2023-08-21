@@ -24,7 +24,7 @@ class EventInfo extends StatelessWidget {
           ? noInternetPage(size, dataController)
           : dataController.statuseRequest == StatuseRequest.loading
               ? Center(
-                  child: Text("loading....".tr, style: generalTextStyle(14)))
+                  child: Text("hgfhgfgfdtsctdstcstctr".tr, style: generalTextStyle(14)))
               : whenShowTheBodyAfterLoadingAndInternet(context, size),
     );
   }
