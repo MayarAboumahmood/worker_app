@@ -18,7 +18,8 @@ class EventInfoController extends GetxController
   EventInfoModel? model;
   late int eventId;
   bool isConfirmed = false;
-
+RxInt eventModelImageLengh = 0.obs;
+  
   @override
   void onClose() {
     pageController.dispose();
@@ -54,9 +55,10 @@ class EventInfoController extends GetxController
       print("r");
       isConfirmed = false;
     }
+    statuseRequest = StatuseRequest.loading;
 
     statuseRequest = await checkIfTheInternetIsConectedBeforGoingToThePage();
-
+// statuseRequest=StatuseRequest.success;
     super.onInit();
   }
 
@@ -99,8 +101,10 @@ class EventInfoController extends GetxController
   Future<EventInfoModel> whenGetDataSuccess(response) async {
     Map<String, dynamic> data = response['data'];
     model = EventInfoModel.fromMap(data);
-
+    print(model!.id);
+     eventModelImageLengh.value = model!.images.length;
     update();
+    
     return model!;
   }
 }

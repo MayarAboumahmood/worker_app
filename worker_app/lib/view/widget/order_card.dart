@@ -42,10 +42,10 @@ Widget orderCard(
                         physics: const NeverScrollableScrollPhysics(),
                         itemCount:
                             controller.finalListData[index].orderDrinks.length,
-                        itemBuilder: (context, index) => Column(
+                        itemBuilder: (context, indexx) => Column(
                           children: [
                             Text(
-                              '${controller.finalListData[index].orderDrinks[index].drinkName}: ${controller.finalListData[index].orderDrinks[index].quantity}',
+                              '${controller.finalListData[index].orderDrinks[indexx].drinkName}: ${controller.finalListData[index].orderDrinks[indexx].quantity}',
                               maxLines: 1,
                               overflow: TextOverflow.ellipsis,
                               style: TextStyle(

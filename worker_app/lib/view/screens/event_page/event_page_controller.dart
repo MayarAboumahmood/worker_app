@@ -71,11 +71,10 @@ await service.checkingConfirmation();
     
     }
     for (int i = 0; i < responsedata.length; i++) {
-      // print(i);
+  
       finalListData.add(EventModel.fromMap(responsedata[i]));
     }
-    print(finalListData.length);
-// print("${finalListData[0].beginDate.hour}:${finalListData[0].beginDate.minute}");
+ 
     update();
     return finalListData;
   }

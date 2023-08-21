@@ -46,9 +46,9 @@ class SearchPage extends StatelessWidget {
 
   Widget createCustomerNamesListView(
       BuildContext context, GeneralSearchController controller) {
-    return ListView.builder(
+    return Obx(() =>ListView.builder(
       padding: const EdgeInsets.symmetric(vertical: 20),
-      itemCount: controller.finalSearchListData.length,
+      itemCount: controller.customerSearchedListLength.value,
       itemBuilder: (context, index) {
         return Padding(
             padding: const EdgeInsets.symmetric(horizontal: 10, vertical: 15),
@@ -57,7 +57,7 @@ class SearchPage extends StatelessWidget {
               index: index,
             ));
       },
-    );
+    ));
   }
 
   Widget createDrinkSearchGridView(
@@ -114,11 +114,11 @@ class SearchPage extends StatelessWidget {
                             controller.drinkSearchedList.length
                       }
                     :
-                    //------------------------
+                    
                     {
                         controller.customerSearch(text),
-                        // controller.drinkSearchedListLength.value =
-                        //     controller.drinkSearchedList.length
+                        controller.customerSearchedListLength.value =
+                            controller.finalSearchListData.length
                       };
               },
             ),

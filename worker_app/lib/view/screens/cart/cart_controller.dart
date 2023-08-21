@@ -46,13 +46,6 @@ class CartController extends GetxController  implements StatuseRequestController
   sendData() async {
   String token = await prefService.readString('token');
     
-  // List<Map<String, dynamic>> drinksMapList = order.drinksWithAmount
-  //   .map((drinkAmount) => {
-  //     "drink_id": drinkAmount.drink.id,
-  //     "quantity": drinkAmount.amount,
-  //   })
-  //   .toList();
-    
   String finalOrder='';
    for (var i = 0; i < order.drinksWithAmount.length; i++) {
       if (order.drinksWithAmount.length - 1 == i) {

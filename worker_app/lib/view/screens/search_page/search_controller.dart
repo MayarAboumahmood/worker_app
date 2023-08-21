@@ -12,19 +12,20 @@ class GeneralSearchController extends GetxController {
   @override
   void onInit() {
     drinkSearchedList = drinkCardController.finalListData;
+    drinkSearchedListLength.value = drinkCardController.finalListData.length;
+    customerSearchedListLength.value =doorController.finalListDataCome.length + doorController.finalListDataNotCome.length;
+
     finalSearchListData =
         doorController.finalListDataCome + doorController.finalListDataNotCome;
     super.onInit();
   }
 
   RxInt drinkSearchedListLength = 0.obs;
+  RxInt customerSearchedListLength = 0.obs;
   void drinkSearch(String drinkSearhedName) {
     if (drinkSearchedList.isEmpty) {
       drinkSearchedList = drinkCardController.finalListData;
     }
-
-    print('drinkSearchedList: ');
-    print(drinkSearchedList.length);
 
     drinkSearchedList = drinkCardController.finalListData
         .where((character) => character.name
@@ -33,16 +34,20 @@ class GeneralSearchController extends GetxController {
         .toList();
   }
 
-  void customerSearch(String customerName) {
+  void customerSearch(String customerName2) {
     finalSearchListData = doorController.finalListDataCome
         .where((character) => character.customerName
             .toLowerCase()
-            .startsWith(customerName.toLowerCase()))
-        .toList();
-    finalSearchListData = doorController.finalListDataNotCome
+            .startsWith(customerName2.toLowerCase()))
+        .toList()+doorController.finalListDataNotCome
         .where((character) => character.customerName
             .toLowerCase()
-            .startsWith(customerName.toLowerCase()))
+            .startsWith(customerName2.toLowerCase()))
         .toList();
+print('finalSearchListData.length');
+        print(finalSearchListData.length);
+        print('doorController.finalListDataCome.length');
+        print(doorController.finalListDataCome.length);
+        
   }
 }

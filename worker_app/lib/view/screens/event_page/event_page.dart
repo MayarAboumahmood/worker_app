@@ -25,7 +25,7 @@ class EventPage extends StatelessWidget {
             controller.statuseRequest == StatuseRequest.offlinefailure
                 ? noInternetPage(size, controller)
                 : controller.statuseRequest == StatuseRequest.loading
-                    ? Text("loading....".tr, style: generalTextStyle(14))
+                    ? Text("....".tr, style: generalTextStyle(14))
                     : whenShowTheBodyAfterLoadingAndInternet(context),
       ),
     );

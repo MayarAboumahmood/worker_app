@@ -18,27 +18,34 @@ class EventInfo extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     Sizes size = Sizes(context);
-    return
-     GetBuilder<EventInfoController>(
-      builder: (ctx) =>
-          dataController.statuseRequest == StatuseRequest.offlinefailure
-              ? noInternetPage(size, dataController)
-              : dataController.statuseRequest == StatuseRequest.loading
-                  ? Center(child: Text("loading....".tr, style: generalTextStyle(14)))
-                  : whenShowTheBodyAfterLoadingAndInternet(context, size),
+    return GetBuilder<EventInfoController>(
+      builder: (ctx) => dataController.statuseRequest ==
+              StatuseRequest.offlinefailure
+          ? noInternetPage(size, dataController)
+          : dataController.statuseRequest == StatuseRequest.loading
+              ? Center(
+                  child: Text("loading....".tr, style: generalTextStyle(14)))
+              : whenShowTheBodyAfterLoadingAndInternet(context, size),
     );
   }
 
   whenShowTheBodyAfterLoadingAndInternet(BuildContext context, Sizes size) {
     return Scaffold(
       body: SafeArea(child: cardBody(size)),
-      floatingActionButton:dataController.isConfirmed? FloatingActionButton.extended(
-          onPressed: () {},
-          label: TextButton(
-              onPressed: () {
-                Get.offNamed('/Bar', arguments: dataController.eventId);
-              },
-              child: Text('Work here'.tr, style: generalTextStyle(null),),),):null,
+      floatingActionButton: dataController.isConfirmed
+          ? FloatingActionButton.extended(
+              onPressed: () {},
+              label: TextButton(
+                onPressed: () {
+                  Get.offNamed('/Bar', arguments: dataController.eventId);
+                },
+                child: Text(
+                  'Work here'.tr,
+                  style: generalTextStyle(null),
+                ),
+              ),
+            )
+          : null,
     );
   }
 
@@ -70,7 +77,7 @@ class EventInfo extends StatelessWidget {
                   child: buildImagesList(size)),
             ),
             const SizedBox(height: 3),
-            // buildDots(),
+            buildDots(),
             eventInfo(),
           ],
         )));
@@ -128,10 +135,15 @@ class EventInfo extends StatelessWidget {
   }
 
   Widget buildImagesList(Sizes size) {
-    return  AnimatedBuilder(
-            animation: dataController.pageController,
-            builder: (context, child) {
-              return dataController.model!.images.isEmpty?Image.asset('assets/images/The project icon.jpg',fit: BoxFit.fill,) : PageView.builder(
+    return AnimatedBuilder(
+      animation: dataController.pageController,
+      builder: (context, child) {
+        return dataController.model!.images.isEmpty
+            ? Image.asset(
+                'assets/images/The project icon.jpg',
+                fit: BoxFit.fill,
+              )
+            : PageView.builder(
                 onPageChanged: dataController.setPageIndex,
                 controller: dataController.pageController,
                 itemCount: dataController.model!.images.length,
@@ -142,25 +154,25 @@ class EventInfo extends StatelessWidget {
                         topRight: Radius.circular(size.buttonRadius),
                       ),
                       child: Image.network(
-                              "${ServerConstApis.loadImages}${dataController.model!.images[index].picture}",
-                              fit: BoxFit.fill));
+                          "${ServerConstApis.loadImages}${dataController.model!.images[index].picture}",
+                          fit: BoxFit.fill));
                 },
               );
-            },
-          );
+      },
+    );
   }
 
   Widget buildDots() {
-    // return Obx(() {
-    return Row(
-      mainAxisAlignment: MainAxisAlignment.center,
-      children: List.generate(
-        dataController.model!.images.length==0?1:dataController.model!.images.length,
-        (index) => buildDot(
-            index: index, currentIndex: dataController.pageIndex.value),
-      ),
-    );
-    // });
+    return Obx(() {
+      return Row(
+        mainAxisAlignment: MainAxisAlignment.center,
+        children: List.generate(
+          dataController.eventModelImageLengh.value,
+          (index) => buildDot(
+              index: index, currentIndex: dataController.pageIndex.value),
+        ),
+      );
+    });
   }
 
   Widget setEventINfo(String title) {
