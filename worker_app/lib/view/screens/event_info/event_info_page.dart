@@ -94,7 +94,7 @@ class EventInfo extends StatelessWidget {
             height: 10,
           ),
           Text(
-            dataController.model!.title,
+            dataController.model.title,
             style: TextStyle(
                 color: Get.isDarkMode ? skinColorWhite : backGroundDarkColor,
                 fontSize: 23,
@@ -105,26 +105,26 @@ class EventInfo extends StatelessWidget {
             height: 10,
           ),
           setEventINfo(
-              '${'Artists: '.tr}${dataController.model!.artist.map((artist) => artist.artistName).join(', ')}'),
+              '${'Artists: '.tr}${dataController.model.artist.map((artist) => artist.artistName).join(', ')}'),
           elementDivider(),
           const SizedBox(height: 3),
           setEventINfo(
-            '${'Date: '.tr}${dataController.model!.beginDate.day}/${dataController.model!.beginDate.month}/${dataController.model!.beginDate.year}',
+            '${'Date: '.tr}${dataController.model.beginDate.day}/${dataController.model.beginDate.month}/${dataController.model.beginDate.year}',
           ),
           elementDivider(),
           const SizedBox(height: 3),
           setEventINfo(
             'Available Places: '.tr +
-                dataController.model!.availablePlaces.toString(),
+                dataController.model.availablePlaces.toString(),
           ),
           elementDivider(),
           const SizedBox(height: 3),
           setEventINfo(
-            '${'Ticket Price: '.tr}${dataController.model!.ticketPrice} ${'S.P'.tr}',
+            '${'Ticket Price: '.tr}${dataController.model.ticketPrice} ${'S.P'.tr}',
           ),
           elementDivider(),
           const SizedBox(height: 3),
-          setEventINfo('Description: '.tr + dataController.model!.description),
+          setEventINfo('Description: '.tr + dataController.model.description),
         ],
       ),
     );
@@ -138,7 +138,7 @@ class EventInfo extends StatelessWidget {
     return AnimatedBuilder(
       animation: dataController.pageController,
       builder: (context, child) {
-        return dataController.model!.images.isEmpty
+        return dataController.model.images.isEmpty
             ? Image.asset(
                 'assets/images/The project icon.jpg',
                 fit: BoxFit.fill,
@@ -146,7 +146,7 @@ class EventInfo extends StatelessWidget {
             : PageView.builder(
                 onPageChanged: dataController.setPageIndex,
                 controller: dataController.pageController,
-                itemCount: dataController.model!.images.length,
+                itemCount: dataController.model.images.length,
                 itemBuilder: (context, index) {
                   return ClipRRect(
                       borderRadius: BorderRadius.only(
@@ -154,7 +154,7 @@ class EventInfo extends StatelessWidget {
                         topRight: Radius.circular(size.buttonRadius),
                       ),
                       child: Image.network(
-                          "${ServerConstApis.loadImages}${dataController.model!.images[index].picture}",
+                          "${ServerConstApis.loadImages}${dataController.model.images[index].picture}",
                           fit: BoxFit.fill));
                 },
               );

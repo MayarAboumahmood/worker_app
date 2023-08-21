@@ -28,14 +28,16 @@ class EventService {
         print("Received data: $d");
         print(d);
         if (d != 'data: init') {
+          if (d == 'data: new Event') {
             print(d);
             EventPageController s = Get.find();
             s.finalListData = [];
             print(s.finalListData.length);
             s.sendingARequestAndHandlingData();
-
+             d = d.toString().substring(6);
+            prefService.createString('eventId',d.toString());
             snackBarForErrors("New Event added".tr, "Please take a look ".tr);
-          
+          } 
         }
         // Here, you can parse the data as needed and handle the event
       }).asFuture(); // Await the stream subscription to complete

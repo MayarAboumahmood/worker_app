@@ -47,8 +47,17 @@ RxInt eventModelImageLengh = 0.obs;
   void onInit() async {
     print(statuseRequest);
     model = await sendingARequestAndHandlingData();
-    String g = await prefService.readString('enentI');
-    g = g.toString().substring(6);
+   await check();
+    statuseRequest = StatuseRequest.loading;
+
+    statuseRequest = await checkIfTheInternetIsConectedBeforGoingToThePage();
+// statuseRequest=StatuseRequest.success;
+    super.onInit();
+  }
+ check()async {
+  if(await prefService.isContainKey('eventId')){
+   String g = await prefService.readString('enentId');
+    // g = g.toString().substring(6);
     if (g == eventId.toString()) {
       print("event equals");
       isConfirmed = true;
@@ -56,12 +65,12 @@ RxInt eventModelImageLengh = 0.obs;
       print("r");
       isConfirmed = false;
     }
-    statuseRequest = StatuseRequest.loading;
+    
+    }else{
+      isConfirmed=false;
+    }
+}
 
-    statuseRequest = await checkIfTheInternetIsConectedBeforGoingToThePage();
-// statuseRequest=StatuseRequest.success;
-    super.onInit();
-  }
 
   sendingARequestAndHandlingData() async {
     print("drrrrrrrrrrrrrrr");
@@ -106,10 +115,10 @@ RxInt eventModelImageLengh = 0.obs;
   Future<EventInfoModel> whenGetDataSuccess(response) async {
     Map<String, dynamic> data = response['data'];
     model = EventInfoModel.fromMap(data);
-    print(model!.id);
-     eventModelImageLengh.value = model!.images.length;
+    print(model.id);
+     eventModelImageLengh.value = model.images.length;
     update();
     
-    return model!;
+    return model;
   }
 }
