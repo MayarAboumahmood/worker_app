@@ -34,7 +34,7 @@ service.checkingOreders();
     if (statuseRequest == StatuseRequest.success) {
       return whenGetDataSuccess(response);
     } else if (statuseRequest == StatuseRequest.authfailuer) {
-      snackBarForErrors("Auth error", "Please login again");
+      snackBarForErrors("Auth error".tr, "Please login again".tr);
       Get.offAllNamed('LoginPage');
     } else {
       // when happen a mestake we handel it here

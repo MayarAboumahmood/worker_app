@@ -70,18 +70,18 @@ class Stock extends StatelessWidget {
           Get.back();
         },
       ),
-      actions: [
-        IconButton(
-          icon: Icon(
-            Icons.search,
-            color: Get.isDarkMode ? skinColorWhite : backGroundDarkColor,
-            size: size.appBarIconSize,
-          ),
-          onPressed: () {
-            // Perform search action
-          },
-        ),
-      ],
+      // actions: [
+      //   IconButton(
+      //     icon: Icon(
+      //       Icons.search,
+      //       color: Get.isDarkMode ? skinColorWhite : backGroundDarkColor,
+      //       size: size.appBarIconSize,
+      //     ),
+      //     onPressed: () {
+      //       // Perform search action
+      //     },
+      //   ),
+      // ],
     );
   }
 }

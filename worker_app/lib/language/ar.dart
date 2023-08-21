@@ -130,4 +130,9 @@ const Map<String, String> ar = {
   'Have not come yet': 'لم يأتو بعد',
   'Have already came': 'جائو بالفعل',
   'Stock Page': 'صفحة المخزون',
+  'Deny': 'رفض',
+  'Approve': 'موافة',
+  'Table Number': 'رقم الطاولة',
+  "New order added": "تمت اضافة طلب جديد",
+  "Please serve it": "يرجى تنفيذ الطلب",
 };

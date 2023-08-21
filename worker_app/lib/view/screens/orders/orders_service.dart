@@ -33,7 +33,7 @@ class OrdersService {
           print(s.finalListData.length);
           s.sendingARequestAndHandlingData();
           s.update();
-          snackBarForErrors("New order added", "Please serve it");
+          snackBarForErrors("New order added".tr, "Please serve it".tr);
       
            }
         // Here, you can parse the data as needed and handle the event
