@@ -2,6 +2,7 @@ import 'dart:io';
 import 'package:dartz/dartz.dart';
 import 'package:flutter/foundation.dart';
 import 'package:flutter/material.dart';
+import 'package:flutter_image_compress/flutter_image_compress.dart';
 import 'package:get/get.dart';
 import 'package:image_picker/image_picker.dart';
 
@@ -32,6 +33,16 @@ class AddNewDrinkController extends GetxController
     description = '';
     formstate = GlobalKey<FormState>();
     super.onInit();
+  }
+
+  Future<Object> compressImage(File file) async {
+    final XFile? result = await FlutterImageCompress.compressAndGetFile(
+      file.absolute.path,
+      file.absolute.path,
+      quality: 70, // Adjust the quality as per your requirements
+    );
+
+    return result ?? file;
   }
 
   late File image;

@@ -1,8 +1,10 @@
+import 'dart:io';
 import 'dart:typed_data';
 import 'package:dartz/dartz.dart';
 import 'package:file_picker/file_picker.dart';
 import 'package:flutter/material.dart';
 import 'package:get/get.dart';
+import 'package:image_picker/image_picker.dart';
 
 import '../../../constant/status_request.dart';
 import '../../../data/Models/drink_model.dart';
@@ -14,7 +16,7 @@ import 'edit_drink_on_stock_service.dart';
 class EditeDrinkOnStockController extends GetxController
 implements StatuseRequestController
 {
-  bool webImageExcist = false;
+  bool imageExcist = false;
   String selctFile = '';
   Uint8List selectedImageInBytes = Uint8List(8);
 
@@ -42,14 +44,18 @@ implements StatuseRequestController
     formstate = GlobalKey<FormState>();
     super.onInit();
   }
- Future<void> pickImage() async {
-    FilePickerResult? fileResult =
-        await FilePicker.platform.pickFiles(allowMultiple: true);
-
-    if (fileResult != null) {
-      selctFile = fileResult.files.first.name;
-      selectedImageInBytes = fileResult.files.first.bytes!;
-      webImageExcist = true;
+  late File image;
+  final picker = ImagePicker();
+  late Uint8List imageInBytes;
+  Future<void> pickImage() async {
+    final pickedImage = await picker.pickImage(source: ImageSource.gallery);
+    // FilePickerResult? fileResult =
+    // await FilePicker.platform.pickFiles(allowMultiple: true);
+    if (pickedImage != null) {
+      image = File(pickedImage.path);
+      imageInBytes = await pickedImage.readAsBytes();
+      // selectedImageInBytes = pickedFile.files.first.bytes!;
+      imageExcist = true;
       update();
     }
   }
@@ -89,7 +95,7 @@ implements StatuseRequestController
       'drink_id': model.id.toString()
     };
     Either<StatuseRequest, Map<dynamic, dynamic>> response =
-        await service.updateDrink(data, selectedImageInBytes, selctFile, token);
+        await service.updateDrink(data, imageInBytes, image.path.split('/').last, token);
     return response.fold((l) => l, (r) => r);
   }
 

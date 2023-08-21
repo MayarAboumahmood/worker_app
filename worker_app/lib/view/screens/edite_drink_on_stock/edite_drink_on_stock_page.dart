@@ -175,11 +175,11 @@ class EditeDrinkOnStockPage extends StatelessWidget {
                         ),
                       ),
                       const SizedBox(height: 5),
-                      controller.webImageExcist
+                      controller.imageExcist
                           ? /*GetPlatform.isWeb
                             ? */
-                          Image.memory(
-                              controller.selectedImageInBytes,
+                          Image.file(
+                              controller.image,
                               fit: BoxFit.contain,
                             )
                           : Image.network(
