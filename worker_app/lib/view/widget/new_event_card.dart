@@ -15,7 +15,8 @@ class NewEventCard extends StatelessWidget {
   Widget build(BuildContext context) {
     return GestureDetector(
       onTap: () {
-        Get.toNamed('/EventInfo', arguments: event.id);
+        prefService.createString('eventId',event.id.toString());
+        Get.toNamed('/EventInfo');
       },
       child: Container(
           height: 85, //Get.size.height * .12,

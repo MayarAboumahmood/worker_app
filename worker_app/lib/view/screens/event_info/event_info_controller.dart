@@ -1,6 +1,7 @@
 import 'package:dartz/dartz.dart';
 import 'package:flutter/material.dart';
 import 'package:get/get.dart';
+import 'package:worker_app/constant/date.dart';
 
 import '../../../constant/status_request.dart';
 import '../../../data/Models/event_info_model.dart';
@@ -15,7 +16,7 @@ class EventInfoController extends GetxController
   final RxInt pageIndex = 0.obs;
   final PageController pageController = PageController();
   EventInfoService service = EventInfoService();
-  EventInfoModel? model;
+  EventInfoModel model=EventInfoModel(title: "title", availablePlaces: 5, beginDate: MyDate(day: 5, month:5, year:2001, hour:8, minute: 5), id: 5, description: "description", ticketPrice: 45000, images: [], artist: [], bandName:" bandName");
   late int eventId;
   bool isConfirmed = false;
 RxInt eventModelImageLengh = 0.obs;
@@ -41,10 +42,10 @@ RxInt eventModelImageLengh = 0.obs;
   }
 
   @override
-  StatuseRequest? statuseRequest = (StatuseRequest.init);
+  StatuseRequest? statuseRequest = StatuseRequest.init;
   @override
   void onInit() async {
-    eventId = Get.arguments;
+    print(statuseRequest);
     model = await sendingARequestAndHandlingData();
     String g = await prefService.readString('enentI');
     g = g.toString().substring(6);
@@ -65,6 +66,8 @@ RxInt eventModelImageLengh = 0.obs;
   sendingARequestAndHandlingData() async {
     print("drrrrrrrrrrrrrrr");
     statuseRequest = StatuseRequest.loading;
+
+    
     update();
     dynamic response =
         await getdata(); // check if the return data is statuseRequest or real data
@@ -83,6 +86,8 @@ RxInt eventModelImageLengh = 0.obs;
 
   getdata() async {
     String token = await prefService.readString('token');
+    eventId =int.parse(await prefService.readString('eventId'));
+    
     Map<String, String> data = {"event_id": eventId.toString()};
     Either<StatuseRequest, Map<dynamic, dynamic>> response =
         await service.getEventInfo(token, data);

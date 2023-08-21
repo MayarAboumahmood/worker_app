@@ -111,4 +111,5 @@ const Map<String, String> en = {
   'Available Places: ': 'Available Places: ',
   'Ticket Price: ': 'Ticket Price: ',
   'Work here': 'Work here',
+  
 };

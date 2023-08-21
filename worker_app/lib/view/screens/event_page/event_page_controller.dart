@@ -67,6 +67,7 @@ await service.checkingConfirmation();
     List responsedata = response['data']['upComing'];
     List responsedata2 = response['data']['now'];
     print(responsedata);
+    finalListData=[];
     for (var i = 0; i < responsedata2.length; i++) {
       finalListData.add(EventModel.fromMap(responsedata2[i]));
     

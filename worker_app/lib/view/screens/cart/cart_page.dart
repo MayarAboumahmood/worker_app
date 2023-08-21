@@ -52,7 +52,7 @@ class CartPage extends StatelessWidget {
               myRadius: size.buttonRadius,
               ontap: () {
                 controller.onpressDone();
-
+Navigator.of(context).pop();
                 //send the data to the backend and go back to the prev page.
               },
               mywidth: size.normalButtonWidht,

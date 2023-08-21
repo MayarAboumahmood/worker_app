@@ -1,3 +1,4 @@
+
 import 'package:dartz/dartz.dart';
 import 'package:get/get.dart';
 
@@ -80,7 +81,8 @@ g=g.toString().substring(6);
     DrinkCardController drinkCardController=Get.find();
     order.drinksWithAmount=[];
     drinkCardController.makeTheNumberofDriknsEqualsZero();
-     Get.back();
+     
+     print('rrrrrrrrrrrrrrr');
     update();
   }
 }

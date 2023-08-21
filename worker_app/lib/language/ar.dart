@@ -135,4 +135,6 @@ const Map<String, String> ar = {
   'Table Number': 'رقم الطاولة',
   "New order added": "تمت اضافة طلب جديد",
   "Please serve it": "يرجى تنفيذ الطلب",
+  'New reservation added':"تمت إضافة حجز جديد",
+  'Please review it':'يرجى مراجعته'
 };

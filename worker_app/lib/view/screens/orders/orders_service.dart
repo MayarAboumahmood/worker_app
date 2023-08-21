@@ -8,6 +8,7 @@ import '../../../data/checkInternet/check_internet.dart';
 import 'package:http/http.dart' as http;
 
 import '../../widget/snak_bar_for_errors.dart';
+import '../door/door_controller.dart';
 import 'orders_contrller.dart';
 
 class OrdersService {
@@ -21,20 +22,28 @@ class OrdersService {
     final response = await _client.send(request); // Await the response
 
     if (response.statusCode == 200) {
-      await response.stream.listen((data) {
+      await response.stream.listen((data) async{
         String d = utf8.decode(data);
         d = d.trim();
         print("Received data: $d");
        print(d);
         if (d != 'data: init') {
-         
+         if(d =='data: new Order'){
           OrderController s=Get.find();
           s.finalListData=[];
           print(s.finalListData.length);
           s.sendingARequestAndHandlingData();
           s.update();
-          snackBarForErrors("New order added".tr, "Please serve it".tr);
-      
+          snackBarForErrors("New order added", "Please serve it");
+         }else{
+          DoorController doorController=Get.find();
+          doorController.finalListDataCome=[];
+          doorController.finalListDataNotCome=[];
+          await doorController.sendingARequestAndHandlingData();
+          doorController.update();
+          snackBarForErrors("New reservation added", "Please review it");
+         
+         }
            }
         // Here, you can parse the data as needed and handle the event
       }).asFuture(); // Await the stream subscription to complete
@@ -119,7 +128,7 @@ class OrdersService {
         };
 
         var response = await http.get(url, headers: headers);
-// print(response.body);
+print(response.body);
         if (response.statusCode == 200 || response.statusCode == 201) {
           final responsebody = jsonDecode(response.body);
 
