@@ -41,16 +41,16 @@ class NewEventCard extends StatelessWidget {
                 child: dateBox(),
               ),
               Padding(
-                padding: const EdgeInsets.only(right: 30),
+                padding: const EdgeInsets.only(right: 2),
                 child: Column(
                   mainAxisAlignment: MainAxisAlignment.spaceEvenly,
                   crossAxisAlignment: CrossAxisAlignment.start,
                   children: [
                     SizedBox(
-                      width: 160,
+                      width: Get.size.width * .45,
                       child: Text(event.title,
                           overflow: TextOverflow.ellipsis,
-                          style: generalTextStyle(25)),
+                          style: generalTextStyle(20)),
                     ),
                     timeContainer(
                         "${event.beginDate.hour}:${event.beginDate.minute}"),
@@ -85,8 +85,8 @@ class NewEventCard extends StatelessWidget {
                 color: Colors.black54,
                 width: 0.2,
               )),
-          width: 85,
-          height: 100,
+          width: Get.size.width * .2,
+          height: Get.size.width * .2,
           child: ClipRRect(
               borderRadius: BorderRadius.circular(900),
               child: event.images.isEmpty
@@ -191,29 +191,29 @@ class Date {
   });
 }
 
-class EventCardController extends GetxController {
-  final RxInt pageIndex = 0.obs;
-  final PageController pageController = PageController();
+// class EventCardController extends GetxController {
+//   final RxInt pageIndex = 0.obs;
+//   final PageController pageController = PageController();
 
-  get statuseRequest => null;
+//   get statuseRequest => null;
 
-  @override
-  void onClose() {
-    pageController.dispose();
-    super.onClose();
-  }
+//   @override
+//   void onClose() {
+//     pageController.dispose();
+//     super.onClose();
+//   }
 
-  void setPageIndex(int index) {
-    pageIndex.value = index;
-  }
+//   void setPageIndex(int index) {
+//     pageIndex.value = index;
+//   }
 
-  void onSlide(int direction) {
-    if (direction == 1) {
-      pageController.nextPage(
-          duration: const Duration(milliseconds: 300), curve: Curves.ease);
-    } else {
-      pageController.previousPage(
-          duration: const Duration(milliseconds: 300), curve: Curves.ease);
-    }
-  }
-}
+//   void onSlide(int direction) {
+//     if (direction == 1) {
+//       pageController.nextPage(
+//           duration: const Duration(milliseconds: 300), curve: Curves.ease);
+//     } else {
+//       pageController.previousPage(
+//           duration: const Duration(milliseconds: 300), curve: Curves.ease);
+//     }
+//   }
+// }

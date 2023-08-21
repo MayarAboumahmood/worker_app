@@ -9,6 +9,7 @@ import 'package:worker_app/view/screens/event_page/event_page_binding.dart';
 import 'package:worker_app/view/screens/landing/landing_page.dart';
 import 'package:worker_app/view/screens/login/login_binding.dart';
 import 'package:worker_app/view/screens/login/login_page.dart';
+import 'package:worker_app/view/screens/search_page/search_page.dart';
 import 'package:worker_app/view/screens/settings/theme_binding.dart';
 import 'package:worker_app/view/screens/stock/stock_binding.dart';
 import 'package:worker_app/view/screens/stock/stock_page.dart';
@@ -28,5 +29,6 @@ appRoutes() => [
           page: () => EventInfo(),
           binding: EventInfoBinding()),
       GetPage(name: '/Cart', page: () => CartPage()),
+      GetPage(name: '/SearchPage', page: () => SearchPage()),
       GetPage(name: '/StockPage', page: () => Stock(), binding: StockBinding()),
     ];

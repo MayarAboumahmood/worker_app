@@ -4,6 +4,7 @@ import 'package:get/get.dart';
 import '../../../constant/status_request.dart';
 import '../../../general_controller/statuse_request_controller.dart';
 import '../../../main.dart';
+import '../../widget/drink_card.dart';
 import '../../widget/snak_bar_for_errors.dart';
 import 'cart_page.dart';
 import 'cart_service.dart.dart';
@@ -45,13 +46,6 @@ class CartController extends GetxController  implements StatuseRequestController
   sendData() async {
   String token = await prefService.readString('token');
     
-  // List<Map<String, dynamic>> drinksMapList = order.drinksWithAmount
-  //   .map((drinkAmount) => {
-  //     "drink_id": drinkAmount.drink.id,
-  //     "quantity": drinkAmount.amount,
-  //   })
-  //   .toList();
-    
   String finalOrder='';
    for (var i = 0; i < order.drinksWithAmount.length; i++) {
       if (order.drinksWithAmount.length - 1 == i) {
@@ -59,9 +53,12 @@ class CartController extends GetxController  implements StatuseRequestController
       } else {
         finalOrder +="${order.drinksWithAmount[i].drink.id}:${order.drinksWithAmount[i].amount},";
        }
-    }
+    }String g=await prefService.readString('enentI');
+
+g=g.toString().substring(6);
   Map<String, dynamic> data = {
     "drinks": finalOrder,
+    "event_id":g
   };
     
   Either<StatuseRequest, Map<dynamic, dynamic>> response =
@@ -80,6 +77,9 @@ class CartController extends GetxController  implements StatuseRequestController
   }
 
   whenLoginSuccess(response) async {
+    DrinkCardController drinkCardController=Get.find();
+    order.drinksWithAmount=[];
+    drinkCardController.makeTheNumberofDriknsEqualsZero();
      Get.back();
     update();
   }

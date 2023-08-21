@@ -5,6 +5,7 @@ import 'package:worker_app/constant/theme.dart';
 import '../../data/Models/door_model.dart';
 import '../screens/door/door_controller.dart';
 
+// ignore: must_be_immutable
 class ReservationCard extends StatelessWidget {
   final ReservationResponse reservation;
   final int index;
@@ -28,7 +29,7 @@ class ReservationCard extends StatelessWidget {
               width: 40,
               child: TextButton(
                 onPressed: () {
-                  controller.toggleTrueSign();
+                   controller.toggleTrueSign(index,reservation.numberOfPlaces,reservation.attendanceNumber!);
                 },
                 child: Obx(() => Container(
                     height: 30,
@@ -40,7 +41,7 @@ class ReservationCard extends StatelessWidget {
                               ? Colors.grey[400]!
                               : const Color.fromARGB(255, 54, 54, 54)),
                     ),
-                    child: controller.showTrueSign.value
+                    child: controller.showTrueSign[index].value
                         ? Center(
                             child: Icon(Icons.check,
                                 color: Get.isDarkMode
@@ -65,15 +66,16 @@ class ReservationCard extends StatelessWidget {
                   const SizedBox(
                     width: 6,
                   ),
-                  addRemoveButton('add', controller, index),
-                  // Obx(() {
-                  // controller.myOnStart(reservation);
-                  Text(
-                    controller.numberOfPepole[index].toString(),
-                    style: generalTextStyle(null),
-                  ),
-                  // }),
-                  addRemoveButton('remove', controller, index),
+                  addRemoveButton('add', controller, index,reservation),
+                  //  Obx(() {
+                    // controller.myOnStart(reservation);
+                    Text(
+                      controller.numberOfPepole[index]
+                          .toString(),
+                      style: generalTextStyle(null),
+                    ),
+                  //  }),
+                  addRemoveButton('remove', controller, index,reservation),
                   const SizedBox(
                     width: 6,
                   ),
@@ -91,15 +93,16 @@ class ReservationCard extends StatelessWidget {
 Widget addRemoveButton(
   String addOrRemove,
   DoorController reservationController,
-  int reservation,
+  int reservationId,
+  ReservationResponse model
 ) {
   return SizedBox(
     width: 50,
     child: MaterialButton(
       onPressed: () {
         addOrRemove == 'add'
-            ? reservationController.increaseTheNumberOfPeople(reservation)
-            : reservationController.decreaseTheNumberOfPeople(reservation);
+            ? reservationController.increaseTheNumberOfPeople(reservationId,model.numberOfPlaces)
+            : reservationController.decreaseTheNumberOfPeople(reservationId,model.numberOfPlaces);
       },
       child: Icon(
         addOrRemove == 'add' ? Icons.add : Icons.remove,

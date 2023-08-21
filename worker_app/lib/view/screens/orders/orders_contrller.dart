@@ -20,7 +20,7 @@ class OrderController extends GetxController
     // statuseRequest = await checkIfTheInternetIsConectedBeforGoingToThePage();
     finalListData = await sendingARequestAndHandlingData();
     statuseRequest = await checkIfTheInternetIsConectedBeforGoingToThePage();
-
+service.checkingOreders();
     super.onInit();
   }
 
@@ -34,7 +34,7 @@ class OrderController extends GetxController
     if (statuseRequest == StatuseRequest.success) {
       return whenGetDataSuccess(response);
     } else if (statuseRequest == StatuseRequest.authfailuer) {
-      snackBarForErrors("Auth error", "Please login again");
+      snackBarForErrors("Auth error".tr, "Please login again".tr);
       Get.offAllNamed('LoginPage');
     } else {
       // when happen a mestake we handel it here
@@ -63,9 +63,12 @@ class OrderController extends GetxController
 
   Future<List<CustomerOrderModel>> whenGetDataSuccess(response) async {
     List responsedata = response['data'];
+    finalListData=[];
     for (int i = 0; i < responsedata.length; i++) {
       finalListData.add(CustomerOrderModel.fromMap(responsedata[i]));
     }
+    print("lengthhhhhhhhhhhhhhhhhhhhhhhhhhhhhhh");
+    print(finalListData.length);
     update();
     return finalListData;
   }
@@ -87,21 +90,29 @@ class OrderController extends GetxController
     return amount;
   }
 
-  onPressApproveToOrder(int id) async {
+  onPressApproveToOrder(int id, int idFinal) async {
     String token = await prefService.readString('token');
     Map<String, String> data = {"order_id": id.toString()};
     Either<StatuseRequest, Map<dynamic, dynamic>> response =
         await service.approveOrder(token, data);
 
-    return response.fold((l) => l, (r) => r);
+    statuseRequest=handlingData(response);
+if (statuseRequest == StatuseRequest.success) {
+      finalListData.removeAt(idFinal);
+      update();
+    } 
   }
 
-  onPressDenyToOrder(int id) async {
+  onPressDenyToOrder(int id,int idFinal) async {
     String token = await prefService.readString('token');
     Map<String, String> data = {"order_id": id.toString()};
     Either<StatuseRequest, Map<dynamic, dynamic>> response =
         await service.denyOrder(token, data);
-
-    return response.fold((l) => l, (r) => r);
+statuseRequest=handlingData(response);
+if (statuseRequest == StatuseRequest.success) {
+      finalListData.removeAt(idFinal);
+      update();
+    } 
+    // return response.fold((l) => l, (r) => r);
   }
 }

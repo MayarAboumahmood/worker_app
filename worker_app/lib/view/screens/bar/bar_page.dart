@@ -11,6 +11,7 @@ import '../../widget/animation_title.dart';
 import '../../widget/bottom_nav_bar.dart';
 import '../../widget/drawer.dart';
 import '../../widget/drink_card.dart';
+import '../door/door_controller.dart';
 import '../door/door_page.dart';
 import '../orders/order_page.dart';
 
@@ -21,6 +22,8 @@ class BarPage extends StatelessWidget {
   Widget build(BuildContext context) {
     Sizes size = Sizes(context);
     BarPageController controller = Get.find();
+    // final DrinkSearchController drinkSearchController =
+    //     Get.put(DrinkSearchController());
     final DrinkCardController drinkCardController =
         Get.put(DrinkCardController());
     return DefaultTabController(
@@ -28,12 +31,12 @@ class BarPage extends StatelessWidget {
         initialIndex: 0,
         child: Scaffold(
           floatingActionButton: Obx(() => Visibility(
-                visible: controller.page.value == 0,
+                visible: controller.page.value != 1,
                 replacement: const Text(''),
                 child: floatingDoneButton(controller, drinkCardController),
               )),
           extendBody: true,
-          appBar: createAppBar(size),
+          appBar: createAppBar(size, controller),
           drawer: ProjectDrawer(),
           body: SafeArea(
             child: Stack(
@@ -96,8 +99,8 @@ class BarPage extends StatelessWidget {
     List<Widget> list = [
       buildBarGridView(Colors.black, context, drinkCardController),
       // buildBarGridView(Colors.blue, context, drinkCardController),
-     buildOrderList(size),
-      attendanceList(context,controller.eventId),
+      buildOrderList(size),
+      attendanceList(context, controller.eventId),
     ];
     return ([list[controller.page.value]]);
   }
@@ -107,56 +110,58 @@ class BarPage extends StatelessWidget {
     return GetBuilder(
         init: drinkCardContrller,
         builder: (context) {
-          return
-    GridView.builder(
-      padding: const EdgeInsets.all(16),
-      gridDelegate: SliverGridDelegateWithFixedCrossAxisCount(
-        crossAxisCount: ccontext.widthInches > 8.5
-            ? 4
-            : ccontext.widthInches > 5.5
-                ? 3
-                : 2,
-        mainAxisExtent: 230,
-        crossAxisSpacing: 10,
-        mainAxisSpacing: 16,
-      ),
-       itemCount: drinkCardContrller.finalListData.length,
+          return GridView.builder(
+            padding: const EdgeInsets.all(16),
+            gridDelegate: SliverGridDelegateWithFixedCrossAxisCount(
+              crossAxisCount: ccontext.widthInches > 8.5
+                  ? 4
+                  : ccontext.widthInches > 5.5
+                      ? 3
+                      : 2,
+              mainAxisExtent: 230,
+              crossAxisSpacing: 10,
+              mainAxisSpacing: 16,
+            ),
+            itemCount: drinkCardContrller.finalListData.length,
             itemBuilder: (context, index) {
               return DrinkCard(
                 id: index,
                 drink: drinkCardContrller.finalListData[index],
               );
-      },
-      );});
+            },
+          );
+        });
   }
 
-  PreferredSizeWidget? createAppBar(Sizes size) {
+  PreferredSizeWidget? createAppBar(Sizes size, BarPageController controller) {
     return AppBar(
       elevation: 0.4,
       backgroundColor: Get.isDarkMode ? darkPrimaryColor : primaryColor,
       title: AnimationAppBarTitle(title: 'Worker app'.tr),
       actions: [
-        IconButton(
-          icon: Icon(
-            Icons.search,
-            color: Get.isDarkMode ? skinColorWhite : backGroundDarkColor,
-            size: size.appBarIconSize,
+        Obx(()=>Visibility(
+          visible: controller.page.value!=1,
+          child: IconButton(
+            icon: Icon(
+              Icons.search,
+              color: Get.isDarkMode ? skinColorWhite : backGroundDarkColor,
+              size: size.appBarIconSize,
+            ),
+            onPressed: () {
+              Get.toNamed('/SearchPage', arguments: controller.page.value);
+            },
           ),
-          onPressed: () {
-            // Perform search action
-          },
-        ),
+        )),
       ],
     );
   }
 
-   void onpressedDone(int index, DrinkCardController drinkCardController) {
+  void onpressedDone(int index, DrinkCardController drinkCardController) {
     if (index == 0) {
       Get.toNamed('/Cart', arguments: drinkCardController.order);
+    } else if (index == 2) {
+      DoorController controller = Get.find();
+      controller.sendData();
     }
-    // else if(index ==1){
-    //   PlacesController controller=Get.find();
-    //   controller.onpressDone();
-    // }
   }
 }

@@ -20,7 +20,8 @@ class EventPageController extends GetxController
     // statuseRequest = await checkIfTheInternetIsConectedBeforGoingToThePage();
     finalListData = await sendingARequestAndHandlingData();
     statuseRequest = await checkIfTheInternetIsConectedBeforGoingToThePage();
-
+await service.checkingConfirmation();
+  
     super.onInit();
   }
 
@@ -63,13 +64,17 @@ class EventPageController extends GetxController
 
   Future<List<EventModel>> whenGetDataSuccess(response) async {
     List responsedata = response['data']['upComing'];
+    List responsedata2 = response['data']['now'];
     print(responsedata);
+    for (var i = 0; i < responsedata2.length; i++) {
+      finalListData.add(EventModel.fromMap(responsedata2[i]));
+    
+    }
     for (int i = 0; i < responsedata.length; i++) {
-      // print(i);
+  
       finalListData.add(EventModel.fromMap(responsedata[i]));
     }
-    print(finalListData.length);
-// print("${finalListData[0].beginDate.hour}:${finalListData[0].beginDate.minute}");
+ 
     update();
     return finalListData;
   }

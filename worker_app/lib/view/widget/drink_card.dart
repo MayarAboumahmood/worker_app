@@ -1,14 +1,15 @@
 // ignore_for_file: public_member_api_docs, sort_constructors_first
-import 'package:auto_size_text/auto_size_text.dart';
 
+import 'package:auto_size_text/auto_size_text.dart';
 import 'package:dartz/dartz.dart';
 import 'package:flutter/material.dart';
 import 'package:get/get.dart';
+import 'package:worker_app/constant/text_style.dart';
 import 'package:worker_app/view/widget/snak_bar_for_errors.dart';
 
+import '../../constant/server_const.dart';
 import '../../constant/sizes.dart';
 import '../../constant/status_request.dart';
-import '../../constant/text_style.dart';
 import '../../constant/theme.dart';
 import '../../data/Models/drink_model.dart';
 import '../../general_controller/statuse_request_controller.dart';
@@ -55,11 +56,15 @@ class DrinkCard extends StatelessWidget {
                   child: Stack(
                     children: [
                       Positioned.fill(
-                        child: Image.asset(
-                          // drink.imageName;
-                          'assets/images/medium page background image.jpg',
-                          fit: BoxFit.fill,
-                        ),
+                        child: drink.image == ''
+                            ? Image.asset(
+                                'assets/images/medium page background image.jpg',
+                                fit: BoxFit.fill,
+                              )
+                            : Image.network(
+                                "${ServerConstApis.loadImages}${drink.image}",
+                                fit: BoxFit.fill,
+                              ),
                       ),
                       Positioned.fill(
                         child: Container(
@@ -90,11 +95,14 @@ class DrinkCard extends StatelessWidget {
                   ),
                 ),
               ),
-              AutoSizeText(
-                drink.name,
-                maxLines: 2,
-                overflow: TextOverflow.ellipsis,
-                style: generalTextStyle(18),
+              Padding(
+                padding: const EdgeInsets.symmetric(horizontal: 5),
+                child: AutoSizeText(
+                  drink.name,
+                  maxLines: 2,
+                  overflow: TextOverflow.ellipsis,
+                  style: generalTextStyle(17),
+                ),
               ),
               const SizedBox(
                 height: 3,
@@ -116,7 +124,7 @@ class DrinkCard extends StatelessWidget {
         onPressed: () {
           addOrRemove == 'add'
               ? drinkCardController.increaseTheNumberOfDrinks(id, drink)
-              : drinkCardController.decreaseTheNumberOfDrinks(id);
+              : drinkCardController.decreaseTheNumberOfDrinks(id, drink);
           //  add one from this drink or remove one of the drink
         },
         child: Icon(
@@ -216,9 +224,20 @@ class DrinkCardController extends GetxController
     return true;
   }
 
-  void decreaseTheNumberOfDrinks(int id) {
-    order.drinksWithAmount[id].amount--;
-    numberOfDrinks[id] > 0 ? numberOfDrinks[id].value-- : null;
+  void decreaseTheNumberOfDrinks(int id, DrinkModel drink) {
+    for (var element in order.drinksWithAmount) {
+      if (element.drink == drink) {
+        if (element.amount > 0) {
+          numberOfDrinks[id].value--;
+
+          element.amount--;
+          if (element.amount == 0) {
+            order.drinksWithAmount.remove(element);
+          }
+          break;
+        }
+      }
+    }
   }
 
   void makeTheNumberofDriknsEqualsZero() {

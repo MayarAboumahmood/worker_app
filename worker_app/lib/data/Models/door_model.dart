@@ -1,7 +1,5 @@
 class ReservationResponse {
-  late bool status;
-  late String message;
-  late int reservationId;
+  late int? reservationId;
   late bool? attendance;
   late int numberOfPlaces;
   late int? attendanceNumber;
@@ -11,9 +9,7 @@ class ReservationResponse {
   late int? workerId;
 
   ReservationResponse({
-    required this.status,
-    required this.message,
-     required this.reservationId,
+      required this.reservationId,
     this.attendance,
     required this.numberOfPlaces,
     this.attendanceNumber,
@@ -23,18 +19,18 @@ class ReservationResponse {
     this.workerId,
   });
 
-  factory ReservationResponse.fromJson(Map<String, dynamic> json,String type) {
+  factory ReservationResponse.fromJson(Map<String, dynamic> json) {
+    // print(object)
     return ReservationResponse(
-      status: json['status'],
-      message: json['message'],
-       reservationId: json[type]['reservation_id']??0,
-      attendance: json[type]['attendance']??false,
-      numberOfPlaces: json[type]['number_of_places']??0,
-      attendanceNumber: json[type]['attendance_number']??0,
-      sectionNumber: json[type]['section_number']??0,
-      customerName: json[type]['customer_name']??'',
-      customerId: json[type]['customer_id'],
-      workerId: json[type]['worker_id'],
+      
+       reservationId: json['reservation_id']??0,
+      attendance: json['attendance']??false,
+      numberOfPlaces: json['number_of_places']??0,
+      attendanceNumber: json['attendance_number']??0,
+      sectionNumber: json['section_number']??0,
+      customerName: json['customer_name']??'',
+      customerId: json['customer_id']??0,
+      workerId: json['worker_id']??0,
     );
   }
 }

@@ -34,8 +34,13 @@ class OnBoardController extends GetxController {
   }
 
   void onPress() async {
+    if(! await prefService.isContainKey('enentI')){
+    await prefService.createString('enentI',0.toString());
+    }
     if (await prefService.isContainKey('token')) {
+      
       Get.offAllNamed('/EventPage');
+      
      
       } else {
       

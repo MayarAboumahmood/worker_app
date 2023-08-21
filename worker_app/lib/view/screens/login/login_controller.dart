@@ -85,7 +85,8 @@ class LoginController extends GetxController
   }
 
   whenLoginSuccess(response) async {
-    await prefService.createString('token', response['token']); // storing token
+    await prefService.createString('token', response['data']['token']); // storing token
+    await prefService.createString('id', response['data']['worker_id'].toString()); // storing token
     Get.offNamed('/EventPage');
     update();
   }

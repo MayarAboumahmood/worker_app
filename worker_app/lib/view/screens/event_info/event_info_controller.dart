@@ -2,7 +2,6 @@ import 'package:dartz/dartz.dart';
 import 'package:flutter/material.dart';
 import 'package:get/get.dart';
 
-import '../../../constant/date.dart';
 import '../../../constant/status_request.dart';
 import '../../../data/Models/event_info_model.dart';
 import '../../../general_controller/statuse_request_controller.dart';
@@ -11,13 +10,16 @@ import '../../widget/no_internet_page.dart';
 import '../../widget/snak_bar_for_errors.dart';
 import 'event_info_service.dart';
 
-class EventInfoController extends GetxController  implements StatuseRequestController{
+class EventInfoController extends GetxController
+    implements StatuseRequestController {
   final RxInt pageIndex = 0.obs;
   final PageController pageController = PageController();
-EventInfoService service=EventInfoService();
- EventInfoModel model=EventInfoModel(title: 'title', availablePlaces: 2, beginDate: MyDate(day:1, month: 1, year: 1, hour:1, minute:1), id: 1, description: "description", ticketPrice: 2500, images: [], artist: [], bandName: "");
-late int eventId;
- 
+  EventInfoService service = EventInfoService();
+  EventInfoModel? model;
+  late int eventId;
+  bool isConfirmed = false;
+RxInt eventModelImageLengh = 0.obs;
+  
   @override
   void onClose() {
     pageController.dispose();
@@ -38,14 +40,25 @@ late int eventId;
     }
   }
 
-   @override
+  @override
   StatuseRequest? statuseRequest = (StatuseRequest.init);
   @override
   void onInit() async {
-    eventId=Get.arguments;
- statuseRequest = await checkIfTheInternetIsConectedBeforGoingToThePage();
-    await sendingARequestAndHandlingData();
-   
+    eventId = Get.arguments;
+    model = await sendingARequestAndHandlingData();
+    String g = await prefService.readString('enentI');
+    g = g.toString().substring(6);
+    if (g == eventId.toString()) {
+      print("event equals");
+      isConfirmed = true;
+    } else {
+      print("r");
+      isConfirmed = false;
+    }
+    statuseRequest = StatuseRequest.loading;
+
+    statuseRequest = await checkIfTheInternetIsConectedBeforGoingToThePage();
+// statuseRequest=StatuseRequest.success;
     super.onInit();
   }
 
@@ -66,16 +79,13 @@ late int eventId;
       [];
     }
     update();
-    
   }
 
   getdata() async {
     String token = await prefService.readString('token');
-    Map<String, String> data = {
-    "event_id":eventId.toString()
-};
+    Map<String, String> data = {"event_id": eventId.toString()};
     Either<StatuseRequest, Map<dynamic, dynamic>> response =
-        await service.getEventInfo(token,data);
+        await service.getEventInfo(token, data);
 
     return response.fold((l) => l, (r) => r);
   }
@@ -89,11 +99,12 @@ late int eventId;
   }
 
   Future<EventInfoModel> whenGetDataSuccess(response) async {
-  Map<String ,dynamic> data=response['data'];
- model=EventInfoModel.fromMap(data);
- print(model.title);
-  update();
-    return model;
+    Map<String, dynamic> data = response['data'];
+    model = EventInfoModel.fromMap(data);
+    print(model!.id);
+     eventModelImageLengh.value = model!.images.length;
+    update();
+    
+    return model!;
   }
-
 }

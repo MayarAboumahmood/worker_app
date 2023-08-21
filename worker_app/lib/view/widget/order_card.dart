@@ -37,15 +37,17 @@ Widget orderCard(
                     SizedBox(
                       height:
                           controller.finalListData[index].orderDrinks.length *
-                              45,
+                              42,
                       child: ListView.builder(
                         physics: const NeverScrollableScrollPhysics(),
                         itemCount:
                             controller.finalListData[index].orderDrinks.length,
-                        itemBuilder: (context, index) => Column(
+                        itemBuilder: (context, indexx) => Column(
                           children: [
                             Text(
-                              '${controller.finalListData[index].orderDrinks[index].drinkName}: ${controller.finalListData[index].orderDrinks[index].quantity}',
+                              '${controller.finalListData[index].orderDrinks[indexx].drinkName}: ${controller.finalListData[index].orderDrinks[indexx].quantity}',
+                              maxLines: 1,
+                              overflow: TextOverflow.ellipsis,
                               style: TextStyle(
                                 fontFamily: jostFontFamily,
                                 color: Get.isDarkMode
@@ -95,13 +97,13 @@ Widget orderCard(
                     Row(
                       mainAxisAlignment: MainAxisAlignment.spaceBetween,
                       children: [
-                        approveDenyButton('Approve', () {
+                        approveDenyButton('Approve'.tr, () {
                           controller.onPressApproveToOrder(
-                              controller.finalListData[index].orderID);
+                              controller.finalListData[index].orderID, index);
                         }, Colors.green),
-                        approveDenyButton('Deny', () {
+                        approveDenyButton('Deny'.tr, () {
                           controller.onPressDenyToOrder(
-                              controller.finalListData[index].orderID);
+                              controller.finalListData[index].orderID, index);
                         }, Colors.red),
                       ],
                     )

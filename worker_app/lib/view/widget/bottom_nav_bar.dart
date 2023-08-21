@@ -17,7 +17,6 @@ class BottomNavBar extends StatefulWidget {
 
 class BottomNavBarState extends State<BottomNavBar> {
   BarPageController controller = Get.find();
-  // int page = 0;
   GlobalKey<CurvedNavigationBarState> bottomNavigationKey = GlobalKey();
 
   @override
@@ -32,8 +31,9 @@ class BottomNavBarState extends State<BottomNavBar> {
         bottomBarUnit('Door', Icons.door_sliding_rounded),
       ],
       color: Get.isDarkMode ? darkPrimaryColor : primaryColor,
-      buttonBackgroundColor:
-          Get.isDarkMode ? darkPrimaryColor : darkPrimaryColor,
+      buttonBackgroundColor: Get.isDarkMode
+          ? darkPrimaryColor.withOpacity(0.7)
+          : primaryColor.withOpacity(0.7),
       backgroundColor: Get.isDarkMode
           ? backGroundDarkColor.withOpacity(0.1)
           : skinColorWhite!.withOpacity(0.1),
@@ -50,21 +50,22 @@ class BottomNavBarState extends State<BottomNavBar> {
 
   Widget bottomBarUnit(String title, IconData? icon) {
     return Padding(
-      padding: const EdgeInsets.only(top: 15),
-      child: SizedBox(
-        height: 65,
-        width: 65,
-        child: Tab(
-          icon: Icon(
-            icon,
-            color: Get.isDarkMode ? skinColorWhite : backGroundDarkColor,
+        padding: const EdgeInsets.only(top: 20),
+        child: SizedBox(
+          height: 70,
+          width: 65,
+          child: Column(
+            children: [
+              Icon(
+                icon,
+                color: Get.isDarkMode ? skinColorWhite : backGroundDarkColor,
+              ),
+              Text(
+                title.tr,
+                style: generalTextStyle(null),
+              ),
+            ],
           ),
-          child: Text(
-            title.tr,
-            style: generalTextStyle(null),
-          ),
-        ),
-      ),
-    );
+        ));
   }
 }
