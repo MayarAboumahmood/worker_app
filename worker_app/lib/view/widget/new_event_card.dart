@@ -46,7 +46,12 @@ class NewEventCard extends StatelessWidget {
                   mainAxisAlignment: MainAxisAlignment.spaceEvenly,
                   crossAxisAlignment: CrossAxisAlignment.start,
                   children: [
-                    Text(event.title, style: generalTextStyle(25)),
+                    SizedBox(
+                      width: 160,
+                      child: Text(event.title,
+                          overflow: TextOverflow.ellipsis,
+                          style: generalTextStyle(25)),
+                    ),
                     timeContainer(
                         "${event.beginDate.hour}:${event.beginDate.minute}"),
                   ],

@@ -32,7 +32,8 @@ class BottomNavBarState extends State<BottomNavBar> {
         bottomBarUnit('Door', Icons.door_sliding_rounded),
       ],
       color: Get.isDarkMode ? darkPrimaryColor : primaryColor,
-      buttonBackgroundColor: Get.isDarkMode ? darkPrimaryColor : primaryColor,
+      buttonBackgroundColor:
+          Get.isDarkMode ? darkPrimaryColor : darkPrimaryColor,
       backgroundColor: Get.isDarkMode
           ? backGroundDarkColor.withOpacity(0.1)
           : skinColorWhite!.withOpacity(0.1),
@@ -40,8 +41,6 @@ class BottomNavBarState extends State<BottomNavBar> {
       animationDuration: const Duration(milliseconds: 500),
       onTap: (index) {
         setState(() {
-          // print('index :');
-          // print(index);
           controller.changePage(index);
         });
       },
