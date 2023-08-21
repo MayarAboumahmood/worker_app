@@ -1,5 +1,5 @@
 class ServerConstApis {
-  static String baseAPI = 'http://192.168.43.170:3000/';
+  static String baseAPI = 'https://culter-house-backend.onrender.com/';
 
 ///// sign
   static String signUp = '${baseAPI}customers/signup';

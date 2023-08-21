@@ -20,6 +20,7 @@ class EventPageController extends GetxController
     // statuseRequest = await checkIfTheInternetIsConectedBeforGoingToThePage();
     finalListData = await sendingARequestAndHandlingData();
     statuseRequest = await checkIfTheInternetIsConectedBeforGoingToThePage();
+service.sse();
 await service.checkingConfirmation();
   
     super.onInit();
