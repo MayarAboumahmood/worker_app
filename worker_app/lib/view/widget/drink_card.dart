@@ -1,15 +1,15 @@
 // ignore_for_file: public_member_api_docs, sort_constructors_first
-import 'package:auto_size_text/auto_size_text.dart';
 
+import 'package:auto_size_text/auto_size_text.dart';
 import 'package:dartz/dartz.dart';
 import 'package:flutter/material.dart';
 import 'package:get/get.dart';
+import 'package:worker_app/constant/text_style.dart';
 import 'package:worker_app/view/widget/snak_bar_for_errors.dart';
 
 import '../../constant/server_const.dart';
 import '../../constant/sizes.dart';
 import '../../constant/status_request.dart';
-import '../../constant/text_style.dart';
 import '../../constant/theme.dart';
 import '../../data/Models/drink_model.dart';
 import '../../general_controller/statuse_request_controller.dart';
@@ -124,7 +124,7 @@ class DrinkCard extends StatelessWidget {
         onPressed: () {
           addOrRemove == 'add'
               ? drinkCardController.increaseTheNumberOfDrinks(id, drink)
-              : drinkCardController.decreaseTheNumberOfDrinks(id,drink);
+              : drinkCardController.decreaseTheNumberOfDrinks(id, drink);
           //  add one from this drink or remove one of the drink
         },
         child: Icon(
@@ -223,22 +223,22 @@ class DrinkCardController extends GetxController
     }
     return true;
   }
-void decreaseTheNumberOfDrinks(int id, DrinkModel drink) {
+
+  void decreaseTheNumberOfDrinks(int id, DrinkModel drink) {
     for (var element in order.drinksWithAmount) {
-        if (element.drink == drink) {
-          if(element.amount>0){
-   numberOfDrinks[id].value--;
-            
+      if (element.drink == drink) {
+        if (element.amount > 0) {
+          numberOfDrinks[id].value--;
+
           element.amount--;
-          if(element.amount==0){
+          if (element.amount == 0) {
             order.drinksWithAmount.remove(element);
-            
           }
           break;
-          }
         }
-  }}
-
+      }
+    }
+  }
 
   void makeTheNumberofDriknsEqualsZero() {
     for (var element in numberOfDrinks) {
