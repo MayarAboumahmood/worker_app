@@ -155,7 +155,10 @@ class EventInfo extends StatelessWidget {
                       ),
                       child: Image.network(
                           "${ServerConstApis.loadImages}${dataController.model.images[index].picture}",
-                          fit: BoxFit.fill));
+                          fit: BoxFit.fill, errorBuilder: (context, Exception, StackTrace) {
+                      return Image.asset('assets/images/The project icon.jpg',
+                          fit: BoxFit.fill);
+                    },));
                 },
               );
       },

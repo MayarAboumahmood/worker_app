@@ -95,7 +95,10 @@ class NewEventCard extends StatelessWidget {
                       fit: BoxFit.fill)
                   : Image.network(
                       "${ServerConstApis.loadImages}${event.images[0].picture}",
-                      fit: BoxFit.fill))),
+                      fit: BoxFit.fill, errorBuilder: (context, Exception, StackTrace) {
+                      return Image.asset('assets/images/The project icon.jpg',
+                          fit: BoxFit.fill);
+                    },))),
     );
   }
 

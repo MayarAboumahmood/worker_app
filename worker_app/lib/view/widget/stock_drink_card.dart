@@ -51,7 +51,10 @@ class StockDrinkCard extends StatelessWidget {
                               )
                             : Image.network(
                                 "${ServerConstApis.loadImages}${model.image}",
-                                fit: BoxFit.fill,
+                                fit: BoxFit.fill, errorBuilder: (context, Exception, StackTrace) {
+                      return Image.asset('assets/images/The project icon.jpg',
+                          fit: BoxFit.fill);
+                    },
                               ),
                       ),
                       Positioned.fill(
