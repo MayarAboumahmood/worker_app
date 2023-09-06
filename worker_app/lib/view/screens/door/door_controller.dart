@@ -67,7 +67,8 @@ class DoorController extends GetxController
   Future<List<ReservationResponse>> whenGetDataSuccess(response) async {
     List notComeData = response['data']['notCome'];
     List comeData = response['data']['hasCome'];
-
+finalListDataCome=[];
+finalListDataNotCome=[];
     for (int i = 0; i < notComeData.length; i++) {
       finalListDataNotCome.add(ReservationResponse.fromJson(notComeData[i]));
       numberOfPepole.add(finalListDataNotCome[i].attendanceNumber!);

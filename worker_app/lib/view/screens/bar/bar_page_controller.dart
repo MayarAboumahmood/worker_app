@@ -5,7 +5,6 @@ class BarPageController extends GetxController {
   @override
   void onInit() {
     eventId=Get.arguments;
-    // TODO: implement onInit
     super.onInit();
   }
   RxInt page = 0.obs;

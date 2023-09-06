@@ -108,10 +108,10 @@ RxInt eventModelImageLengh = 0.obs;
 
     Map<String, dynamic> data = response['data'];
     model = EventInfoModel.fromMap(data);
-    print(model!.id);
-     eventModelImageLengh.value = model!.images.length;
+    print(model.id);
+     eventModelImageLengh.value = model.images.length;
     update();
     
-    return model!;
+    return model;
   }
 }
